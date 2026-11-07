@@ -465,11 +465,11 @@
         </div>
         <div>
           <div class="flex justify-between items-center mb-2">
-            <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Soup Ingestion Fraction</label>
+            <label id="ingest-frac-label" class="text-xs font-bold uppercase tracking-wider text-slate-400">Soup / Broth Ingestion Fraction</label>
             <span id="ingest-frac-badge" class="text-xs font-bold text-rose-400">40% Consumed</span>
           </div>
           <input type="range" id="input-ingest-frac" min="0.1" max="1.0" step="0.05" value="0.40" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-rose-500">
-          <div class="flex justify-between text-xs text-slate-500 mt-1 font-mono">
+          <div id="ingest-frac-ticks" class="flex justify-between text-xs text-slate-500 mt-1 font-mono">
             <span>10% (Sip)</span><span>35% (Typical)</span><span>100% (Dry/Chug)</span>
           </div>
         </div>
@@ -481,6 +481,11 @@
             <option value="3">3 Diners (Sharing Group)</option>
           </select>
         </div>
+      </div>
+
+      <!-- Dynamic Format Banner -->
+      <div id="format-info-pill" class="p-3.5 rounded-xl border text-xs leading-relaxed transition flex items-center gap-3">
+        <!-- Dynamically injected via renderNutrition() -->
       </div>
 
       <!-- Nutritional Scorecard -->
@@ -1448,12 +1453,54 @@
 
     function renderNutrition() {
       const baseId = document.getElementById('input-base').value;
-      const ingestFrac = parseFloat(document.getElementById('input-ingest-frac').value);
+      const base = BASES.find(b => b.base_id === baseId) || BASES[0];
       const diners = parseInt(document.getElementById('input-diners').value);
       
-      document.getElementById('ingest-frac-badge').textContent = `${Math.round(ingestFrac * 100)}% Consumed`;
+      const isDry = base.category === 'Dry Stir-Fry' || base.category === 'Dry Toss';
+      const fracLabel = document.getElementById('ingest-frac-label');
+      const fracBadge = document.getElementById('ingest-frac-badge');
+      const fracSlider = document.getElementById('input-ingest-frac');
+      const fracTicks = document.getElementById('ingest-frac-ticks');
+      const formatPill = document.getElementById('format-info-pill');
 
-      const base = BASES.find(b => b.base_id === baseId) || BASES[0];
+      let ingestFrac = parseFloat(fracSlider.value);
+
+      if (isDry) {
+        ingestFrac = 1.0;
+        fracSlider.value = 1.0;
+        fracSlider.disabled = true;
+        fracSlider.classList.add('opacity-40', 'cursor-not-allowed');
+        if (fracTicks) fracTicks.classList.add('opacity-20');
+        if (fracLabel) fracLabel.textContent = base.category === 'Dry Stir-Fry' ? 'Wok-Fried Sauce & Oil Adhesion' : 'Tossed Dressing Adhesion';
+        if (fracBadge) {
+          fracBadge.textContent = '100% Ingested (No Broth)';
+          fracBadge.className = 'text-xs font-bold text-amber-400 font-mono';
+        }
+
+        if (formatPill) {
+          if (base.category === 'Dry Stir-Fry') {
+            formatPill.className = 'p-3.5 rounded-xl border bg-rose-950/40 border-rose-800/60 text-rose-200 text-xs leading-relaxed flex items-center gap-3';
+            formatPill.innerHTML = '<i class="fa-solid fa-fire-burner text-rose-400 text-lg shrink-0"></i><div><strong>Dry Stir-Fry (Mala Xiang Guo) Format — No Liquid Broth</strong>: All ingredients are wok-tossed in seasoned chili oil, tallow/palm olein, Pixian doubanjiang, and aromatics. <strong>100% of the sauce adheres directly to the food</strong> and is ingested. You cannot "leave broth behind" in a dry stir-fry.</div>';
+          } else {
+            formatPill.className = 'p-3.5 rounded-xl border bg-amber-950/40 border-amber-800/60 text-amber-200 text-xs leading-relaxed flex items-center gap-3';
+            formatPill.innerHTML = '<i class="fa-solid fa-mortar-pestle text-amber-400 text-lg shrink-0"></i><div><strong>Dry Toss (Mala Ban) Format — No Liquid Broth</strong>: Ingredients are blanched in clean water first (rendering out excess surface starch), then tossed in sesame tahini paste and aged Chinkiang vinegar. <strong>100% of the dressing adheres to the food</strong> and is consumed.</div>';
+          }
+        }
+      } else {
+        fracSlider.disabled = false;
+        fracSlider.classList.remove('opacity-40', 'cursor-not-allowed');
+        if (fracTicks) fracTicks.classList.remove('opacity-20');
+        if (fracLabel) fracLabel.textContent = 'Soup / Broth Ingestion Fraction';
+        if (fracBadge) {
+          fracBadge.textContent = `${Math.round(ingestFrac * 100)}% Broth Consumed`;
+          fracBadge.className = 'text-xs font-bold text-emerald-400 font-mono';
+        }
+
+        if (formatPill) {
+          formatPill.className = 'p-3.5 rounded-xl border bg-emerald-950/40 border-emerald-800/60 text-emerald-200 text-xs leading-relaxed flex items-center gap-3';
+          formatPill.innerHTML = '<i class="fa-solid fa-bowl-hot text-emerald-400 text-lg shrink-0"></i><div><strong>Soup Malatang Format — Aqueous Dilution Shield</strong>: Ingredients are served swimming in aqueous liquid broth. You can drink or leave the liquid. Leaving 60% of the liquid in the bowl drops absorbed sodium by <strong>65%</strong>!</div>';
+        }
+      }
 
       // Calibrated Mediterranean 1,000g Basket raw ingredients (Seabass, Prawns, Squid, Tau Kwa, Broccoli, Greens, Fungi, Konjac)
       const rawProtein = 90.9;
