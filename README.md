@@ -4,7 +4,8 @@
 [![Antigravity IDE](https://img.shields.io/badge/Antigravity%20IDE-Gemini%203.8%20Flash-blue?style=for-the-badge)](https://github.com/lauyeehow1986-hub/mala)
 [![HPB HIDS](https://img.shields.io/badge/Singapore%20HPB-HIDS%20Accredited-emerald?style=for-the-badge)](https://data.gov.sg/datasets/d_cd7fbc766695f997396b96bf93820382/view)
 
-🔗 **Live Interactive Web Dashboard**: [https://lauyeehow1986-hub.github.io/mala/](https://lauyeehow1986-hub.github.io/mala/)
+🔗 **Live Interactive Web Dashboard**: [https://lauyeehow1986-hub.github.io/mala/](https://lauyeehow1986-hub.github.io/mala/)  
+📑 **Executive Summary & Decision Cheat Sheet**: [`reports/EXECUTIVE_SUMMARY_INSIGHTS.md`](reports/EXECUTIVE_SUMMARY_INSIGHTS.md)
 
 Quantitative dual-objective optimization, food-physics arbitrage, actuarial stored-value membership valuation, and public health policy simulation engine for Singapore Mala Xiang Guo and Malatang restaurants in **Antigravity IDE (Gemini 3.8 Flash)**.
 
@@ -56,6 +57,7 @@ mala/
 ├── mcp_servers/
 │   └── sg_mala_quant_mcp.py                                     # FastMCP / MCPServer 2.x implementation
 ├── reports/
+│   ├── EXECUTIVE_SUMMARY_INSIGHTS.md                            # Executive synthesis & 30-second ordering cheat sheet
 │   ├── actuarial_stored_value_membership_evaluation.md          # Actuarial model ($300 to $1500 vs PAYG) & closure hazard
 │   ├── hpb_health_policy_and_business_win_win_blueprint.md       # HPB HIDS reform blueprint & business win-win strategy
 │   ├── mediterranean_hpb_optimal_bowl_analysis.md               # Mediterranean Diet × HPB clinical & flavor simulation report

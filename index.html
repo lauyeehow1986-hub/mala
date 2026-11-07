@@ -76,20 +76,23 @@
     <!-- Tab Navigation Bar -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-800/80">
       <nav class="flex space-x-2 overflow-x-auto py-2 custom-scrollbar text-sm font-medium">
-        <button onclick="switchTab('tab-optimizer')" id="btn-optimizer" class="tab-btn px-3.5 py-1.5 rounded-lg bg-rose-600 text-white flex items-center gap-2 whitespace-nowrap transition">
+        <button onclick="switchTab('tab-insights')" id="btn-insights" class="tab-btn px-3.5 py-1.5 rounded-lg bg-rose-600 text-white flex items-center gap-2 whitespace-nowrap transition">
+          <i class="fa-solid fa-bolt"></i> ⚡ Executive Insights
+        </button>
+        <button onclick="switchTab('tab-optimizer')" id="btn-optimizer" class="tab-btn px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap transition">
           <i class="fa-solid fa-calculator"></i> 1. Knapsack Optimizer
         </button>
         <button onclick="switchTab('tab-broths')" id="btn-broths" class="tab-btn px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap transition">
-          <i class="fa-solid fa-bowl-food"></i> 2. 14 Bases & Cooking Formats
+          <i class="fa-solid fa-bowl-food"></i> 2. 14 Bases & Formats
         </button>
         <button onclick="switchTab('tab-actuarial')" id="btn-actuarial" class="tab-btn px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap transition">
           <i class="fa-solid fa-credit-card"></i> 3. Actuarial Memberships
         </button>
         <button onclick="switchTab('tab-policy')" id="btn-policy" class="tab-btn px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap transition">
-          <i class="fa-solid fa-hand-holding-heart"></i> 4. HPB HIDS Policy & Win-Win
+          <i class="fa-solid fa-hand-holding-heart"></i> 4. HPB HIDS Policy
         </button>
         <button onclick="switchTab('tab-catalog')" id="btn-catalog" class="tab-btn px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap transition">
-          <i class="fa-solid fa-database"></i> 5. 96-Item Arbitrage Catalog
+          <i class="fa-solid fa-database"></i> 5. 96-Item Catalog
         </button>
       </nav>
     </div>
@@ -99,9 +102,239 @@
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full">
 
     <!-- ========================================== -->
+    <!-- TAB 0: EXECUTIVE INSIGHTS & CHEAT SHEET -->
+    <!-- ========================================== -->
+    <section id="tab-insights" class="tab-content block space-y-6">
+      
+      <!-- Hero Banner -->
+      <div class="bg-gradient-to-r from-rose-950/60 via-slate-900 to-amber-950/40 border border-rose-900/50 rounded-2xl p-6 shadow-2xl">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <span class="text-xs font-extrabold px-3 py-1 rounded-full bg-rose-600 text-white uppercase tracking-wider">
+              Executive Synthesis & Counter Cheat Sheet
+            </span>
+            <h2 class="text-2xl font-extrabold text-white mt-2">The 6 Punchy Mala Law Insights</h2>
+            <p class="text-xs text-slate-300 mt-1 max-w-2xl leading-relaxed">
+              Distilling 4 technical and actuarial reports into immediate, actionable rules of thumb for diners, health policymakers, and F&B operators.
+            </p>
+          </div>
+          <div class="flex gap-2">
+            <a href="https://github.com/lauyeehow1986-hub/mala/blob/main/reports/EXECUTIVE_SUMMARY_INSIGHTS.md" target="_blank" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 border border-slate-700 flex items-center gap-2 transition">
+              <i class="fa-solid fa-file-lines text-rose-400"></i> Full Report Markdown
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Insight 1: Counter Cheat Sheet (Crushers vs Traps) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        
+        <!-- 5 Margin Crushers -->
+        <div class="bg-slate-900 border border-emerald-900/50 rounded-2xl p-5 shadow-xl">
+          <div class="flex items-center justify-between mb-3 border-b border-slate-800 pb-2">
+            <h3 class="text-sm font-bold text-emerald-400 flex items-center gap-2">
+              <i class="fa-solid fa-trophy"></i> 5 Arbitrage Margin Crushers
+            </h3>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 font-mono">Stall Loses Money</span>
+          </div>
+          <div class="space-y-2.5 text-xs font-mono">
+            <div class="p-2.5 rounded-lg bg-slate-800/60 flex justify-between items-center">
+              <div>
+                <p class="font-bold text-white font-sans">1. Sliced Mock / Brine Abalone</p>
+                <p class="text-[10px] text-slate-400">Wholesale: $4.90/100g vs $2.98 scale</p>
+              </div>
+              <span class="px-2 py-1 rounded bg-emerald-900/80 text-emerald-300 font-bold">1.57x Recovery</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-800/60 flex justify-between items-center">
+              <div>
+                <p class="font-bold text-white font-sans">2. Baby Octopus (Tako)</p>
+                <p class="text-[10px] text-slate-400">Wholesale: $3.60/100g vs $2.98 scale</p>
+              </div>
+              <span class="px-2 py-1 rounded bg-emerald-900/80 text-emerald-300 font-bold">1.10x Recovery</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-800/60 flex justify-between items-center">
+              <div>
+                <p class="font-bold text-white font-sans">3. Iberico Pork Collar Shabu</p>
+                <p class="text-[10px] text-slate-400">Wholesale: $3.40/100g vs $2.98 scale</p>
+              </div>
+              <span class="px-2 py-1 rounded bg-emerald-900/80 text-emerald-300 font-bold">1.09x Recovery</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-800/60 flex justify-between items-center">
+              <div>
+                <p class="font-bold text-white font-sans">4. Squid & Prawn Paste (Ebiko Ball)</p>
+                <p class="text-[10px] text-slate-400">Wholesale: $2.85/100g vs $2.98 scale</p>
+              </div>
+              <span class="px-2 py-1 rounded bg-emerald-900/80 text-emerald-300 font-bold">0.94x Recovery</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-800/60 flex justify-between items-center">
+              <div>
+                <p class="font-bold text-white font-sans">5. Fresh Barramundi / Seabass</p>
+                <p class="text-[10px] text-slate-400">Wholesale: $2.30/100g vs $2.98 scale</p>
+              </div>
+              <span class="px-2 py-1 rounded bg-emerald-900/80 text-emerald-300 font-bold">0.70x Recovery</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 Water Traps -->
+        <div class="bg-slate-900 border border-rose-900/50 rounded-2xl p-5 shadow-xl">
+          <div class="flex items-center justify-between mb-3 border-b border-slate-800 pb-2">
+            <h3 class="text-sm font-bold text-rose-400 flex items-center gap-2">
+              <i class="fa-solid fa-triangle-exclamation"></i> 5 Pre-Soaked Water Traps
+            </h3>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-rose-950 text-rose-400 border border-rose-800 font-mono">Stall Makes +98%</span>
+          </div>
+          <div class="space-y-2.5 text-xs font-mono">
+            <div class="p-2.5 rounded-lg bg-slate-800/60 flex justify-between items-center">
+              <div>
+                <p class="font-bold text-white font-sans">1. Sweet Potato Noodles (Kuan Fen)</p>
+                <p class="text-[10px] text-slate-400">Water soak multiplier: 4.5x</p>
+              </div>
+              <span class="px-2 py-1 rounded bg-rose-900/80 text-rose-300 font-bold">+98.1% Stall Profit</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-800/60 flex justify-between items-center">
+              <div>
+                <p class="font-bold text-white font-sans">2. Black Wood Ear Fungus (Mu Er)</p>
+                <p class="text-[10px] text-slate-400">Water soak multiplier: 5.2x</p>
+              </div>
+              <span class="px-2 py-1 rounded bg-rose-900/80 text-rose-300 font-bold">+97.0% Stall Profit</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-800/60 flex justify-between items-center">
+              <div>
+                <p class="font-bold text-white font-sans">3. Lotus Root & Potato Slices</p>
+                <p class="text-[10px] text-slate-400">Dense water tubers ($0.18/100g cost)</p>
+              </div>
+              <span class="px-2 py-1 rounded bg-rose-900/80 text-rose-300 font-bold">+93.3% Stall Profit</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-800/60 flex justify-between items-center">
+              <div>
+                <p class="font-bold text-white font-sans">4. White Radish (Daikon)</p>
+                <p class="text-[10px] text-slate-400">93% water weight ($0.15/100g cost)</p>
+              </div>
+              <span class="px-2 py-1 rounded bg-rose-900/80 text-rose-300 font-bold">+95.0% Stall Profit</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-800/60 flex justify-between items-center">
+              <div>
+                <p class="font-bold text-white font-sans">5. Napa Cabbage / Wongombok</p>
+                <p class="text-[10px] text-slate-400">94% water weight ($0.16/100g cost)</p>
+              </div>
+              <span class="px-2 py-1 rounded bg-rose-900/80 text-rose-300 font-bold">+94.6% Stall Profit</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Insight 2 & 3: Mediterranean Longevity & Flavor Alchemy -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-2 text-cyan-400 font-bold text-sm mb-2">
+              <i class="fa-solid fa-heart-pulse"></i> Mediterranean Formula
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              For 2 pax within $30.00: <strong>30% lean seafood</strong> (seabass, prawns, squid), <strong>15% pressed Tau Kwa</strong>, <strong>23% broccoli & greens</strong>, <strong>18% mushrooms</strong>, and <strong>14% konjac</strong>.
+            </p>
+          </div>
+          <div class="mt-4 p-3 bg-cyan-950/40 border border-cyan-800/60 rounded-xl font-mono text-xs">
+            <p class="text-cyan-300 font-bold">Per Diner (2 Pax Sharing):</p>
+            <p class="text-white mt-1">🔥 352 kcal • 💪 46.3g Protein</p>
+            <p class="text-slate-300">🥦 7.2g Fiber • 🧈 &le;2.05g Sat Fat</p>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500 text-slate-950 font-bold mt-2 inline-block font-sans">Nutri-Grade A</span>
+          </div>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-2 text-amber-400 font-bold text-sm mb-2">
+              <i class="fa-solid fa-pepper-hot"></i> Capsaicin Fat Carrier
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Capsaicin is lipophilic. Commercial stalls dissolve it into <strong>beef tallow or palm olein</strong>. Ordering <em>Te La</em> dumps <strong>+20g to +40g oxidized saturated fat</strong> into your bowl.
+            </p>
+          </div>
+          <div class="mt-4 p-3 bg-amber-950/40 border border-amber-800/60 rounded-xl text-xs">
+            <p class="text-amber-300 font-bold">The 50Hz Sanshool Hack:</p>
+            <p class="text-slate-300 mt-1">
+              Pick <strong>Tomato (B11)</strong> or <strong>Wild Mushroom (B13)</strong>. At the bar, add 1 tsp <strong>Green Sichuan Pepper Oil</strong> (50Hz tingling) + 1 tbsp <strong>Chinkiang Black Vinegar</strong> (acid-salt cross-modal enhancer).
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-2 text-rose-400 font-bold text-sm mb-2">
+              <i class="fa-solid fa-shield-halved"></i> The Broth Ingestion Shield
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Full-pot soup contains $2,650mg-$3,200mg sodium. But aqueous broth is a <strong>cooking solute bath</strong>. Diners typically drink only 35%-40% of the liquid.
+            </p>
+          </div>
+          <div class="mt-4 p-3 bg-rose-950/40 border border-rose-800/60 rounded-xl text-xs">
+            <p class="text-rose-300 font-bold">The Golden Ingestion Rule:</p>
+            <p class="text-white mt-1"><em>"Eat the food, leave the broth."</em></p>
+            <p class="text-slate-300 mt-0.5">Leaving 65% of broth unconsumed slashes ingested sodium from 2,650mg down to <strong>490mg-600mg per diner</strong>!</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Insight 4 & 5: Membership Trap & Venue Routing -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        
+        <!-- Membership Trap Matrix -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
+          <div class="flex items-center justify-between mb-3 border-b border-slate-800 pb-2">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-credit-card text-rose-500"></i> The Stored-Value Membership Trap
+            </h3>
+            <span class="text-[10px] text-slate-400 font-mono">ACRA Hazard &lambda;=22%</span>
+          </div>
+          <div class="space-y-2 text-xs">
+            <p class="text-slate-300 leading-relaxed">
+              <strong>Never buy Plan C ($1,200) or Plan D ($1,500)</strong>: With 2,916 Singapore F&B closures in 2026, a 2-year horizon carries a <strong>34%-60% insolvency risk</strong>. Cardholders are unsecured creditors with <strong>0% legal recovery</strong>. Furthermore, 1-year expiry forfeits unspent balances!
+            </p>
+            <div class="p-3 bg-slate-800/80 rounded-xl font-mono text-[11px] space-y-1">
+              <div class="flex justify-between"><span class="text-slate-400">Restaurant Marginal COGS on $1,500:</span><span class="text-emerald-400 font-bold">$570.00</span></div>
+              <div class="flex justify-between"><span class="text-slate-400">Restaurant Day-1 Cash Pocket:</span><span class="text-cyan-400 font-bold">+$930.00 (62.0%)</span></div>
+              <div class="flex justify-between"><span class="text-slate-400">Optimal Strategy:</span><span class="text-amber-300 font-bold">Plan 0 (PAYG with 8% Dining Card)</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Venue Routing Matrix -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
+          <div class="flex items-center justify-between mb-3 border-b border-slate-800 pb-2">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-map-location-dot text-cyan-400"></i> Singapore Venue Routing Law
+            </h3>
+            <span class="text-[10px] text-slate-400 font-mono">Price Model Arbitrage</span>
+          </div>
+          <div class="space-y-2 text-xs">
+            <div class="p-2.5 rounded-lg bg-slate-800/60">
+              <p class="font-bold text-rose-400">1. Unified Weight ($2.98/100g) - Yang Guo Fu / Zhang Liang</p>
+              <p class="text-[11px] text-slate-300 mt-0.5">Order <strong>ONLY premium proteins and seafood</strong> (Mock abalone, tako, Iberico, prawns). The stall loses money on every scoop.</p>
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-800/60">
+              <p class="font-bold text-amber-400">2. Fixed Per-Portion ($1-$1.20) - Ri Ri Hong @ People's Park</p>
+              <p class="text-[11px] text-slate-300 mt-0.5">Order <strong>ALL heavy vegetables, lotus root, potatoes, and kuan fen</strong> here. $1.00 buys 180g (~$0.55/100g vs $2.98 at chains!).</p>
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-800/60">
+              <p class="font-bold text-emerald-400">3. Tiered Weight ($1.50 Veg / $2.80 Meat) - Koufu / Food Republic</p>
+              <p class="text-[11px] text-slate-300 mt-0.5">Best for standard 50/50 mixed bowls where vegetables are billed at a fair $1.50 rate.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
     <!-- TAB 1: KNAPSACK QUANT OPTIMIZER -->
     <!-- ========================================== -->
-    <section id="tab-optimizer" class="tab-content block space-y-6">
+    <section id="tab-optimizer" class="tab-content hidden space-y-6">
       
       <!-- Controls Card -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl grid grid-cols-1 md:grid-cols-3 gap-6">
