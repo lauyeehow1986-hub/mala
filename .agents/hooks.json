@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "agent": "antigravity-gemini-3.8-flash",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "solve_mala_knapsack_30sgd|query_hpb_sgfoodid_recipe_analyser",
+        "command": "python3 hooks/pre_tool_mala_guard.py",
+        "description": "Validates $30 SGD budget constraint, blocks ungrounded item IDs, and flags high water-soakage (>2.5x) or Nutri-Grade D sodium/saturated fat bases before execution."
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "solve_mala_knapsack_30sgd|evaluate_mala_membership_actuarial",
+        "command": "python3 hooks/post_solve_sheaf_audit.py",
+        "description": "Runs Cellular Sheaf Laplacian Cohomology check on the output bowl to certify zero water-tax leakage, verified Singapore URL grounding, and HPB sodium/saturated-fat compliance."
+      }
+    ]
+  }
+}
