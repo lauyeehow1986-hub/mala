@@ -4,7 +4,7 @@ FastMCP Server for Antigravity Gemini 3.8 Flash: `sg-mala-quant-mcp`
 Integrates:
 1. Singapore Supermarket & Wholesale Baseline Cost Engine (NTUC FairPrice, Sheng Siong, RedMart/Lazada, Shopee, PPWC, VWC, Song Fish, Fassler Gourmet)
 2. HPB SGFoodID Food Search (`https://pphtpc.hpb.gov.sg/web/sgfoodid/tools/food-search`) & Recipe Analyser (`https://pphtpc.hpb.gov.sg/web/sgfoodid/tools/recipe-analyser`)
-3. Live Data.gov.sg HIDS Partner List API (`d_cd7fbc766695f997396b96bf93820382`)
+3. Live Data.gov.sg HIDS Partner List API (`d_cd7fbc766695f997396b96bf93820382`: https://data.gov.sg/datasets/d_cd7fbc766695f997396b96bf93820382/view)
 4. Dual-Objective $30 Budget MILP / Knapsack Solver (Bang-for-Bucks vs Health & Longevity)
 5. Continuous-Time Actuarial Stored-Value Membership Engine ($55-for-$60 top-up under ACRA/SingStat F&B closure hazard rates)
 6. Cellular Sheaf Hypergraph Consistency Auditor & HPB Subsidy Policy Simulator
@@ -98,7 +98,7 @@ def query_datagov_hids_partners(
 ) -> Dict[str, Any]:
     """
     Queries the official Singapore Health Promotion Board (HPB) Healthier Ingredient Development Scheme (HIDS)
-    Partner List dataset on Data.gov.sg (`d_cd7fbc766695f997396b96bf93820382`) via CKAN OpenAPI,
+    Partner List dataset on Data.gov.sg (`d_cd7fbc766695f997396b96bf93820382`, https://data.gov.sg/datasets/d_cd7fbc766695f997396b96bf93820382/view) via CKAN OpenAPI,
     with deterministic local fallback to the verified 50-row HIDS table.
     """
     records = []

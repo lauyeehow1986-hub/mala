@@ -12,7 +12,7 @@ Quantitative dual-objective optimization, food-physics arbitrage, actuarial stor
 - User wants to compare ingredient baseline costs across NTUC FairPrice, Sheng Siong, RedMart/Lazada, Shopee Supermarket, Pasir Panjang Wholesale Centre (PPWC), Victoria Wholesale Centre (VWC), Song Fish, and Fassler Gourmet against restaurant pricing architectures (Unified Weight per 100g, Tiered Weight per 100g, or Fixed Per-Portion hawker stalls).
 - User wants to evaluate pre-weighing water soakage physics, ice-glaze weight traps, post-weighing oil absorption, or unlimited free-flow bar economics (steamed rice, soup refills, spiced peanuts, prawn crackers, sour plum drinks, ice jelly, and soft-serve ice cream).
 - User wants to evaluate whether a prepaid restaurant membership (such as S$60 credit for S$55 upfront cash) is a winning or losing deal given Singapore ACRA/SingStat F&B closure hazard rates, restaurant COGS liabilities, breakage, residual balance trapping, and forgone credit card rewards.
-- User wants to optimize a Mala bowl for health and longevity using the HPB SGFoodID Recipe Analyser (`https://pphtpc.hpb.gov.sg/web/sgfoodid/tools/recipe-analyser`), SGFoodID Food Search (`https://pphtpc.hpb.gov.sg/web/sgfoodid/tools/food-search`), and Data.gov.sg HIDS Partner List (`d_cd7fbc766695f997396b96bf93820382`), or design HPB health policy subsidies across dry and soup Mala variations.
+- User wants to optimize a Mala bowl for health and longevity using the HPB SGFoodID Recipe Analyser (`https://pphtpc.hpb.gov.sg/web/sgfoodid/tools/recipe-analyser`), SGFoodID Food Search (`https://pphtpc.hpb.gov.sg/web/sgfoodid/tools/food-search`), and Data.gov.sg HIDS Partner List ([`d_cd7fbc766695f997396b96bf93820382`](https://data.gov.sg/datasets/d_cd7fbc766695f997396b96bf93820382/view)), or design HPB health policy subsidies across dry and soup Mala variations.
 
 ## Core Mathematical & Graph Engineering Architecture
 
@@ -41,7 +41,7 @@ Quantitative dual-objective optimization, food-physics arbitrage, actuarial stor
 1. **Query Singapore Supermarket/Wholesale Baselines & HIDS Partners**
 
    - Run `fetch_sg_supermarket_wholesale_prices` from `scripts/sg_mala_quant_mcp.py` to load the 96-item catalog with verified NTUC FairPrice, Sheng Siong, RedMart, Shopee, PPWC, VWC, Song Fish, and Fassler Gourmet baseline prices.
-   - Run `query_datagov_hids_partners` to query Data.gov.sg resource `d_cd7fbc766695f997396b96bf93820382` for HIDS-accredited healthier oils, wholegrain rice/noodles, and lower-sodium sauces/K-Salt.
+   - Run `query_datagov_hids_partners` to query Data.gov.sg resource [`d_cd7fbc766695f997396b96bf93820382`](https://data.gov.sg/datasets/d_cd7fbc766695f997396b96bf93820382/view) for HIDS-accredited healthier oils, wholegrain rice/noodles, and lower-sodium sauces/K-Salt.
 
 2. **Solve the $30 Knapsack & Verify via SGFoodID Recipe Analyser**
 

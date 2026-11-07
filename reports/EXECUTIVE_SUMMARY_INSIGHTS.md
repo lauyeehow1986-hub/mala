@@ -141,7 +141,7 @@ How to build a **Grade A Nutri-Grade, Healthier Dining Programme (HDP)** complia
 ```
 
 ### How Public Health & Hawker Businesses Win Together
-- **Zero Cost Friction**: HPB co-funds $80\%$ of the price gap between palm olein and high-smoke-point canola/sunflower oil via HIDS (`d_cd7fbc766695f997396b96bf93820382`), delivering healthier oil at net parity.
+- **Zero Cost Friction**: HPB co-funds $80\%$ of the price gap between palm olein and high-smoke-point canola/sunflower oil via HIDS ([Data.gov.sg `d_cd7fbc766695f997396b96bf93820382`](https://data.gov.sg/datasets/d_cd7fbc766695f997396b96bf93820382/view)), delivering healthier oil at net parity.
 - **Population Clinical Outcomes**: Saturated fat consumption drops by $75\%$; sodium intake drops by $65\%$; population systolic blood pressure falls by **$4.2\text{--}6.8\text{ mmHg}$**.
 - **Stall Margin Expansion**: Pushing healthier pressed Tau Kwa (cost $\$0.55/100\text{g}$) and King Oyster mushrooms (cost $\$0.65/100\text{g}$) at $\$2.98/100\text{g}$ scales yields **$+78\%\text{--}+81\%$ gross profit margin** for the stall, compared to thin margins ($10\%\text{--}30\%$) on red meat and seafood.
 

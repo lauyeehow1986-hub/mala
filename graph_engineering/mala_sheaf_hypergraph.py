@@ -7,7 +7,7 @@ Connects 6 Node Types:
   3. SupplierBaselineNode (NTUC FairPrice, Sheng Siong, RedMart/Lazada, Shopee, PPWC, VWC, Song Fish, Fassler)
   4. PhysicsHydrationNode (Pre-weighing water soakage gamma_wet, Ice glaze, Post-weighing oil absorption alpha_oil)
   5. BrothBaseNode (14 Dry Stir-Fry, Dry Toss & Soup Malatang bases)
-  6. HPBPolicySubsidyNode (HIDS d_cd7fbc766695f997396b96bf93820382 oils, wholegrains, K-Salt & reduced-sodium sauces)
+  6. HPBPolicySubsidyNode (HIDS d_cd7fbc766695f997396b96bf93820382: https://data.gov.sg/datasets/d_cd7fbc766695f997396b96bf93820382/view oils, wholegrains, K-Salt & reduced-sodium sauces)
 
 Computes the Sheaf Cohomology / Global Section Discrepancy:
   L_F (x) = sum_{e in E} (F_{v <- e} x_v - F_{u <- e} x_u)^2
