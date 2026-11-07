@@ -85,14 +85,17 @@
         <button onclick="switchTab('tab-broths')" id="btn-broths" class="tab-btn px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap transition">
           <i class="fa-solid fa-bowl-food"></i> 2. 14 Bases & Formats
         </button>
+        <button onclick="switchTab('tab-mediterranean')" id="btn-mediterranean" class="tab-btn px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap transition">
+          <i class="fa-solid fa-heart-pulse"></i> 3. Mediterranean Blueprint
+        </button>
         <button onclick="switchTab('tab-actuarial')" id="btn-actuarial" class="tab-btn px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap transition">
-          <i class="fa-solid fa-credit-card"></i> 3. Actuarial Memberships
+          <i class="fa-solid fa-credit-card"></i> 4. Actuarial Memberships
         </button>
         <button onclick="switchTab('tab-policy')" id="btn-policy" class="tab-btn px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap transition">
-          <i class="fa-solid fa-hand-holding-heart"></i> 4. HPB HIDS Policy
+          <i class="fa-solid fa-hand-holding-heart"></i> 5. HPB HIDS Policy
         </button>
         <button onclick="switchTab('tab-catalog')" id="btn-catalog" class="tab-btn px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap transition">
-          <i class="fa-solid fa-database"></i> 5. 96-Item Catalog
+          <i class="fa-solid fa-database"></i> 6. 96-Item Catalog
         </button>
       </nav>
     </div>
@@ -248,6 +251,9 @@
             <p class="text-white mt-1">🔥 <strong>334 kcal</strong> • 💪 <strong>46.3g Protein</strong></p>
             <p class="text-slate-300">🥦 <strong>6.9g Fiber</strong> • 🧈 <strong>1.81g Sat Fat</strong></p>
             <p class="text-emerald-400 mt-1 text-[11px]">🧂 <strong>490mg Ingested Sodium</strong> (Only 24.5% RDA)</p>
+            <button onclick="switchTab('tab-mediterranean')" class="mt-2 text-[11px] text-cyan-400 hover:text-cyan-300 font-sans font-bold flex items-center gap-1.5 transition cursor-pointer">
+              <span>View Full 1,006g Basket</span> <i class="fa-solid fa-arrow-right text-[9px]"></i>
+            </button>
           </div>
         </div>
 
@@ -552,7 +558,466 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- TAB 3: ACTUARIAL MEMBERSHIP CALCULATOR -->
+    <!-- TAB 3: MEDITERRANEAN LONGEVITY BLUEPRINT -->
+    <!-- ========================================== -->
+    <section id="tab-mediterranean" class="tab-content hidden space-y-6">
+      
+      <!-- Blueprint Banner -->
+      <div class="bg-gradient-to-r from-teal-950/60 via-slate-900 to-emerald-950/60 border border-emerald-800/60 rounded-2xl p-6 shadow-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <div class="flex items-center gap-2 text-emerald-400 font-bold text-xs uppercase tracking-wider mb-1">
+            <i class="fa-solid fa-heart-pulse"></i> Clinical Optimization Blueprint (Report #2 Companion)
+          </div>
+          <h2 class="text-2xl font-extrabold text-white">
+            Mediterranean Diet × HPB My Healthy Plate Mala Formula
+          </h2>
+          <p class="text-xs text-slate-300 mt-1 max-w-3xl leading-relaxed">
+            The mathematically optimized <strong>1,006.7g basket</strong> for 2 diners within a strict <strong>$30.00 SGD budget ($15.00/pax)</strong> under unified weight scales ($2.98/100g). Balances marine Omega-3 EPA/DHA, non-fried soy isoflavones, high-sulforaphane cruciferous greens, fungal beta-glucans, and zero-glycemic prebiotic konjac.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-2.5 shrink-0">
+          <button onclick="loadMediterraneanPreset()" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-xs font-bold text-white shadow-lg shadow-emerald-950/40 flex items-center gap-2 transition cursor-pointer">
+            <i class="fa-solid fa-sliders"></i> Test in Broth Simulator
+          </button>
+          <a href="https://github.com/lauyeehow1986-hub/mala/blob/main/reports/mediterranean_hpb_optimal_bowl_analysis.md" target="_blank" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 border border-slate-700 flex items-center gap-2 transition">
+            <i class="fa-solid fa-book-medical text-cyan-400"></i> Full Report Markdown
+          </a>
+        </div>
+      </div>
+
+      <!-- 5 Golden Ratio Dietary Pillars -->
+      <div>
+        <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+          <i class="fa-solid fa-chart-pie text-cyan-400"></i> The 1,000g Golden Ratio Dietary Pillars (500g/Pax)
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+          
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-xs font-bold text-cyan-400">🐟 30% Marine Seafood</span>
+                <span class="text-[10px] font-mono font-bold text-slate-400">300g</span>
+              </div>
+              <p class="text-xs font-semibold text-white">Barramundi, Prawns, Squid</p>
+              <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">
+                Dense marine Omega-3 EPA/DHA, astaxanthin (arterial endothelium protection), and taurine. Near-zero saturated fat.
+              </p>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-800/80 text-[10px] font-mono text-cyan-300 flex justify-between">
+              <span>Spend: $8.94</span>
+              <span>Protein: 55.8g</span>
+            </div>
+          </div>
+
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-xs font-bold text-emerald-400">🌱 15% Soy Phyto-Protein</span>
+                <span class="text-[10px] font-mono font-bold text-slate-400">150g</span>
+              </div>
+              <p class="text-xs font-semibold text-white">Pressed Firm Tau Kwa</p>
+              <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">
+                Unfried plant isoflavones & cardioprotective phytosterols. Lowers circulating LDL-C with zero oxidized lipid risk.
+              </p>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-800/80 text-[10px] font-mono text-emerald-300 flex justify-between">
+              <span>Spend: $4.47</span>
+              <span>Protein: 23.7g</span>
+            </div>
+          </div>
+
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-xs font-bold text-green-400">🥦 23% Cruciferous & Greens</span>
+                <span class="text-[10px] font-mono font-bold text-slate-400">230g</span>
+              </div>
+              <p class="text-xs font-semibold text-white">Broccoli & Xiao Bai Cai</p>
+              <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">
+                Glucoraphanin & active sulforaphane for phase-II liver detox. High bioavailable potassium to blunt sodium vascular tension.
+              </p>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-800/80 text-[10px] font-mono text-green-300 flex justify-between">
+              <span>Spend: $6.85</span>
+              <span>Fiber: 4.4g</span>
+            </div>
+          </div>
+
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-xs font-bold text-amber-400">🍄 18% Bioactive Fungi</span>
+                <span class="text-[10px] font-mono font-bold text-slate-400">177g</span>
+              </div>
+              <p class="text-xs font-semibold text-white">King Oyster & Black Wood Ear</p>
+              <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">
+                Ergothioneine antioxidant + medicinal fungal &beta;-glucans and guanylate umami. Feeds gut microbiome with zero sugar.
+              </p>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-800/80 text-[10px] font-mono text-amber-300 flex justify-between">
+              <span>Spend: $5.27</span>
+              <span>Fiber: 8.8g</span>
+            </div>
+          </div>
+
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-xs font-bold text-purple-400">🍜 14% Slow Carbs & Kelp</span>
+                <span class="text-[10px] font-mono font-bold text-slate-400">150g</span>
+              </div>
+              <p class="text-xs font-semibold text-white">Konjac Knots, Kelp & Garlic</p>
+              <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">
+                Zero-glycemic glucomannan for gastric fullness, seaweed alginate, and raw allicin for natural nitric oxide arterial dilation.
+              </p>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-800/80 text-[10px] font-mono text-purple-300 flex justify-between">
+              <span>Spend: $4.47</span>
+              <span>Kcal: &lt;50 kcal</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 10-Item Shopping Basket Table -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 mb-4">
+          <div>
+            <h3 class="text-base font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-basket-shopping text-rose-500"></i> The Exact 10-Item Counter Shopping Basket
+            </h3>
+            <p class="text-xs text-slate-400">Weigh raw at any unified-weight counter ($2.98/100g) such as Yang Guo Fu, Zhang Liang, Gong Yuan, or A Hot Hideout.</p>
+          </div>
+          <span class="text-xs font-mono font-bold px-3 py-1 rounded-lg bg-emerald-950 text-emerald-300 border border-emerald-800 self-start sm:self-auto">
+            1,006.7g Total • $30.00 Budget
+          </span>
+        </div>
+
+        <div class="overflow-x-auto custom-scrollbar">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-800/80 text-slate-300 uppercase font-mono text-[11px]">
+              <tr>
+                <th class="py-2.5 px-3">Category</th>
+                <th class="py-2.5 px-3">Ingredient Name</th>
+                <th class="py-2.5 px-3 text-right">Scale Weight</th>
+                <th class="py-2.5 px-3 text-right">Cost ($2.98/100g)</th>
+                <th class="py-2.5 px-3 text-right">Protein</th>
+                <th class="py-2.5 px-3 text-right">Fiber</th>
+                <th class="py-2.5 px-3 text-right">Sat Fat</th>
+                <th class="py-2.5 px-3 text-right">Sodium</th>
+                <th class="py-2.5 px-3">Clinical Longevity Mechanism</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800 font-mono">
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-2 px-3 text-cyan-400 font-sans font-semibold">Marine Seafood</td>
+                <td class="py-2 px-3 font-sans font-bold text-white">Barramundi / Seabass Fillet <span class="text-slate-400 font-normal">(金目鲈/盲槽)</span></td>
+                <td class="py-2 px-3 text-right">150.0g</td>
+                <td class="py-2 px-3 text-right">$4.47</td>
+                <td class="py-2 px-3 text-right text-emerald-400">28.8g</td>
+                <td class="py-2 px-3 text-right text-slate-400">0.0g</td>
+                <td class="py-2 px-3 text-right text-slate-300">0.98g</td>
+                <td class="py-2 px-3 text-right text-slate-300">87mg</td>
+                <td class="py-2 px-3 font-sans text-slate-300 text-[11px]">Marine Omega-3 EPA/DHA; lowers triglyceride and arterial inflammation.</td>
+              </tr>
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-2 px-3 text-cyan-400 font-sans font-semibold">Marine Seafood</td>
+                <td class="py-2 px-3 font-sans font-bold text-white">Deshelled Vannamei Prawns <span class="text-slate-400 font-normal">(鲜虾仁)</span></td>
+                <td class="py-2 px-3 text-right">80.0g</td>
+                <td class="py-2 px-3 text-right">$2.38</td>
+                <td class="py-2 px-3 text-right text-emerald-400">16.1g</td>
+                <td class="py-2 px-3 text-right text-slate-400">0.0g</td>
+                <td class="py-2 px-3 text-right text-slate-300">0.20g</td>
+                <td class="py-2 px-3 text-right text-slate-300">132mg</td>
+                <td class="py-2 px-3 font-sans text-slate-300 text-[11px]">Astaxanthin antioxidant shields cells; zero saturated fat.</td>
+              </tr>
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-2 px-3 text-cyan-400 font-sans font-semibold">Marine Seafood</td>
+                <td class="py-2 px-3 font-sans font-bold text-white">Squid Flower Cut / Sotong <span class="text-slate-400 font-normal">(鱿鱼花)</span></td>
+                <td class="py-2 px-3 text-right">70.0g</td>
+                <td class="py-2 px-3 text-right">$2.09</td>
+                <td class="py-2 px-3 text-right text-emerald-400">10.9g</td>
+                <td class="py-2 px-3 text-right text-slate-400">0.0g</td>
+                <td class="py-2 px-3 text-right text-slate-300">0.25g</td>
+                <td class="py-2 px-3 text-right text-slate-300">31mg</td>
+                <td class="py-2 px-3 font-sans text-slate-300 text-[11px]">Taurine & copper density; promotes hepatic bile acid synthesis.</td>
+              </tr>
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-2 px-3 text-emerald-400 font-sans font-semibold">Soy & Legume</td>
+                <td class="py-2 px-3 font-sans font-bold text-white">Tau Kwa (Firm Pressed Tofu) <span class="text-slate-400 font-normal">(豆干)</span></td>
+                <td class="py-2 px-3 text-right">150.0g</td>
+                <td class="py-2 px-3 text-right">$4.47</td>
+                <td class="py-2 px-3 text-right text-emerald-400">23.7g</td>
+                <td class="py-2 px-3 text-right text-cyan-400">1.8g</td>
+                <td class="py-2 px-3 text-right text-slate-300">1.95g</td>
+                <td class="py-2 px-3 text-right text-slate-300">21mg</td>
+                <td class="py-2 px-3 font-sans text-slate-300 text-[11px]">Non-fried plant isoflavones & phytosterols; blunts intestinal cholesterol uptake.</td>
+              </tr>
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-2 px-3 text-green-400 font-sans font-semibold">Cruciferous</td>
+                <td class="py-2 px-3 font-sans font-bold text-white">Fresh Broccoli Florets <span class="text-slate-400 font-normal">(西蓝花)</span></td>
+                <td class="py-2 px-3 text-right">130.0g</td>
+                <td class="py-2 px-3 text-right">$3.87</td>
+                <td class="py-2 px-3 text-right text-emerald-400">3.6g</td>
+                <td class="py-2 px-3 text-right text-cyan-400">3.4g</td>
+                <td class="py-2 px-3 text-right text-slate-300">0.05g</td>
+                <td class="py-2 px-3 text-right text-slate-300">43mg</td>
+                <td class="py-2 px-3 font-sans text-slate-300 text-[11px]">Glucoraphanin & active sulforaphane; upregulates phase-II antioxidant enzymes.</td>
+              </tr>
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-2 px-3 text-green-400 font-sans font-semibold">Leafy Greens</td>
+                <td class="py-2 px-3 font-sans font-bold text-white">Xiao Bai Cai (Bok Choy) <span class="text-slate-400 font-normal">(小白菜)</span></td>
+                <td class="py-2 px-3 text-right">100.0g</td>
+                <td class="py-2 px-3 text-right">$2.98</td>
+                <td class="py-2 px-3 text-right text-emerald-400">1.5g</td>
+                <td class="py-2 px-3 text-right text-cyan-400">1.0g</td>
+                <td class="py-2 px-3 text-right text-slate-300">0.03g</td>
+                <td class="py-2 px-3 text-right text-slate-300">65mg</td>
+                <td class="py-2 px-3 font-sans text-slate-300 text-[11px]">High bioavailable potassium counterbalances dietary sodium; rich in folate.</td>
+              </tr>
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-2 px-3 text-amber-400 font-sans font-semibold">Bioactive Fungi</td>
+                <td class="py-2 px-3 font-sans font-bold text-white">King Oyster Mushroom <span class="text-slate-400 font-normal">(杏鲍菇)</span></td>
+                <td class="py-2 px-3 text-right">100.0g</td>
+                <td class="py-2 px-3 text-right">$2.98</td>
+                <td class="py-2 px-3 text-right text-emerald-400">3.3g</td>
+                <td class="py-2 px-3 text-right text-cyan-400">3.4g</td>
+                <td class="py-2 px-3 text-right text-slate-300">0.06g</td>
+                <td class="py-2 px-3 text-right text-slate-300">9mg</td>
+                <td class="py-2 px-3 font-sans text-slate-300 text-[11px]">Ergothioneine & beta-glucans; provides savory nucleotide umami without MSG.</td>
+              </tr>
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-2 px-3 text-amber-400 font-sans font-semibold">Medicinal Fungi</td>
+                <td class="py-2 px-3 font-sans font-bold text-white">Black Wood Ear (Mu Er) <span class="text-slate-400 font-normal">(黑木耳)</span></td>
+                <td class="py-2 px-3 text-right">76.7g</td>
+                <td class="py-2 px-3 text-right">$2.29</td>
+                <td class="py-2 px-3 text-right text-emerald-400">0.8g</td>
+                <td class="py-2 px-3 text-right text-cyan-400">5.4g</td>
+                <td class="py-2 px-3 text-right text-slate-300">0.02g</td>
+                <td class="py-2 px-3 text-right text-slate-300">6mg</td>
+                <td class="py-2 px-3 font-sans text-slate-300 text-[11px]">Soluble polysaccharide mucilage; feeds Akkermansia muciniphila gut microbes.</td>
+              </tr>
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-2 px-3 text-purple-400 font-sans font-semibold">Slow Starch</td>
+                <td class="py-2 px-3 font-sans font-bold text-white">Konjac Shirataki Knots <span class="text-slate-400 font-normal">(魔芋丝结)</span></td>
+                <td class="py-2 px-3 text-right">50.0g</td>
+                <td class="py-2 px-3 text-right">$1.49</td>
+                <td class="py-2 px-3 text-right text-slate-400">0.1g</td>
+                <td class="py-2 px-3 text-right text-cyan-400">1.4g</td>
+                <td class="py-2 px-3 text-right text-slate-300">0.01g</td>
+                <td class="py-2 px-3 text-right text-slate-300">4mg</td>
+                <td class="py-2 px-3 font-sans text-slate-300 text-[11px]">Zero-glycemic glucomannan; swells 50x in water, delaying gastric emptying.</td>
+              </tr>
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-2 px-3 text-purple-400 font-sans font-semibold">Sea Vegetable</td>
+                <td class="py-2 px-3 font-sans font-bold text-white">Kelp Knots (Hai Dai) <span class="text-slate-400 font-normal">(海带结)</span></td>
+                <td class="py-2 px-3 text-right">100.0g</td>
+                <td class="py-2 px-3 text-right">$2.98</td>
+                <td class="py-2 px-3 text-right text-emerald-400">1.2g</td>
+                <td class="py-2 px-3 text-right text-cyan-400">2.8g</td>
+                <td class="py-2 px-3 text-right text-slate-300">0.05g</td>
+                <td class="py-2 px-3 text-right text-slate-300">120mg</td>
+                <td class="py-2 px-3 font-sans text-slate-300 text-[11px]">Alginate soluble fiber & trace bioavailable iodine; supports thyroid homeostasis.</td>
+              </tr>
+            </tbody>
+            <tfoot class="bg-slate-800/90 font-mono font-bold text-xs border-t-2 border-slate-700">
+              <tr>
+                <td colspan="2" class="py-3 px-3 text-white font-sans">WHOLE POT TOTAL (Raw Basket)</td>
+                <td class="py-3 px-3 text-right text-rose-400">1,006.7g</td>
+                <td class="py-3 px-3 text-right text-rose-400">$30.00</td>
+                <td class="py-3 px-3 text-right text-emerald-400">90.0g</td>
+                <td class="py-3 px-3 text-right text-cyan-400">19.2g</td>
+                <td class="py-3 px-3 text-right text-slate-200">3.65g</td>
+                <td class="py-3 px-3 text-right text-slate-200">518mg</td>
+                <td class="py-3 px-3 font-sans text-emerald-400 font-semibold">✅ 100% Passes All HPB HDP Thresholds</td>
+              </tr>
+              <tr class="bg-slate-800/50 text-cyan-300 font-sans">
+                <td colspan="2" class="py-2 px-3 font-bold">PER DINER (2 Pax Sharing - $15.00/pax)</td>
+                <td class="py-2 px-3 text-right font-mono font-bold">503.4g</td>
+                <td class="py-2 px-3 text-right font-mono font-bold">$15.00</td>
+                <td class="py-2 px-3 text-right font-mono font-bold">45.0g</td>
+                <td class="py-2 px-3 text-right font-mono font-bold">9.6g</td>
+                <td class="py-2 px-3 text-right font-mono font-bold">1.83g</td>
+                <td class="py-2 px-3 text-right font-mono font-bold">259mg</td>
+                <td class="py-2 px-3 text-[11px] font-normal">Exceeds HPB 35g protein target; &gt;130% daily fiber quota!</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- Broth Base Decision Engine -->
+      <div>
+        <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+          <i class="fa-solid fa-scale-balanced text-amber-400"></i> Broth Base Decision Engine: Cleanest vs. Best Duo
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          
+          <!-- Card 1: B13 Cleanest -->
+          <div class="bg-gradient-to-b from-slate-900 to-emerald-950/30 border-2 border-emerald-600/70 rounded-2xl p-5 shadow-xl flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="px-2.5 py-1 rounded bg-emerald-500 text-slate-950 font-bold text-xs uppercase tracking-wider font-sans">
+                  🏆 Cleanest Champion
+                </span>
+                <span class="text-xs font-mono font-bold text-emerald-400">Base ID: B13</span>
+              </div>
+              <h4 class="text-lg font-bold text-white mb-1">
+                Soup Malatang — Non-Spicy Wild Mushroom & Herbal Broth
+              </h4>
+              <p class="text-xs text-slate-400 font-mono mb-3">菌菇滋补清汤 • 40% Ingestion Fraction</p>
+              
+              <div class="grid grid-cols-3 gap-2 p-3 bg-slate-950/60 rounded-xl font-mono text-center mb-3">
+                <div>
+                  <span class="text-[10px] text-slate-400 uppercase">Calories</span>
+                  <p class="text-sm font-bold text-white">334 kcal</p>
+                </div>
+                <div>
+                  <span class="text-[10px] text-slate-400 uppercase">Sat Fat</span>
+                  <p class="text-sm font-bold text-emerald-400">1.81g</p>
+                </div>
+                <div>
+                  <span class="text-[10px] text-slate-400 uppercase">Sodium</span>
+                  <p class="text-sm font-bold text-emerald-400">490 mg</p>
+                </div>
+              </div>
+
+              <div class="space-y-1.5 text-xs text-slate-300 leading-relaxed">
+                <p>• <strong>Absolute Lowest Sodium</strong>: Only 490mg ingested sodium (24.5% of daily RDA) — a massive 75% drop compared to regular hawker food.</p>
+                <p>• <strong>Zero Added Sugar</strong>: Natural dried shiitake and cordyceps mushroom water with zero sucrose or corn syrup.</p>
+                <p>• <strong>Medicinal Bioactives</strong>: Rich in fungal &beta;-glucans that nourish Akkermansia gut bacteria and ergothioneine cytoprotective antioxidants.</p>
+              </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-emerald-900/50 flex justify-between items-center">
+              <span class="text-xs text-emerald-300 font-medium">Best for: Longevity, hypertension, fat cutting</span>
+              <button onclick="selectBaseAndSimulate('B13', 0.40)" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-xs font-bold text-white transition cursor-pointer">
+                Select B13
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 2: B11 Best Duo -->
+          <div class="bg-gradient-to-b from-slate-900 to-rose-950/30 border border-rose-800/60 rounded-2xl p-5 shadow-xl flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="px-2.5 py-1 rounded bg-rose-600 text-white font-bold text-xs uppercase tracking-wider font-sans">
+                  🤝 Best Duo (Flavor Compromise)
+                </span>
+                <span class="text-xs font-mono font-bold text-rose-400">Base ID: B11</span>
+              </div>
+              <h4 class="text-lg font-bold text-white mb-1">
+                Soup Malatang — Non-Spicy Rich Tomato & Pepper Broth
+              </h4>
+              <p class="text-xs text-slate-400 font-mono mb-3">浓郁番茄汤 • 45% Ingestion Fraction</p>
+              
+              <div class="grid grid-cols-3 gap-2 p-3 bg-slate-950/60 rounded-xl font-mono text-center mb-3">
+                <div>
+                  <span class="text-[10px] text-slate-400 uppercase">Calories</span>
+                  <p class="text-sm font-bold text-white">352 kcal</p>
+                </div>
+                <div>
+                  <span class="text-[10px] text-slate-400 uppercase">Sat Fat</span>
+                  <p class="text-sm font-bold text-emerald-400">2.05g</p>
+                </div>
+                <div>
+                  <span class="text-[10px] text-slate-400 uppercase">Sodium</span>
+                  <p class="text-sm font-bold text-cyan-400">600 mg</p>
+                </div>
+              </div>
+
+              <div class="space-y-1.5 text-xs text-slate-300 leading-relaxed">
+                <p>• <strong>Palatable Hotpot Sensation</strong>: Simmered tomato reduction creates a thick, hearty broth through natural plant pectins and glutamates without needing beef tallow.</p>
+                <p>• <strong>Active Lycopene</strong>: Cooked tomato releases fat-soluble lycopene, supporting arterial flexibility and blunting LDL oxidation.</p>
+                <p>• <strong>Happy Partner Guarantee</strong>: Satisfies diners craving bold, tangy flavor while remaining strictly within Nutri-Grade A limits.</p>
+              </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-rose-900/50 flex justify-between items-center">
+              <span class="text-xs text-rose-300 font-medium">Best for: Couples sharing, craving hearty savory taste</span>
+              <button onclick="selectBaseAndSimulate('B11', 0.45)" class="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-xs font-bold text-white transition cursor-pointer">
+                Select B11
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Warning Callout on Dry Stir-Fry -->
+        <div class="mt-4 p-4 rounded-xl bg-amber-950/40 border border-amber-800/60 text-xs text-amber-200 leading-relaxed flex items-start gap-3">
+          <i class="fa-solid fa-triangle-exclamation text-amber-400 text-base mt-0.5 shrink-0"></i>
+          <div>
+            <strong>The Dry Stir-Fry (Xiang Guo) Lipid Trap Warning</strong>:
+            Commercial stalls cook Dry Mala Xiang Guo (Bases B01–B04) by coating all ingredients in <strong>beef tallow or palm olein</strong> to carry capsaicin. Ingestion fraction is <strong>100%</strong>. Ordering <em>Te La</em> dumps <strong>12.9g saturated fat per diner</strong> into your body. If you must order dry stir-fry, always request <strong>Base B05 (Shao You, Shao Yan, Wei La)</strong> to slash added lipid by 61%.
+          </div>
+        </div>
+      </div>
+
+      <!-- 30-Second Counter Ordering Script & Flavor Alchemy -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
+        <h3 class="text-base font-bold text-white flex items-center gap-2 mb-3">
+          <i class="fa-solid fa-utensils text-rose-500"></i> 3-Step Counter Ordering Script & Flavor Alchemy Protocol
+        </h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          
+          <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/60 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] font-mono uppercase font-bold text-rose-400">Step 1 • At The Weighing Counter</span>
+              <h4 class="text-sm font-bold text-white mt-1 mb-2">Speak the Health Shield Phrase</h4>
+              <p class="text-xs text-slate-300 leading-relaxed mb-3">
+                Tell the stall assistant to cook in soup malatang, select your botanical base, and explicitly request no sugar.
+              </p>
+              <div class="p-2.5 bg-slate-900/90 rounded-lg border border-slate-700 font-mono text-xs text-amber-300">
+                "清汤麻辣烫，菌菇滋补汤（或浓郁番茄汤），请不要加糖。"
+              </div>
+              <p class="text-[11px] text-slate-400 mt-1 italic">
+                (Qīngtāng málàtàng, jùngū zībǔ tāng / nóngyù fānqié tāng, qǐng bùyào jiā táng.)
+              </p>
+            </div>
+            <span class="text-[10px] text-emerald-400 font-semibold mt-3"><i class="fa-solid fa-check"></i> Prevents added sucrose traps</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/60 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] font-mono uppercase font-bold text-cyan-400">Step 2 • At The Sauce Bar</span>
+              <h4 class="text-sm font-bold text-white mt-1 mb-2">The 50Hz Sanshool Hack</h4>
+              <p class="text-xs text-slate-300 leading-relaxed mb-2">
+                Mix this sauce bowl to replicate authentic Sichuan tingling without saturated fat carriers:
+              </p>
+              <ul class="text-xs text-slate-300 space-y-1.5 font-mono">
+                <li>• <strong class="text-white">1 tsp Green Peppercorn Oil</strong> (50Hz lingual tingling, zero carbs)</li>
+                <li>• <strong class="text-white">1 tbsp Aged Chinkiang Vinegar</strong> (blunts glucose spikes 20-30%)</li>
+                <li>• <strong class="text-white">Minced Raw Garlic & Chili Padi</strong> (pure allicin & fat-free capsaicin)</li>
+              </ul>
+            </div>
+            <span class="text-[10px] text-cyan-400 font-semibold mt-3"><i class="fa-solid fa-check"></i> Near-zero calories; amplifies perceived saltiness</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/60 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] font-mono uppercase font-bold text-emerald-400">Step 3 • At The Table</span>
+              <h4 class="text-sm font-bold text-white mt-1 mb-2">The Golden Ingestion Rule</h4>
+              <p class="text-xs text-slate-300 leading-relaxed mb-3">
+                <em>"Eat all solid ingredients, but leave 60% to 70% of the liquid broth in the bowl."</em>
+              </p>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Because ingredients only absorb surface flavor in soup malatang (&phi; = 0.40), leaving the residual broth leaves behind over <strong>1,800mg of sodium</strong>!
+              </p>
+            </div>
+            <div class="mt-3 p-2 bg-emerald-950/50 border border-emerald-800/60 rounded-lg text-emerald-300 text-[11px] font-mono font-bold">
+              Ingested Sodium: 490mg (Passes HPB &le;1,000mg)
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 4: ACTUARIAL MEMBERSHIP CALCULATOR -->
     <!-- ========================================== -->
     <section id="tab-actuarial" class="tab-content hidden space-y-6">
       
@@ -651,7 +1116,7 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- TAB 4: HPB HIDS POLICY & WIN-WIN -->
+    <!-- TAB 5: HPB HIDS POLICY & WIN-WIN -->
     <!-- ========================================== -->
     <section id="tab-policy" class="tab-content hidden space-y-6">
       
@@ -752,7 +1217,7 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- TAB 5: 96-ITEM ARBITRAGE CATALOG -->
+    <!-- TAB 6: 96-ITEM ARBITRAGE CATALOG -->
     <!-- ========================================== -->
     <section id="tab-catalog" class="tab-content hidden space-y-4">
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl flex flex-col sm:flex-row justify-between items-center gap-3">
@@ -828,6 +1293,22 @@
         btn.classList.add('bg-rose-600', 'text-white');
         btn.classList.remove('text-slate-400');
       }
+    }
+
+    // Mediterranean Preset & Base Jump Helpers
+    function selectBaseAndSimulate(baseId, ingestFrac) {
+      switchTab('tab-broths');
+      const select = document.getElementById('input-base');
+      if (select) select.value = baseId;
+      const slider = document.getElementById('input-ingest-frac');
+      if (slider) slider.value = ingestFrac;
+      const diners = document.getElementById('input-diners');
+      if (diners) diners.value = 2;
+      renderNutrition();
+    }
+
+    function loadMediterraneanPreset() {
+      selectBaseAndSimulate('B13', 0.40);
     }
 
     // Knapsack Solver
