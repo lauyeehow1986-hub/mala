@@ -241,10 +241,13 @@
             </p>
           </div>
           <div class="mt-4 p-3 bg-cyan-950/40 border border-cyan-800/60 rounded-xl font-mono text-xs">
-            <p class="text-cyan-300 font-bold">Per Diner (2 Pax Sharing):</p>
-            <p class="text-white mt-1">🔥 352 kcal • 💪 46.3g Protein</p>
-            <p class="text-slate-300">🥦 7.2g Fiber • 🧈 &le;2.05g Sat Fat</p>
-            <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500 text-slate-950 font-bold mt-2 inline-block font-sans">Nutri-Grade A</span>
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-cyan-300 font-bold">Per Diner (B13 Wild Mushroom):</span>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500 text-slate-950 font-bold font-sans">Nutri-Grade A</span>
+            </div>
+            <p class="text-white mt-1">🔥 <strong>334 kcal</strong> • 💪 <strong>46.3g Protein</strong></p>
+            <p class="text-slate-300">🥦 <strong>6.9g Fiber</strong> • 🧈 <strong>1.81g Sat Fat</strong></p>
+            <p class="text-emerald-400 mt-1 text-[11px]">🧂 <strong>490mg Ingested Sodium</strong> (Only 24.5% RDA)</p>
           </div>
         </div>
 
@@ -457,9 +460,9 @@
         <div>
           <div class="flex justify-between items-center mb-2">
             <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Soup Ingestion Fraction</label>
-            <span id="ingest-frac-badge" class="text-xs font-bold text-rose-400">35% Consumed</span>
+            <span id="ingest-frac-badge" class="text-xs font-bold text-rose-400">40% Consumed</span>
           </div>
-          <input type="range" id="input-ingest-frac" min="0.1" max="1.0" step="0.05" value="0.35" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-rose-500">
+          <input type="range" id="input-ingest-frac" min="0.1" max="1.0" step="0.05" value="0.40" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-rose-500">
           <div class="flex justify-between text-xs text-slate-500 mt-1 font-mono">
             <span>10% (Sip)</span><span>35% (Typical)</span><span>100% (Dry/Chug)</span>
           </div>
@@ -480,7 +483,7 @@
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
           <div>
             <span class="text-xs text-slate-400 uppercase font-semibold">Calories Per Diner</span>
-            <p id="nutr-kcal" class="text-3xl font-extrabold text-white mt-1">352 kcal</p>
+            <p id="nutr-kcal" class="text-3xl font-extrabold text-white mt-1">334 kcal</p>
           </div>
           <div class="mt-4 flex gap-2">
             <span id="badge-500kcal" class="text-[10px] px-2 py-0.5 rounded font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800">HPB &le;500 kcal Pass</span>
@@ -496,7 +499,7 @@
               <span class="text-xs text-slate-400">protein</span>
             </div>
             <div class="flex items-baseline space-x-2 mt-0.5">
-              <span id="nutr-fiber" class="text-lg font-bold text-cyan-400">7.2g</span>
+              <span id="nutr-fiber" class="text-lg font-bold text-cyan-400">6.9g</span>
               <span class="text-xs text-slate-400">dietary fiber</span>
             </div>
           </div>
@@ -506,8 +509,8 @@
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
           <div>
             <span class="text-xs text-slate-400 uppercase font-semibold">Saturated Fat</span>
-            <p id="nutr-satfat" class="text-3xl font-extrabold text-amber-400 mt-1">2.05g</p>
-            <p id="nutr-totalfat" class="text-xs text-slate-400 mt-1">Total fat: 11.28g</p>
+            <p id="nutr-satfat" class="text-3xl font-extrabold text-emerald-400 mt-1">1.81g</p>
+            <p id="nutr-totalfat" class="text-xs text-slate-400 mt-1">Total fat: 10.4g</p>
           </div>
           <span id="badge-satfat" class="text-[10px] px-2 py-0.5 rounded font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800 mt-3 inline-block">
             Low SFA &le;10g Pass
@@ -517,11 +520,11 @@
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
           <div>
             <span class="text-xs text-slate-400 uppercase font-semibold">Ingested Sodium</span>
-            <p id="nutr-sodium" class="text-3xl font-extrabold text-rose-400 mt-1">600 mg</p>
-            <p id="nutr-sod-share" class="text-xs text-slate-400 mt-1">30.0% of 2,000mg Daily Limit</p>
+            <p id="nutr-sodium" class="text-3xl font-extrabold text-emerald-400 mt-1">490 mg</p>
+            <p id="nutr-sod-share" class="text-xs text-slate-400 mt-1">24.5% of 2,000mg Daily Limit</p>
           </div>
           <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden mt-3">
-            <div id="bar-sodium" class="bg-rose-500 h-full" style="width: 30%"></div>
+            <div id="bar-sodium" class="bg-emerald-500 h-full" style="width: 24.5%"></div>
           </div>
         </div>
 
@@ -957,7 +960,7 @@
         const opt = document.createElement('option');
         opt.value = b.base_id;
         opt.textContent = `[${b.base_id}] ${b.name_en} (${b.category})`;
-        if (b.base_id === 'B11') opt.selected = true;
+        if (b.base_id === 'B13') opt.selected = true;
         select.appendChild(opt);
       });
     }
@@ -971,13 +974,13 @@
 
       const base = BASES.find(b => b.base_id === baseId) || BASES[0];
 
-      // Simulated Mediterranean Basket raw ingredients
-      const rawProtein = 90.0;
-      const rawFiber = 19.2;
-      const rawSatFat = 3.65;
-      const rawSodium = 518.0;
-      const rawKcal = 550.0;
-      const rawFat = 18.0;
+      // Calibrated Mediterranean 1,000g Basket raw ingredients (Seabass, Prawns, Squid, Tau Kwa, Broccoli, Greens, Fungi, Konjac)
+      const rawProtein = 90.9;
+      const rawFiber = 13.1;
+      const rawSatFat = 3.38;
+      const rawSodium = 412.0;
+      const rawKcal = 630.0;
+      const rawFat = 17.5;
 
       const potKcal = rawKcal + (base.full_pot_kcal * ingestFrac);
       const potProtein = rawProtein + (base.full_pot_protein_g * ingestFrac);
@@ -1141,7 +1144,13 @@
     document.getElementById('input-objective').addEventListener('change', renderOptimizer);
     document.getElementById('input-pricing').addEventListener('change', renderOptimizer);
 
-    document.getElementById('input-base').addEventListener('change', renderNutrition);
+    document.getElementById('input-base').addEventListener('change', (e) => {
+      const b = BASES.find(x => x.base_id === e.target.value);
+      if (b && b.typical_ingestion_fraction) {
+        document.getElementById('input-ingest-frac').value = b.typical_ingestion_fraction;
+      }
+      renderNutrition();
+    });
     document.getElementById('input-ingest-frac').addEventListener('input', renderNutrition);
     document.getElementById('input-diners').addEventListener('change', renderNutrition);
 

@@ -69,6 +69,12 @@ How to build a **Grade A Nutri-Grade, Healthier Dining Programme (HDP)** complia
 - **Saturated Fat**: **$1.81\text{--}2.05\text{g}$** (Far below the HPB $\le 10\text{g}$ limit).
 - **Ingested Sodium**: **$490\text{--}600\text{mg}$** (Only $25\%\text{--}30\%$ of the $2,000\text{mg}$ daily allowance).
 
+> 🏆 **Featured Gold Standard (`B13` Non-Spicy Wild Mushroom & Herbal Broth)**:
+> - 🔥 **$334\text{ kcal}$** • 💪 **$46.3\text{g}$ Protein** • 🥦 **$6.9\text{g}$ Fiber** • 🧈 **$1.81\text{g}$ Sat Fat**
+> - 🧂 **$490\text{mg}$ Ingested Sodium** (Just $24.5\%$ of the $2,000\text{mg}$ daily limit — a $75\%$ drop vs hawker Mala).
+> - **Zero Added Sugar** • Medicinal fungal $\beta$-glucans & ergothioneine • **Certified Nutri-Grade A**.
+> *(If dining as a duo craving bolder richness, `B11` Rich Tomato delivers $352\text{ kcal}$ & $600\text{mg}$ sodium with active lycopene).*
+
 ---
 
 ## 3. Broth & Sensory Chemistry: The Flavor Alchemy Protocol
