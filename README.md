@@ -50,6 +50,8 @@ mala/
 ├── mcp_servers/
 │   └── sg_mala_quant_mcp.py                                     # FastMCP / MCPServer 2.x implementation
 ├── reports/
+│   ├── mediterranean_hpb_optimal_bowl_analysis.md               # Mediterranean Diet × HPB clinical & flavor simulation report
+│   ├── multi_quantum_bang_for_bucks_report.md                   # Multi-quantum ($10 to $30 SGD) knapsack arbitrage guide
 │   └── optimization_results_summary.json                        # Precomputed benchmark optimizations
 ├── skills/
 │   └── sg-mala-optimiser-engine/
