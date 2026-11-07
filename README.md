@@ -1,5 +1,11 @@
 # Singapore Mala Xiang Guo & Malatang Multi-Objective Quant Optimiser, Cellular Sheaf Hypergraph, Actuarial Membership Engine & HPB Health Policy Simulator
 
+[![GitHub Pages](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-rose?style=for-the-badge&logo=github)](https://lauyeehow1986-hub.github.io/mala/)
+[![Antigravity IDE](https://img.shields.io/badge/Antigravity%20IDE-Gemini%203.8%20Flash-blue?style=for-the-badge)](https://github.com/lauyeehow1986-hub/mala)
+[![HPB HIDS](https://img.shields.io/badge/Singapore%20HPB-HIDS%20Accredited-emerald?style=for-the-badge)](https://data.gov.sg/datasets/d_cd7fbc766695f997396b96bf93820382/view)
+
+🔗 **Live Interactive Web Dashboard**: [https://lauyeehow1986-hub.github.io/mala/](https://lauyeehow1986-hub.github.io/mala/)
+
 Quantitative dual-objective optimization, food-physics arbitrage, actuarial stored-value membership valuation, and public health policy simulation engine for Singapore Mala Xiang Guo and Malatang restaurants in **Antigravity IDE (Gemini 3.8 Flash)**.
 
 ---

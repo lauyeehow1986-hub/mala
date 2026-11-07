@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Singapore Mala Quant Optimiser & HPB Health Policy Simulator</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            mala: {
+              50: '#fff1f2',
+              100: '#ffe4e6',
+              500: '#f43f5e',
+              600: '#e11d48',
+              700: '#be123c',
+              800: '#9f1239',
+              900: '#881337',
+              950: '#4c0519',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    code, pre, .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #1e293b;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #475569;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <div class="flex items-center space-x-3">
+        <span class="text-2xl">🌶️</span>
+        <div>
+          <h1 class="text-lg font-bold bg-gradient-to-r from-red-500 via-rose-400 to-amber-300 bg-clip-text text-transparent">
+            SG Mala Quant & Health Engine
+          </h1>
+          <p class="text-xs text-slate-400 hidden sm:block">Operations Research • Cellular Sheaf • Actuarial • HPB HIDS Simulator</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-2">
+        <a href="https://github.com/lauyeehow1986-hub/mala" target="_blank" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 border border-slate-700 flex items-center gap-1.5 transition">
+          <i class="fa-brands fa-github"></i> GitHub Repo
+        </a>
+      </div>
+    </div>
+    
+    <!-- Tab Navigation Bar -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-800/80">
+      <nav class="flex space-x-2 overflow-x-auto py-2 custom-scrollbar text-sm font-medium">
+        <button onclick="switchTab('tab-optimizer')" id="btn-optimizer" class="tab-btn px-3.5 py-1.5 rounded-lg bg-rose-600 text-white flex items-center gap-2 whitespace-nowrap transition">
+          <i class="fa-solid fa-calculator"></i> 1. Knapsack Optimizer
+        </button>
+        <button onclick="switchTab('tab-broths')" id="btn-broths" class="tab-btn px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap transition">
+          <i class="fa-solid fa-bowl-food"></i> 2. 14 Bases & Cooking Formats
+        </button>
+        <button onclick="switchTab('tab-actuarial')" id="btn-actuarial" class="tab-btn px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap transition">
+          <i class="fa-solid fa-credit-card"></i> 3. Actuarial Memberships
+        </button>
+        <button onclick="switchTab('tab-policy')" id="btn-policy" class="tab-btn px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap transition">
+          <i class="fa-solid fa-hand-holding-heart"></i> 4. HPB HIDS Policy & Win-Win
+        </button>
+        <button onclick="switchTab('tab-catalog')" id="btn-catalog" class="tab-btn px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap transition">
+          <i class="fa-solid fa-database"></i> 5. 96-Item Arbitrage Catalog
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full">
+
+    <!-- ========================================== -->
+    <!-- TAB 1: KNAPSACK QUANT OPTIMIZER -->
+    <!-- ========================================== -->
+    <section id="tab-optimizer" class="tab-content block space-y-6">
+      
+      <!-- Controls Card -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Budget Quantum -->
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Budget Quantum</label>
+            <span id="budget-val-badge" class="text-base font-extrabold text-rose-400">$30.00 SGD</span>
+          </div>
+          <input type="range" id="input-budget" min="10" max="30" step="5" value="30" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-rose-500">
+          <div class="flex justify-between text-xs text-slate-500 mt-1 font-mono">
+            <span>$10</span><span>$15</span><span>$20</span><span>$25</span><span>$30</span>
+          </div>
+        </div>
+
+        <!-- Strategy / Objective -->
+        <div>
+          <label class="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-2">Optimization Objective</label>
+          <select id="input-objective" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-rose-500">
+            <option value="minimise_restaurant_margin">💥 Margin Crusher (Max Wholesale COGS)</option>
+            <option value="maximise_health">🥗 Mediterranean × HPB Clinical Health</option>
+            <option value="pareto_joint">⚖️ Pareto Joint (Value + Longevity)</option>
+          </select>
+        </div>
+
+        <!-- Pricing Model -->
+        <div>
+          <label class="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-2">Stall Pricing Model</label>
+          <select id="input-pricing" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-rose-500">
+            <option value="unified">Unified Weight ($2.98 / 100g) - Yang Guo Fu / Zhang Liang</option>
+            <option value="tiered">Tiered Weight ($1.50-$3.50 / 100g) - Koufu / Food Republic</option>
+            <option value="portion">Fixed Per-Portion ($1-$3 / heap) - Ri Ri Hong / Labula</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- Live KPI Badges -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-center">
+          <p class="text-xs text-slate-400 font-medium">Customer Spend</p>
+          <p id="kpi-spend" class="text-lg font-bold text-slate-100">$30.00</p>
+          <span class="text-[10px] text-slate-500">Exact Budget</span>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-center">
+          <p class="text-xs text-slate-400 font-medium">Raw Scale Weight</p>
+          <p id="kpi-weight" class="text-lg font-bold text-amber-400">1,006.7g</p>
+          <span class="text-[10px] text-slate-500">Scale Reading</span>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-center">
+          <p class="text-xs text-slate-400 font-medium">Wholesale COGS</p>
+          <p id="kpi-cogs" class="text-lg font-bold text-emerald-400">$31.55</p>
+          <span class="text-[10px] text-emerald-500 font-semibold">Extracted Value</span>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-center">
+          <p class="text-xs text-slate-400 font-medium">Retail Value (NTUC)</p>
+          <p id="kpi-retail" class="text-lg font-bold text-cyan-400">$47.88</p>
+          <span class="text-[10px] text-slate-500">Supermarket Equiv</span>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-center">
+          <p class="text-xs text-slate-400 font-medium">Stall Gross Margin</p>
+          <p id="kpi-margin" class="text-lg font-bold text-rose-400">-5.16%</p>
+          <span id="kpi-margin-sub" class="text-[10px] text-rose-400 font-semibold">Stall In The Red!</span>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-center">
+          <p class="text-xs text-slate-400 font-medium">Water-Tax Leakage</p>
+          <p id="kpi-watertax" class="text-lg font-bold text-blue-400">$1.64</p>
+          <span class="text-[10px] text-slate-500">Pre-Soaked Water</span>
+        </div>
+      </div>
+
+      <!-- Optimized Basket Table -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+        <div class="px-5 py-4 border-b border-slate-800 flex justify-between items-center">
+          <h3 class="text-sm font-bold text-slate-200 flex items-center gap-2">
+            <i class="fa-solid fa-basket-shopping text-rose-500"></i> Optimized Order Basket & Source Deep Links
+          </h3>
+          <span id="free-flow-badge" class="text-xs px-2.5 py-1 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 font-medium">
+            Includes Free-Flow Bar (+$1.93 COGS / +$6.63 Retail)
+          </span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-800/60 text-slate-400 uppercase tracking-wider text-[11px] font-semibold">
+              <tr>
+                <th class="py-3 px-4">Category</th>
+                <th class="py-3 px-4">Item Name</th>
+                <th class="py-3 px-4 text-right">Weight (g)</th>
+                <th class="py-3 px-4 text-right">Customer Spend</th>
+                <th class="py-3 px-4 text-right">Wholesale COGS</th>
+                <th class="py-3 px-4 text-right">Supermarket Retail</th>
+                <th class="py-3 px-4 text-center">Source Deep Link</th>
+              </tr>
+            </thead>
+            <tbody id="basket-table-body" class="divide-y divide-slate-800/60 font-mono">
+              <!-- Dynamically Populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 2: 14 BROTH BASES & COOKING FORMATS -->
+    <!-- ========================================== -->
+    <section id="tab-broths" class="tab-content hidden space-y-6">
+      
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div>
+          <label class="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-2">Base Broth / Sauce</label>
+          <select id="input-base" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-rose-500">
+            <!-- Dynamically Populated with B01 - B14 -->
+          </select>
+        </div>
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Soup Ingestion Fraction</label>
+            <span id="ingest-frac-badge" class="text-xs font-bold text-rose-400">35% Consumed</span>
+          </div>
+          <input type="range" id="input-ingest-frac" min="0.1" max="1.0" step="0.05" value="0.35" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-rose-500">
+          <div class="flex justify-between text-xs text-slate-500 mt-1 font-mono">
+            <span>10% (Sip)</span><span>35% (Typical)</span><span>100% (Dry/Chug)</span>
+          </div>
+        </div>
+        <div>
+          <label class="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-2">Diners Count Sharing Pot</label>
+          <select id="input-diners" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-rose-500">
+            <option value="1">1 Diner (Solo Feast)</option>
+            <option value="2" selected>2 Diners (Couple Duo - Recommended)</option>
+            <option value="3">3 Diners (Sharing Group)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Nutritional Scorecard -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
+          <div>
+            <span class="text-xs text-slate-400 uppercase font-semibold">Calories Per Diner</span>
+            <p id="nutr-kcal" class="text-3xl font-extrabold text-white mt-1">352 kcal</p>
+          </div>
+          <div class="mt-4 flex gap-2">
+            <span id="badge-500kcal" class="text-[10px] px-2 py-0.5 rounded font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800">HPB &le;500 kcal Pass</span>
+            <span id="nutri-grade-badge" class="text-[10px] px-2.5 py-0.5 rounded font-bold bg-emerald-500 text-slate-950">Grade A</span>
+          </div>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
+          <div>
+            <span class="text-xs text-slate-400 uppercase font-semibold">Protein & Fiber</span>
+            <div class="flex items-baseline space-x-2 mt-1">
+              <span id="nutr-protein" class="text-2xl font-bold text-emerald-400">46.3g</span>
+              <span class="text-xs text-slate-400">protein</span>
+            </div>
+            <div class="flex items-baseline space-x-2 mt-0.5">
+              <span id="nutr-fiber" class="text-lg font-bold text-cyan-400">7.2g</span>
+              <span class="text-xs text-slate-400">dietary fiber</span>
+            </div>
+          </div>
+          <p class="text-[11px] text-emerald-400 mt-3"><i class="fa-solid fa-check"></i> Exceeds HPB 35g Protein target</p>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
+          <div>
+            <span class="text-xs text-slate-400 uppercase font-semibold">Saturated Fat</span>
+            <p id="nutr-satfat" class="text-3xl font-extrabold text-amber-400 mt-1">2.05g</p>
+            <p id="nutr-totalfat" class="text-xs text-slate-400 mt-1">Total fat: 11.28g</p>
+          </div>
+          <span id="badge-satfat" class="text-[10px] px-2 py-0.5 rounded font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800 mt-3 inline-block">
+            Low SFA &le;10g Pass
+          </span>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
+          <div>
+            <span class="text-xs text-slate-400 uppercase font-semibold">Ingested Sodium</span>
+            <p id="nutr-sodium" class="text-3xl font-extrabold text-rose-400 mt-1">600 mg</p>
+            <p id="nutr-sod-share" class="text-xs text-slate-400 mt-1">30.0% of 2,000mg Daily Limit</p>
+          </div>
+          <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden mt-3">
+            <div id="bar-sodium" class="bg-rose-500 h-full" style="width: 30%"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Format Comparison Guide -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+          <h4 class="text-sm font-bold text-rose-400 mb-1">🔥 Dry Stir-Fry (Xiang Guo)</h4>
+          <p class="text-xs text-slate-400 mb-2 font-mono">Ingestion: 100% of oil & paste</p>
+          <p class="text-xs text-slate-300">Wok-fried in hot palm oil/beef tallow. Saturated fat skyrockets to 13g-23g. Order strictly with <strong>"Shao You Shao Yan Wei La" (B05)</strong> to cut lipid load by 61%.</p>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+          <h4 class="text-sm font-bold text-amber-400 mb-1">🥗 Dry Toss (Mala Ban - B08)</h4>
+          <p class="text-xs text-slate-400 mb-2 font-mono">Ingestion: 100% clean dressing</p>
+          <p class="text-xs text-slate-300">Blanched in clear water first, rendering out surface starch. Dressed with roasted white sesame paste (tahini MUFAs) and Chinkiang black vinegar. Sat fat: ~3.4g.</p>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+          <h4 class="text-sm font-bold text-emerald-400 mb-1">🍲 Soup Malatang (B11 / B13)</h4>
+          <p class="text-xs text-slate-400 mb-2 font-mono">Ingestion: 35%-40% of broth</p>
+          <p class="text-xs text-slate-300">Aqueous boiling shields from oxidized oils. Leaving 65% of the liquid in the bowl drops absorbed sodium to just 490mg-670mg. Highest Mediterranean alignment.</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 3: ACTUARIAL MEMBERSHIP CALCULATOR -->
+    <!-- ========================================== -->
+    <section id="tab-actuarial" class="tab-content hidden space-y-6">
+      
+      <!-- Preset Top-Up Packages -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+        <div onclick="selectTopUpPlan(300, 350)" class="topup-card cursor-pointer bg-slate-900 border border-slate-800 hover:border-rose-500 rounded-xl p-4 transition text-center">
+          <span class="text-xs font-bold text-slate-400">Plan A</span>
+          <p class="text-xl font-extrabold text-white mt-1">$300 for $350</p>
+          <span class="text-[11px] text-emerald-400 font-semibold">+14.3% Bonus</span>
+        </div>
+        <div onclick="selectTopUpPlan(500, 600)" class="topup-card cursor-pointer bg-slate-900 border-2 border-rose-500 rounded-xl p-4 transition text-center shadow-lg shadow-rose-950/30">
+          <span class="text-xs font-bold text-rose-400">Plan B (Popular)</span>
+          <p class="text-xl font-extrabold text-white mt-1">$500 for $600</p>
+          <span class="text-[11px] text-emerald-400 font-semibold">+16.7% Bonus</span>
+        </div>
+        <div onclick="selectTopUpPlan(1200, 1500)" class="topup-card cursor-pointer bg-slate-900 border border-slate-800 hover:border-rose-500 rounded-xl p-4 transition text-center">
+          <span class="text-xs font-bold text-slate-400">Plan C</span>
+          <p class="text-xl font-extrabold text-white mt-1">$1,200 for $1,500</p>
+          <span class="text-[11px] text-rose-400 font-semibold">+20.0% Bonus</span>
+        </div>
+        <div onclick="selectTopUpPlan(1500, 1900)" class="topup-card cursor-pointer bg-slate-900 border border-slate-800 hover:border-rose-500 rounded-xl p-4 transition text-center">
+          <span class="text-xs font-bold text-slate-400">Plan D</span>
+          <p class="text-xl font-extrabold text-white mt-1">$1,500 for $1,900</p>
+          <span class="text-[11px] text-rose-400 font-semibold">+21.1% Bonus</span>
+        </div>
+        <div onclick="selectTopUpPlan(0, 0)" class="topup-card cursor-pointer bg-slate-900 border border-slate-800 hover:border-rose-500 rounded-xl p-4 transition text-center">
+          <span class="text-xs font-bold text-emerald-400">Plan 0 (No Top-Up)</span>
+          <p class="text-xl font-extrabold text-white mt-1">Cash / Card PAYG</p>
+          <span class="text-[11px] text-emerald-400 font-semibold">5%-8% Card Rebate</span>
+        </div>
+      </div>
+
+      <!-- Sliders Card -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div>
+          <label class="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-2">Spend Per Visit (SGD)</label>
+          <input type="number" id="act-spend" value="30.0" step="5" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white font-mono">
+        </div>
+        <div>
+          <label class="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-2">Visit Interval (Days)</label>
+          <select id="act-interval" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
+            <option value="7">Weekly (Every 7 days)</option>
+            <option value="14" selected>Fortnightly (Every 14 days)</option>
+            <option value="30">Monthly (Every 30 days)</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-2">Outlet Closure Hazard Rate (&lambda;)</label>
+          <select id="act-hazard" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
+            <option value="0.10">Established Mall Chain (&lambda; = 10%/yr)</option>
+            <option value="0.22" selected>Independent / Young Stall (&lambda; = 22%/yr)</option>
+            <option value="0.38">Distressed Promotion Stall (&lambda; = 38%/yr)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Actuarial Outcome Banner -->
+      <div id="act-verdict-banner" class="bg-rose-950/40 border border-rose-800 rounded-2xl p-6 shadow-xl flex flex-col md:flex-row justify-between items-center gap-4">
+        <div>
+          <span id="act-verdict-pill" class="text-xs font-extrabold px-3 py-1 rounded-full bg-rose-600 text-white uppercase tracking-wider">
+            LOSING_ASYMMETRIC_TRAP
+          </span>
+          <h3 id="act-verdict-title" class="text-xl font-bold text-white mt-2">Net Risk-Adjusted Return: -$12.01 SGD</h3>
+          <p id="act-verdict-desc" class="text-xs text-slate-300 mt-1">Insolvency hazard and capital lock-in exceed the nominal 16.7% discount.</p>
+        </div>
+        <div class="text-right font-mono">
+          <p class="text-xs text-slate-400">Cash Principal Break-Even</p>
+          <p id="act-breakeven" class="text-2xl font-extrabold text-amber-400">16.7 visits</p>
+        </div>
+      </div>
+
+      <!-- Detailed Breakdown Metrics -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+          <p class="text-xs text-slate-400">Total Trips to Deplete</p>
+          <p id="act-total-trips" class="text-xl font-bold text-white mt-1">20 visits</p>
+          <span id="act-horizon" class="text-[11px] text-slate-500 font-mono">8.7 months horizon</span>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+          <p class="text-xs text-slate-400">Closure Probability Before Depletion</p>
+          <p id="act-closure-prob" class="text-xl font-bold text-rose-400 mt-1">14.81%</p>
+          <span class="text-[11px] text-slate-500">Unsecured claim in liquidation</span>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+          <p class="text-xs text-slate-400">Restaurant Marginal Food COGS</p>
+          <p id="act-rest-cogs" class="text-xl font-bold text-emerald-400 mt-1">$180.00</p>
+          <span class="text-[11px] text-slate-500">True marginal cost to stall</span>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+          <p class="text-xs text-slate-400">Restaurant Day-1 Cash Profit</p>
+          <p id="act-rest-profit" class="text-xl font-bold text-cyan-400 mt-1">+$320.00 (64.0%)</p>
+          <span class="text-[11px] text-cyan-500 font-medium">Stall Day-1 cash margin</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 4: HPB HIDS POLICY & WIN-WIN -->
+    <!-- ========================================== -->
+    <section id="tab-policy" class="tab-content hidden space-y-6">
+      
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+        <h3 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+          <i class="fa-solid fa-building-columns text-rose-500"></i> Singapore HPB Healthier Ingredient Development Scheme (HIDS)
+        </h3>
+        <p class="text-xs text-slate-300 leading-relaxed">
+          Grounded in Data.gov.sg dataset <code class="text-rose-400">d_cd7fbc766695f997396b96bf93820382</code>. HPB co-funds up to <strong>80% of the wholesale price differential</strong> between conventional palm olein/salt and certified healthier alternatives.
+        </p>
+      </div>
+
+      <!-- Policy Simulator Sliders -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4">
+          <h4 class="text-sm font-bold text-slate-200">Interactive Policy Reform Levers</h4>
+          
+          <label class="flex items-center justify-between p-3 rounded-lg bg-slate-800/60 cursor-pointer">
+            <div>
+              <p class="text-xs font-bold text-white">HIDS Healthier Cooking Oil Subsidy</p>
+              <p class="text-[11px] text-slate-400">Co-fund Canola/Sunflower blends (&le;35% SFA) via Bunge Asia / Gan Hup Lee</p>
+            </div>
+            <input type="checkbox" id="pol-oil" checked class="w-4 h-4 accent-rose-500 rounded">
+          </label>
+
+          <label class="flex items-center justify-between p-3 rounded-lg bg-slate-800/60 cursor-pointer">
+            <div>
+              <p class="text-xs font-bold text-white">Potassium Mineral K-Salt Subsidy</p>
+              <p class="text-[11px] text-slate-400">60% NaCl + 40% KCl blend via Faesol iLite K-Salt</p>
+            </div>
+            <input type="checkbox" id="pol-salt" checked class="w-4 h-4 accent-rose-500 rounded">
+          </label>
+
+          <label class="flex items-center justify-between p-3 rounded-lg bg-slate-800/60 cursor-pointer">
+            <div>
+              <p class="text-xs font-bold text-white">Wholegrain Rice Bar Transition</p>
+              <p class="text-[11px] text-slate-400">50/50 Brown-White Jasmine Rice via Chip Seng Impex</p>
+            </div>
+            <input type="checkbox" id="pol-rice" checked class="w-4 h-4 accent-rose-500 rounded">
+          </label>
+
+          <label class="flex items-center justify-between p-3 rounded-lg bg-slate-800/60 cursor-pointer">
+            <div>
+              <p class="text-xs font-bold text-white">Botanical Umami Base Promotion</p>
+              <p class="text-[11px] text-slate-400">Promote Tomato (B11) & Wild Mushroom (B13) with Healthy 365 app badges</p>
+            </div>
+            <input type="checkbox" id="pol-broth" checked class="w-4 h-4 accent-rose-500 rounded">
+          </label>
+
+        </div>
+
+        <!-- Modeled Clinical Impact Gauges -->
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4">
+          <h4 class="text-sm font-bold text-slate-200">Modeled Population Health Outcomes</h4>
+
+          <div>
+            <div class="flex justify-between text-xs font-semibold mb-1">
+              <span class="text-slate-400">Saturated Fat Ingestion Reduction</span>
+              <span class="text-emerald-400 font-mono">-75.0%</span>
+            </div>
+            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+              <div class="bg-emerald-500 h-full" style="width: 75%"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-semibold mb-1">
+              <span class="text-slate-400">Ingested Sodium Reduction</span>
+              <span class="text-cyan-400 font-mono">-65.0%</span>
+            </div>
+            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+              <div class="bg-cyan-500 h-full" style="width: 65%"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-semibold mb-1">
+              <span class="text-slate-400">Population Systolic BP Reduction</span>
+              <span class="text-rose-400 font-mono">-5.4 mmHg</span>
+            </div>
+            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+              <div class="bg-rose-500 h-full" style="width: 54%"></div>
+            </div>
+          </div>
+
+          <div class="p-3 bg-emerald-950/40 border border-emerald-800 rounded-lg mt-4">
+            <h5 class="text-xs font-bold text-emerald-300">Stall Operator Margin Flywheel</h5>
+            <p class="text-[11px] text-slate-300 mt-1">
+              At $2.98/100g scales, increasing customer selection of pressed Tau Kwa and King Oyster mushrooms yields <strong>+78% to +81% gross margin</strong>, expanding stall net profitability while reducing cardiovascular burden.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 5: 96-ITEM ARBITRAGE CATALOG -->
+    <!-- ========================================== -->
+    <section id="tab-catalog" class="tab-content hidden space-y-4">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl flex flex-col sm:flex-row justify-between items-center gap-3">
+        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-list-check text-rose-500"></i> Full 96-Item Arbitrage Database
+        </h3>
+        <div class="flex gap-2 w-full sm:w-auto">
+          <input type="text" id="catalog-search" placeholder="Search ingredient..." class="bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:ring-2 focus:ring-rose-500 w-full sm:w-48">
+          <select id="catalog-cat-filter" class="bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none">
+            <option value="">All Categories</option>
+            <option value="Leafy Veg">Leafy Veg</option>
+            <option value="Root & Stem Veg">Root & Stem</option>
+            <option value="Fungi & Mushrooms">Fungi</option>
+            <option value="Soy & Beancurd">Soy</option>
+            <option value="Noodles & Starches">Noodles</option>
+            <option value="Meat Cuts">Meat Cuts</option>
+            <option value="Seafood">Seafood</option>
+            <option value="Specialty">Specialty</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+        <div class="overflow-x-auto max-h-[600px] custom-scrollbar">
+          <table class="w-full text-left text-xs font-mono">
+            <thead class="bg-slate-800 text-slate-300 uppercase tracking-wider text-[10px] sticky top-0 z-10">
+              <tr>
+                <th class="py-2.5 px-3">ID</th>
+                <th class="py-2.5 px-3">Name</th>
+                <th class="py-2.5 px-3">Category</th>
+                <th class="py-2.5 px-3 text-right">Wholesale /100g</th>
+                <th class="py-2.5 px-3 text-right">Unified Ratio</th>
+                <th class="py-2.5 px-3 text-right">Soak Factor</th>
+                <th class="py-2.5 px-3 text-right">Protein</th>
+                <th class="py-2.5 px-3 text-right">Sat Fat</th>
+                <th class="py-2.5 px-3 text-right">Sodium</th>
+                <th class="py-2.5 px-3 text-center">Source</th>
+              </tr>
+            </thead>
+            <tbody id="catalog-table-body" class="divide-y divide-slate-800">
+              <!-- Dynamically Populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800 bg-slate-900 py-4 text-center text-xs text-slate-500">
+    <p>Singapore Mala Multi-Objective Quant Optimiser • Antigravity IDE (Gemini 3.8 Flash) • Grounded in HPB SG FoodID & Data.gov.sg</p>
+  </footer>
+
+  <!-- Embedded Datasets & Client-Side Simulator Logic -->
+  <script>
+    const CATALOG = [{"id": "LV01", "name_en": "Xiao Bai Cai (Bok Choy)", "name_zh": "\u5c0f\u767d\u83dc", "category": "Leafy Veg", "retail_cost_100g": 0.48, "wholesale_cost_100g": 0.3, "water_soak_multiplier": 1.25, "effective_stall_cogs_100g_wet": 0.24, "drained_retail_val_100g_weighed": 0.384, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 95.0, "price_per_portion_100g_equiv": 1.05, "val_ratio_unified_retail": 0.1289, "val_ratio_unified_wholesale": 0.0805, "restaurant_margin_unified_pct": 91.95, "val_ratio_tiered_retail": 0.256, "val_ratio_tiered_wholesale": 0.16, "restaurant_margin_tiered_pct": 84.0, "val_ratio_portion_retail": 0.456, "val_ratio_portion_wholesale": 0.228, "restaurant_margin_portion_pct": 77.2, "oil_absorption_factor": 1.35, "kcal_100g": 13.0, "protein_g": 1.5, "fat_g": 0.2, "sat_fat_g": 0.03, "carbs_g": 2.2, "fiber_g": 1.0, "sodium_mg": 65.0, "health_density_score": 2.22, "source_name": "NTUC FairPrice Pasar Xiao Bai Cai 250g", "source_url": "https://www.fairprice.com.sg/product/pasar-xiao-bai-cai-250g-12393702"}, {"id": "LV02", "name_en": "Kang Kong (Water Morning Glory)", "name_zh": "\u7a7a\u5fc3\u83dc/\u8579\u83dc", "category": "Leafy Veg", "retail_cost_100g": 0.38, "wholesale_cost_100g": 0.24, "water_soak_multiplier": 1.3, "effective_stall_cogs_100g_wet": 0.18, "drained_retail_val_100g_weighed": 0.292, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 95.0, "price_per_portion_100g_equiv": 1.05, "val_ratio_unified_retail": 0.0981, "val_ratio_unified_wholesale": 0.0604, "restaurant_margin_unified_pct": 93.96, "val_ratio_tiered_retail": 0.1949, "val_ratio_tiered_wholesale": 0.12, "restaurant_margin_tiered_pct": 88.0, "val_ratio_portion_retail": 0.361, "val_ratio_portion_wholesale": 0.171, "restaurant_margin_portion_pct": 82.9, "oil_absorption_factor": 1.55, "kcal_100g": 19.0, "protein_g": 2.6, "fat_g": 0.2, "sat_fat_g": 0.05, "carbs_g": 3.1, "fiber_g": 2.1, "sodium_mg": 113.0, "health_density_score": 7.0, "source_name": "NTUC FairPrice Budget Kang Kong 200g", "source_url": "https://www.fairprice.com.sg/product/budget-kang-kong-200g-13138414"}, {"id": "LV03", "name_en": "Napa Cabbage (Wongombok)", "name_zh": "\u5927\u767d\u83dc/\u9ec4\u82bd\u767d", "category": "Leafy Veg", "retail_cost_100g": 0.22, "wholesale_cost_100g": 0.14, "water_soak_multiplier": 1.25, "effective_stall_cogs_100g_wet": 0.11, "drained_retail_val_100g_weighed": 0.176, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 110.0, "price_per_portion_100g_equiv": 0.91, "val_ratio_unified_retail": 0.0591, "val_ratio_unified_wholesale": 0.0369, "restaurant_margin_unified_pct": 96.31, "val_ratio_tiered_retail": 0.1173, "val_ratio_tiered_wholesale": 0.0733, "restaurant_margin_tiered_pct": 92.67, "val_ratio_portion_retail": 0.242, "val_ratio_portion_wholesale": 0.121, "restaurant_margin_portion_pct": 87.9, "oil_absorption_factor": 1.45, "kcal_100g": 16.0, "protein_g": 1.2, "fat_g": 0.2, "sat_fat_g": 0.04, "carbs_g": 3.2, "fiber_g": 1.2, "sodium_mg": 9.0, "health_density_score": 2.28, "source_name": "NTUC FairPrice China Beijing Cabbage", "source_url": "https://www.fairprice.com.sg/product/china-beijing-cabbage-1-per-pack-13226730"}, {"id": "LV04", "name_en": "Round Cabbage", "name_zh": "\u5305\u83dc/\u5377\u5fc3\u83dc", "category": "Leafy Veg", "retail_cost_100g": 0.22, "wholesale_cost_100g": 0.14, "water_soak_multiplier": 1.15, "effective_stall_cogs_100g_wet": 0.12, "drained_retail_val_100g_weighed": 0.191, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 110.0, "price_per_portion_100g_equiv": 0.91, "val_ratio_unified_retail": 0.0642, "val_ratio_unified_wholesale": 0.0403, "restaurant_margin_unified_pct": 95.97, "val_ratio_tiered_retail": 0.1275, "val_ratio_tiered_wholesale": 0.08, "restaurant_margin_tiered_pct": 92.0, "val_ratio_portion_retail": 0.242, "val_ratio_portion_wholesale": 0.132, "restaurant_margin_portion_pct": 86.8, "oil_absorption_factor": 1.1, "kcal_100g": 25.0, "protein_g": 1.3, "fat_g": 0.1, "sat_fat_g": 0.03, "carbs_g": 5.8, "fiber_g": 2.5, "sodium_mg": 18.0, "health_density_score": 7.47, "source_name": "NTUC FairPrice Gold Round Cabbage 1.5kg", "source_url": "https://www.fairprice.com.sg/product/gold-round-cabbage-1-5kg-13097801"}, {"id": "LV05", "name_en": "Chinese Spinach (Puay Leng)", "name_zh": "\u83e0\u83dc/\u82cb\u83dc", "category": "Leafy Veg", "retail_cost_100g": 0.42, "wholesale_cost_100g": 0.28, "water_soak_multiplier": 1.3, "effective_stall_cogs_100g_wet": 0.22, "drained_retail_val_100g_weighed": 0.323, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 90.0, "price_per_portion_100g_equiv": 1.11, "val_ratio_unified_retail": 0.1084, "val_ratio_unified_wholesale": 0.0738, "restaurant_margin_unified_pct": 92.62, "val_ratio_tiered_retail": 0.2154, "val_ratio_tiered_wholesale": 0.1467, "restaurant_margin_tiered_pct": 85.33, "val_ratio_portion_retail": 0.378, "val_ratio_portion_wholesale": 0.198, "restaurant_margin_portion_pct": 80.2, "oil_absorption_factor": 1.5, "kcal_100g": 23.0, "protein_g": 2.9, "fat_g": 0.4, "sat_fat_g": 0.06, "carbs_g": 3.6, "fiber_g": 2.2, "sodium_mg": 79.0, "health_density_score": 8.1, "source_name": "NTUC FairPrice Chef Chinese Spinach 200g", "source_url": "https://www.fairprice.com.sg/product/chef-chinese-spinach-phuay-leng-200g-13236468"}, {"id": "LV06", "name_en": "Crown Daisy (Tang Oh)", "name_zh": "\u833c\u84bf", "category": "Leafy Veg", "retail_cost_100g": 1.1, "wholesale_cost_100g": 0.72, "water_soak_multiplier": 1.25, "effective_stall_cogs_100g_wet": 0.58, "drained_retail_val_100g_weighed": 0.88, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.2, "portion_weight_g": 85.0, "price_per_portion_100g_equiv": 1.41, "val_ratio_unified_retail": 0.2953, "val_ratio_unified_wholesale": 0.1946, "restaurant_margin_unified_pct": 80.54, "val_ratio_tiered_retail": 0.5867, "val_ratio_tiered_wholesale": 0.3867, "restaurant_margin_tiered_pct": 61.33, "val_ratio_portion_retail": 0.7792, "val_ratio_portion_wholesale": 0.4108, "restaurant_margin_portion_pct": 58.92, "oil_absorption_factor": 1.4, "kcal_100g": 24.0, "protein_g": 3.4, "fat_g": 0.6, "sat_fat_g": 0.08, "carbs_g": 3.0, "fiber_g": 3.0, "sodium_mg": 117.0, "health_density_score": 11.63, "source_name": "NTUC FairPrice HL Japanese Tang-Oh 200g", "source_url": "https://www.fairprice.com.sg/product/hl-japanese-tang-oh-200g-13041910"}, {"id": "LV07", "name_en": "Hong Kong Kailan (Chinese Kale)", "name_zh": "\u9999\u6e2f\u82a5\u5170", "category": "Leafy Veg", "retail_cost_100g": 0.58, "wholesale_cost_100g": 0.38, "water_soak_multiplier": 1.15, "effective_stall_cogs_100g_wet": 0.33, "drained_retail_val_100g_weighed": 0.504, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 95.0, "price_per_portion_100g_equiv": 1.05, "val_ratio_unified_retail": 0.1692, "val_ratio_unified_wholesale": 0.1107, "restaurant_margin_unified_pct": 88.93, "val_ratio_tiered_retail": 0.3362, "val_ratio_tiered_wholesale": 0.22, "restaurant_margin_tiered_pct": 78.0, "val_ratio_portion_retail": 0.551, "val_ratio_portion_wholesale": 0.3135, "restaurant_margin_portion_pct": 68.65, "oil_absorption_factor": 1.1, "kcal_100g": 22.0, "protein_g": 1.1, "fat_g": 0.7, "sat_fat_g": 0.1, "carbs_g": 3.8, "fiber_g": 2.5, "sodium_mg": 7.0, "health_density_score": 7.05, "source_name": "NTUC FairPrice Chef Hong Kong Kailan 200g", "source_url": "https://www.fairprice.com.sg/product/chef-hong-kong-kailan-200g-13236466"}, {"id": "LV08", "name_en": "Baby Chye Sim", "name_zh": "\u83dc\u5fc3/\u5c0f\u767d\u83dc\u5fc3", "category": "Leafy Veg", "retail_cost_100g": 0.7, "wholesale_cost_100g": 0.45, "water_soak_multiplier": 1.2, "effective_stall_cogs_100g_wet": 0.38, "drained_retail_val_100g_weighed": 0.583, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 95.0, "price_per_portion_100g_equiv": 1.05, "val_ratio_unified_retail": 0.1957, "val_ratio_unified_wholesale": 0.1275, "restaurant_margin_unified_pct": 87.25, "val_ratio_tiered_retail": 0.3889, "val_ratio_tiered_wholesale": 0.2533, "restaurant_margin_tiered_pct": 74.67, "val_ratio_portion_retail": 0.665, "val_ratio_portion_wholesale": 0.361, "restaurant_margin_portion_pct": 63.9, "oil_absorption_factor": 1.2, "kcal_100g": 15.0, "protein_g": 1.5, "fat_g": 0.2, "sat_fat_g": 0.03, "carbs_g": 2.4, "fiber_g": 1.6, "sodium_mg": 26.0, "health_density_score": 4.67, "source_name": "NTUC FairPrice China Baby Chye Sim 300g", "source_url": "https://www.fairprice.com.sg/product/china-baby-chye-sim-300g-12230719"}, {"id": "LV09", "name_en": "You Mai Cai (A-Choy Lettuce)", "name_zh": "\u6cb9\u9ea6\u83dc", "category": "Leafy Veg", "retail_cost_100g": 0.6, "wholesale_cost_100g": 0.39, "water_soak_multiplier": 1.2, "effective_stall_cogs_100g_wet": 0.33, "drained_retail_val_100g_weighed": 0.5, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 90.0, "price_per_portion_100g_equiv": 1.11, "val_ratio_unified_retail": 0.1678, "val_ratio_unified_wholesale": 0.1107, "restaurant_margin_unified_pct": 88.93, "val_ratio_tiered_retail": 0.3333, "val_ratio_tiered_wholesale": 0.22, "restaurant_margin_tiered_pct": 78.0, "val_ratio_portion_retail": 0.54, "val_ratio_portion_wholesale": 0.297, "restaurant_margin_portion_pct": 70.3, "oil_absorption_factor": 1.3, "kcal_100g": 15.0, "protein_g": 1.4, "fat_g": 0.2, "sat_fat_g": 0.03, "carbs_g": 2.3, "fiber_g": 1.8, "sodium_mg": 28.0, "health_density_score": 4.87, "source_name": "NTUC FairPrice Pasar Local Lettuce 220g", "source_url": "https://www.fairprice.com.sg/product/pasar-local-lettuce-220g-10352771"}, {"id": "LV10", "name_en": "Iceberg / Romaine Lettuce", "name_zh": "\u897f\u751f\u83dc/\u73bb\u7483\u751f\u83dc", "category": "Leafy Veg", "retail_cost_100g": 0.37, "wholesale_cost_100g": 0.24, "water_soak_multiplier": 1.25, "effective_stall_cogs_100g_wet": 0.19, "drained_retail_val_100g_weighed": 0.296, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 95.0, "price_per_portion_100g_equiv": 1.05, "val_ratio_unified_retail": 0.0993, "val_ratio_unified_wholesale": 0.0638, "restaurant_margin_unified_pct": 93.62, "val_ratio_tiered_retail": 0.1973, "val_ratio_tiered_wholesale": 0.1267, "restaurant_margin_tiered_pct": 87.33, "val_ratio_portion_retail": 0.3515, "val_ratio_portion_wholesale": 0.1805, "restaurant_margin_portion_pct": 81.95, "oil_absorption_factor": 1.35, "kcal_100g": 14.0, "protein_g": 0.9, "fat_g": 0.1, "sat_fat_g": 0.02, "carbs_g": 3.0, "fiber_g": 1.2, "sodium_mg": 10.0, "health_density_score": 2.01, "source_name": "NTUC FairPrice Pasar Iceberg Lettuce 400g", "source_url": "https://www.fairprice.com.sg/product/pasar-iceberg-lettuce-400g-13242068"}, {"id": "LV11", "name_en": "Baby Nai Bai (Milk Cabbage)", "name_zh": "\u5976\u767d\u83dc/\u4e0a\u6d77\u9752", "category": "Leafy Veg", "retail_cost_100g": 0.68, "wholesale_cost_100g": 0.44, "water_soak_multiplier": 1.2, "effective_stall_cogs_100g_wet": 0.37, "drained_retail_val_100g_weighed": 0.567, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 95.0, "price_per_portion_100g_equiv": 1.05, "val_ratio_unified_retail": 0.1902, "val_ratio_unified_wholesale": 0.1242, "restaurant_margin_unified_pct": 87.58, "val_ratio_tiered_retail": 0.3778, "val_ratio_tiered_wholesale": 0.2467, "restaurant_margin_tiered_pct": 75.33, "val_ratio_portion_retail": 0.646, "val_ratio_portion_wholesale": 0.3515, "restaurant_margin_portion_pct": 64.85, "oil_absorption_factor": 1.25, "kcal_100g": 14.0, "protein_g": 1.5, "fat_g": 0.2, "sat_fat_g": 0.03, "carbs_g": 2.2, "fiber_g": 1.3, "sodium_mg": 55.0, "health_density_score": 3.47, "source_name": "NTUC FairPrice Leafy Greens", "source_url": "https://omni.fairprice.com.sg/product-listing?hasImage=true&hasStock=true&personalisationApi=similar-product&personalisationType=SIMILAR_PRODUCT&trackinfo=1300366&title=Similar%20Products&pageType=similar-product"}, {"id": "LV12", "name_en": "Sweet Potato Leaves", "name_zh": "\u756a\u85af\u53f6", "category": "Leafy Veg", "retail_cost_100g": 0.8, "wholesale_cost_100g": 0.5, "water_soak_multiplier": 1.25, "effective_stall_cogs_100g_wet": 0.4, "drained_retail_val_100g_weighed": 0.64, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 90.0, "price_per_portion_100g_equiv": 1.11, "val_ratio_unified_retail": 0.2148, "val_ratio_unified_wholesale": 0.1342, "restaurant_margin_unified_pct": 86.58, "val_ratio_tiered_retail": 0.4267, "val_ratio_tiered_wholesale": 0.2667, "restaurant_margin_tiered_pct": 73.33, "val_ratio_portion_retail": 0.72, "val_ratio_portion_wholesale": 0.36, "restaurant_margin_portion_pct": 64.0, "oil_absorption_factor": 1.35, "kcal_100g": 42.0, "protein_g": 4.0, "fat_g": 0.3, "sat_fat_g": 0.07, "carbs_g": 8.8, "fiber_g": 5.4, "sodium_mg": 6.0, "health_density_score": 20.98, "source_name": "NTUC FairPrice Kok Fah Sweet Potato Leaves", "source_url": "https://omni.fairprice.com.sg/product-listing?hasImage=true&hasStock=true&personalisationApi=similar-product&personalisationType=SIMILAR_PRODUCT&trackinfo=1300366&title=Similar%20Products&pageType=similar-product"}, {"id": "RV01", "name_en": "Potato Slices", "name_zh": "\u571f\u8c46\u7247/\u9a6c\u94c3\u85af", "category": "Root & Stem Veg", "retail_cost_100g": 0.15, "wholesale_cost_100g": 0.09, "water_soak_multiplier": 1.1, "effective_stall_cogs_100g_wet": 0.08, "drained_retail_val_100g_weighed": 0.136, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 120.0, "price_per_portion_100g_equiv": 0.83, "val_ratio_unified_retail": 0.0458, "val_ratio_unified_wholesale": 0.0268, "restaurant_margin_unified_pct": 97.32, "val_ratio_tiered_retail": 0.0909, "val_ratio_tiered_wholesale": 0.0533, "restaurant_margin_tiered_pct": 94.67, "val_ratio_portion_retail": 0.18, "val_ratio_portion_wholesale": 0.096, "restaurant_margin_portion_pct": 90.4, "oil_absorption_factor": 1.15, "kcal_100g": 77.0, "protein_g": 2.0, "fat_g": 0.1, "sat_fat_g": 0.03, "carbs_g": 17.5, "fiber_g": 2.2, "sodium_mg": 6.0, "health_density_score": 7.7, "source_name": "NTUC FairPrice China Holland Potato 1kg", "source_url": "https://www.fairprice.com.sg/product/holland-potato-china-1kg-13057650"}, {"id": "RV02", "name_en": "Lotus Root Slices", "name_zh": "\u83b2\u85d5\u7247", "category": "Root & Stem Veg", "retail_cost_100g": 0.81, "wholesale_cost_100g": 0.52, "water_soak_multiplier": 1.1, "effective_stall_cogs_100g_wet": 0.47, "drained_retail_val_100g_weighed": 0.736, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.2, "portion_weight_g": 110.0, "price_per_portion_100g_equiv": 1.09, "val_ratio_unified_retail": 0.2471, "val_ratio_unified_wholesale": 0.1577, "restaurant_margin_unified_pct": 84.23, "val_ratio_tiered_retail": 0.4909, "val_ratio_tiered_wholesale": 0.3133, "restaurant_margin_tiered_pct": 68.67, "val_ratio_portion_retail": 0.7425, "val_ratio_portion_wholesale": 0.4308, "restaurant_margin_portion_pct": 56.92, "oil_absorption_factor": 0.85, "kcal_100g": 74.0, "protein_g": 2.6, "fat_g": 0.1, "sat_fat_g": 0.03, "carbs_g": 17.2, "fiber_g": 4.9, "sodium_mg": 40.0, "health_density_score": 18.03, "source_name": "NTUC FairPrice Agro Fresh Lotus Root 400g", "source_url": "https://www.fairprice.com.sg/product/orgo-fresh-lotus-root-400-g-90160215"}, {"id": "RV03", "name_en": "Broccoli Florets", "name_zh": "\u897f\u5170\u82b1", "category": "Root & Stem Veg", "retail_cost_100g": 0.91, "wholesale_cost_100g": 0.6, "water_soak_multiplier": 1.3, "effective_stall_cogs_100g_wet": 0.46, "drained_retail_val_100g_weighed": 0.7, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.2, "portion_weight_g": 100.0, "price_per_portion_100g_equiv": 1.2, "val_ratio_unified_retail": 0.2349, "val_ratio_unified_wholesale": 0.1544, "restaurant_margin_unified_pct": 84.56, "val_ratio_tiered_retail": 0.4667, "val_ratio_tiered_wholesale": 0.3067, "restaurant_margin_tiered_pct": 69.33, "val_ratio_portion_retail": 0.7583, "val_ratio_portion_wholesale": 0.3833, "restaurant_margin_portion_pct": 61.67, "oil_absorption_factor": 1.65, "kcal_100g": 34.0, "protein_g": 2.8, "fat_g": 0.4, "sat_fat_g": 0.04, "carbs_g": 6.6, "fiber_g": 2.6, "sodium_mg": 33.0, "health_density_score": 9.04, "source_name": "NTUC FairPrice Agro Fresh Royal Broccoli 280g", "source_url": "https://www.fairprice.com.sg/product/orgo-fresh-royal-broccoli-280-g-90153099"}, {"id": "RV04", "name_en": "Cauliflower Florets", "name_zh": "\u6709\u673a\u83dc\u82b1/\u82b1\u6930\u83dc", "category": "Root & Stem Veg", "retail_cost_100g": 0.85, "wholesale_cost_100g": 0.55, "water_soak_multiplier": 1.25, "effective_stall_cogs_100g_wet": 0.44, "drained_retail_val_100g_weighed": 0.68, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.2, "portion_weight_g": 100.0, "price_per_portion_100g_equiv": 1.2, "val_ratio_unified_retail": 0.2282, "val_ratio_unified_wholesale": 0.1477, "restaurant_margin_unified_pct": 85.23, "val_ratio_tiered_retail": 0.4533, "val_ratio_tiered_wholesale": 0.2933, "restaurant_margin_tiered_pct": 70.67, "val_ratio_portion_retail": 0.7083, "val_ratio_portion_wholesale": 0.3667, "restaurant_margin_portion_pct": 63.33, "oil_absorption_factor": 1.5, "kcal_100g": 25.0, "protein_g": 1.9, "fat_g": 0.3, "sat_fat_g": 0.05, "carbs_g": 5.0, "fiber_g": 2.0, "sodium_mg": 30.0, "health_density_score": 5.88, "source_name": "RedMart Fresh Broccoli & Cauliflower", "source_url": "https://redmart.lazada.sg/shop-groceries-fruitvegetables-freshvegetables-broccolicauliflower/"}, {"id": "RV05", "name_en": "Boiled Bamboo Shoots", "name_zh": "\u7b0b\u7247/\u6625\u7b0b/\u51ac\u7b0b", "category": "Root & Stem Veg", "retail_cost_100g": 0.7, "wholesale_cost_100g": 0.45, "water_soak_multiplier": 1.15, "effective_stall_cogs_100g_wet": 0.39, "drained_retail_val_100g_weighed": 0.609, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.2, "portion_weight_g": 100.0, "price_per_portion_100g_equiv": 1.2, "val_ratio_unified_retail": 0.2043, "val_ratio_unified_wholesale": 0.1309, "restaurant_margin_unified_pct": 86.91, "val_ratio_tiered_retail": 0.4058, "val_ratio_tiered_wholesale": 0.26, "restaurant_margin_tiered_pct": 74.0, "val_ratio_portion_retail": 0.5833, "val_ratio_portion_wholesale": 0.325, "restaurant_margin_portion_pct": 67.5, "oil_absorption_factor": 0.7, "kcal_100g": 27.0, "protein_g": 2.6, "fat_g": 0.3, "sat_fat_g": 0.06, "carbs_g": 5.2, "fiber_g": 2.2, "sodium_mg": 4.0, "health_density_score": 9.86, "source_name": "NTUC FairPrice Three Leaves Boiled Bamboo Shoot", "source_url": "https://www.fairprice.com.sg/product/three-leaves-boiled-bamboo-shoot-1-per-pack-10738738"}, {"id": "RV06", "name_en": "White Radish (Daikon)", "name_zh": "\u767d\u841d\u535c", "category": "Root & Stem Veg", "retail_cost_100g": 0.12, "wholesale_cost_100g": 0.08, "water_soak_multiplier": 1.08, "effective_stall_cogs_100g_wet": 0.07, "drained_retail_val_100g_weighed": 0.111, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 120.0, "price_per_portion_100g_equiv": 0.83, "val_ratio_unified_retail": 0.0373, "val_ratio_unified_wholesale": 0.0235, "restaurant_margin_unified_pct": 97.65, "val_ratio_tiered_retail": 0.0741, "val_ratio_tiered_wholesale": 0.0467, "restaurant_margin_tiered_pct": 95.33, "val_ratio_portion_retail": 0.144, "val_ratio_portion_wholesale": 0.084, "restaurant_margin_portion_pct": 91.6, "oil_absorption_factor": 0.95, "kcal_100g": 18.0, "protein_g": 0.6, "fat_g": 0.1, "sat_fat_g": 0.02, "carbs_g": 4.1, "fiber_g": 1.6, "sodium_mg": 21.0, "health_density_score": 3.71, "source_name": "NTUC FairPrice Fresh White Radish 750g", "source_url": "https://www.fairprice.com.sg/product/fresh-white-radish-0-59kg-10775950"}, {"id": "RV07", "name_en": "Sweet Corn Coblettes", "name_zh": "\u751c\u7389\u7c73\u6bb5", "category": "Root & Stem Veg", "retail_cost_100g": 0.28, "wholesale_cost_100g": 0.18, "water_soak_multiplier": 1.05, "effective_stall_cogs_100g_wet": 0.17, "drained_retail_val_100g_weighed": 0.267, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 130.0, "price_per_portion_100g_equiv": 0.77, "val_ratio_unified_retail": 0.0895, "val_ratio_unified_wholesale": 0.057, "restaurant_margin_unified_pct": 94.3, "val_ratio_tiered_retail": 0.1778, "val_ratio_tiered_wholesale": 0.1133, "restaurant_margin_tiered_pct": 88.67, "val_ratio_portion_retail": 0.364, "val_ratio_portion_wholesale": 0.221, "restaurant_margin_portion_pct": 77.9, "oil_absorption_factor": 0.65, "kcal_100g": 86.0, "protein_g": 3.3, "fat_g": 1.4, "sat_fat_g": 0.2, "carbs_g": 18.7, "fiber_g": 2.0, "sodium_mg": 15.0, "health_density_score": 10.35, "source_name": "NTUC FairPrice Pasar Sweet Corn 2s", "source_url": "https://www.fairprice.com.sg/product/pasar-sweet-corn-2s-10388088"}, {"id": "RV08", "name_en": "Mung Bean Sprouts (Taugeh)", "name_zh": "\u7eff\u8c46\u82bd", "category": "Root & Stem Veg", "retail_cost_100g": 0.4, "wholesale_cost_100g": 0.22, "water_soak_multiplier": 1.18, "effective_stall_cogs_100g_wet": 0.19, "drained_retail_val_100g_weighed": 0.339, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 100.0, "price_per_portion_100g_equiv": 1.0, "val_ratio_unified_retail": 0.1138, "val_ratio_unified_wholesale": 0.0638, "restaurant_margin_unified_pct": 93.62, "val_ratio_tiered_retail": 0.226, "val_ratio_tiered_wholesale": 0.1267, "restaurant_margin_tiered_pct": 87.33, "val_ratio_portion_retail": 0.4, "val_ratio_portion_wholesale": 0.19, "restaurant_margin_portion_pct": 81.0, "oil_absorption_factor": 1.1, "kcal_100g": 30.0, "protein_g": 3.0, "fat_g": 0.2, "sat_fat_g": 0.05, "carbs_g": 5.9, "fiber_g": 1.8, "sodium_mg": 6.0, "health_density_score": 8.31, "source_name": "NTUC FairPrice Pasar Bean Sprout 200g", "source_url": "https://www.fairprice.com.sg/product/pasar-bean-sprout-200g-13278935"}, {"id": "RV09", "name_en": "Lady's Finger (Okra)", "name_zh": "\u79cb\u8475/\u7f8a\u89d2\u8c46", "category": "Root & Stem Veg", "retail_cost_100g": 0.6, "wholesale_cost_100g": 0.39, "water_soak_multiplier": 1.1, "effective_stall_cogs_100g_wet": 0.35, "drained_retail_val_100g_weighed": 0.545, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 95.0, "price_per_portion_100g_equiv": 1.05, "val_ratio_unified_retail": 0.183, "val_ratio_unified_wholesale": 0.1174, "restaurant_margin_unified_pct": 88.26, "val_ratio_tiered_retail": 0.3636, "val_ratio_tiered_wholesale": 0.2333, "restaurant_margin_tiered_pct": 76.67, "val_ratio_portion_retail": 0.57, "val_ratio_portion_wholesale": 0.3325, "restaurant_margin_portion_pct": 66.75, "oil_absorption_factor": 1.05, "kcal_100g": 33.0, "protein_g": 1.9, "fat_g": 0.2, "sat_fat_g": 0.03, "carbs_g": 7.5, "fiber_g": 3.2, "sodium_mg": 7.0, "health_density_score": 10.96, "source_name": "NTUC FairPrice Pasar Lady Finger 250g", "source_url": "https://www.fairprice.com.sg/product/pasar-lady-finger-250g-10422194"}, {"id": "RV10", "name_en": "Bitter Gourd Slices", "name_zh": "\u82e6\u74dc\u7247", "category": "Root & Stem Veg", "retail_cost_100g": 0.8, "wholesale_cost_100g": 0.52, "water_soak_multiplier": 1.08, "effective_stall_cogs_100g_wet": 0.48, "drained_retail_val_100g_weighed": 0.741, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 95.0, "price_per_portion_100g_equiv": 1.05, "val_ratio_unified_retail": 0.2486, "val_ratio_unified_wholesale": 0.1611, "restaurant_margin_unified_pct": 83.89, "val_ratio_tiered_retail": 0.4938, "val_ratio_tiered_wholesale": 0.32, "restaurant_margin_tiered_pct": 68.0, "val_ratio_portion_retail": 0.76, "val_ratio_portion_wholesale": 0.456, "restaurant_margin_portion_pct": 54.4, "oil_absorption_factor": 0.9, "kcal_100g": 17.0, "protein_g": 1.0, "fat_g": 0.2, "sat_fat_g": 0.02, "carbs_g": 3.7, "fiber_g": 2.8, "sodium_mg": 5.0, "health_density_score": 8.46, "source_name": "NTUC FairPrice Agro Fresh Bitter Gourd", "source_url": "https://www.fairprice.com.sg/product/orgo-fresh-malaysian-bitter-gourd-1-pc-90160953"}, {"id": "RV11", "name_en": "Sweet Potato Chunks", "name_zh": "\u7ea2\u85af/\u7d2b\u85af\u5757", "category": "Root & Stem Veg", "retail_cost_100g": 0.47, "wholesale_cost_100g": 0.3, "water_soak_multiplier": 1.05, "effective_stall_cogs_100g_wet": 0.29, "drained_retail_val_100g_weighed": 0.448, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 115.0, "price_per_portion_100g_equiv": 0.87, "val_ratio_unified_retail": 0.1502, "val_ratio_unified_wholesale": 0.0973, "restaurant_margin_unified_pct": 90.27, "val_ratio_tiered_retail": 0.2984, "val_ratio_tiered_wholesale": 0.1933, "restaurant_margin_tiered_pct": 80.67, "val_ratio_portion_retail": 0.5405, "val_ratio_portion_wholesale": 0.3335, "restaurant_margin_portion_pct": 66.65, "oil_absorption_factor": 0.95, "kcal_100g": 86.0, "protein_g": 1.6, "fat_g": 0.1, "sat_fat_g": 0.02, "carbs_g": 20.1, "fiber_g": 3.0, "sodium_mg": 55.0, "health_density_score": 9.86, "source_name": "NTUC FairPrice Sweet Potato Listing", "source_url": "https://omni.fairprice.com.sg/product-listing?hasImage=true&hasStock=true&metaData=%5Bobject+Object%5D&personalisationApi=similar-product&personalisationType=SIMILAR_PRODUCT&trackinfo=1101669&title=Similar+Products&ctaSublocation=similar+products&pageType=similar-product"}, {"id": "RV12", "name_en": "Kelp Knots / Seaweed Strips", "name_zh": "\u6d77\u5e26\u7ed3/\u6d77\u5e26\u4e1d", "category": "Root & Stem Veg", "retail_cost_100g": 1.17, "wholesale_cost_100g": 0.35, "water_soak_multiplier": 1.25, "effective_stall_cogs_100g_wet": 0.28, "drained_retail_val_100g_weighed": 0.936, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 105.0, "price_per_portion_100g_equiv": 0.95, "val_ratio_unified_retail": 0.3141, "val_ratio_unified_wholesale": 0.094, "restaurant_margin_unified_pct": 90.6, "val_ratio_tiered_retail": 0.624, "val_ratio_tiered_wholesale": 0.1867, "restaurant_margin_tiered_pct": 81.33, "val_ratio_portion_retail": 1.2285, "val_ratio_portion_wholesale": 0.294, "restaurant_margin_portion_pct": 70.6, "oil_absorption_factor": 0.65, "kcal_100g": 43.0, "protein_g": 1.7, "fat_g": 0.6, "sat_fat_g": 0.1, "carbs_g": 9.6, "fiber_g": 1.3, "sodium_mg": 233.0, "health_density_score": 4.51, "source_name": "NTUC FairPrice AAA Dried Kelp Knot 100g", "source_url": "https://www.fairprice.com.sg/product/dried-kelp-knot"}, {"id": "FM01", "name_en": "Enoki Mushroom (Golden Needle)", "name_zh": "\u91d1\u9488\u83c7", "category": "Fungi & Mushrooms", "retail_cost_100g": 0.38, "wholesale_cost_100g": 0.25, "water_soak_multiplier": 1.15, "effective_stall_cogs_100g_wet": 0.22, "drained_retail_val_100g_weighed": 0.33, "price_unified_100g": 2.98, "price_tiered_100g": 2.0, "price_per_portion": 1.0, "portion_weight_g": 100.0, "price_per_portion_100g_equiv": 1.0, "val_ratio_unified_retail": 0.1109, "val_ratio_unified_wholesale": 0.0738, "restaurant_margin_unified_pct": 92.62, "val_ratio_tiered_retail": 0.1652, "val_ratio_tiered_wholesale": 0.11, "restaurant_margin_tiered_pct": 89.0, "val_ratio_portion_retail": 0.38, "val_ratio_portion_wholesale": 0.22, "restaurant_margin_portion_pct": 78.0, "oil_absorption_factor": 1.4, "kcal_100g": 37.0, "protein_g": 2.7, "fat_g": 0.3, "sat_fat_g": 0.05, "carbs_g": 7.8, "fiber_g": 2.7, "sodium_mg": 3.0, "health_density_score": 9.91, "source_name": "NTUC FairPrice Pasar Enoki Mushroom 300g", "source_url": "https://www.fairprice.com.sg/product/pasar-enoki-mushroom-300g-13092609"}, {"id": "FM02", "name_en": "White / Brown Bunashimeji", "name_zh": "\u767d\u7389\u83c7/\u87f9\u5473\u83c7", "category": "Fungi & Mushrooms", "retail_cost_100g": 0.96, "wholesale_cost_100g": 0.65, "water_soak_multiplier": 1.12, "effective_stall_cogs_100g_wet": 0.58, "drained_retail_val_100g_weighed": 0.857, "price_unified_100g": 2.98, "price_tiered_100g": 2.0, "price_per_portion": 1.5, "portion_weight_g": 90.0, "price_per_portion_100g_equiv": 1.67, "val_ratio_unified_retail": 0.2876, "val_ratio_unified_wholesale": 0.1946, "restaurant_margin_unified_pct": 80.54, "val_ratio_tiered_retail": 0.4286, "val_ratio_tiered_wholesale": 0.29, "restaurant_margin_tiered_pct": 71.0, "val_ratio_portion_retail": 0.576, "val_ratio_portion_wholesale": 0.348, "restaurant_margin_portion_pct": 65.2, "oil_absorption_factor": 1.15, "kcal_100g": 22.0, "protein_g": 2.7, "fat_g": 0.4, "sat_fat_g": 0.06, "carbs_g": 3.7, "fiber_g": 2.8, "sodium_mg": 4.0, "health_density_score": 10.84, "source_name": "NTUC FairPrice Hokto White Shimeji 125g", "source_url": "https://www.fairprice.com.sg/product/hokto-mushroom-white-shimeiji-100g-11017131"}, {"id": "FM03", "name_en": "King Oyster Mushroom (Eryngii)", "name_zh": "\u674f\u9c8d\u83c7", "category": "Fungi & Mushrooms", "retail_cost_100g": 1.0, "wholesale_cost_100g": 0.65, "water_soak_multiplier": 1.08, "effective_stall_cogs_100g_wet": 0.6, "drained_retail_val_100g_weighed": 0.926, "price_unified_100g": 2.98, "price_tiered_100g": 2.0, "price_per_portion": 1.5, "portion_weight_g": 95.0, "price_per_portion_100g_equiv": 1.58, "val_ratio_unified_retail": 0.3107, "val_ratio_unified_wholesale": 0.2013, "restaurant_margin_unified_pct": 79.87, "val_ratio_tiered_retail": 0.463, "val_ratio_tiered_wholesale": 0.3, "restaurant_margin_tiered_pct": 70.0, "val_ratio_portion_retail": 0.6333, "val_ratio_portion_wholesale": 0.38, "restaurant_margin_portion_pct": 62.0, "oil_absorption_factor": 1.1, "kcal_100g": 35.0, "protein_g": 3.3, "fat_g": 0.4, "sat_fat_g": 0.06, "carbs_g": 6.1, "fiber_g": 3.4, "sodium_mg": 9.0, "health_density_score": 13.94, "source_name": "NTUC FairPrice Eloasis King Oyster Mushroom 300g", "source_url": "https://www.fairprice.com.sg/product/eloasis-king-oyster-mushroom-300g-13243900"}, {"id": "FM04", "name_en": "Fresh Shiitake Mushroom", "name_zh": "\u9c9c\u9999\u83c7", "category": "Fungi & Mushrooms", "retail_cost_100g": 1.04, "wholesale_cost_100g": 0.68, "water_soak_multiplier": 1.15, "effective_stall_cogs_100g_wet": 0.59, "drained_retail_val_100g_weighed": 0.904, "price_unified_100g": 2.98, "price_tiered_100g": 2.0, "price_per_portion": 1.5, "portion_weight_g": 90.0, "price_per_portion_100g_equiv": 1.67, "val_ratio_unified_retail": 0.3035, "val_ratio_unified_wholesale": 0.198, "restaurant_margin_unified_pct": 80.2, "val_ratio_tiered_retail": 0.4522, "val_ratio_tiered_wholesale": 0.295, "restaurant_margin_tiered_pct": 70.5, "val_ratio_portion_retail": 0.624, "val_ratio_portion_wholesale": 0.354, "restaurant_margin_portion_pct": 64.6, "oil_absorption_factor": 1.45, "kcal_100g": 34.0, "protein_g": 2.2, "fat_g": 0.5, "sat_fat_g": 0.1, "carbs_g": 6.8, "fiber_g": 2.5, "sodium_mg": 9.0, "health_density_score": 8.15, "source_name": "NTUC FairPrice Chef Shiitake Mushroom 250g", "source_url": "https://www.fairprice.com.sg/product/chef-shiitake-mushroom-250g-13016308"}, {"id": "FM05", "name_en": "Rehydrated Dried Shiitake", "name_zh": "\u51ac\u83c7/\u82b1\u83c7(\u6ce1\u53d1)", "category": "Fungi & Mushrooms", "retail_cost_100g": 4.8, "wholesale_cost_100g": 3.6, "water_soak_multiplier": 4.0, "effective_stall_cogs_100g_wet": 0.9, "drained_retail_val_100g_weighed": 1.2, "price_unified_100g": 2.98, "price_tiered_100g": 2.0, "price_per_portion": 1.5, "portion_weight_g": 85.0, "price_per_portion_100g_equiv": 1.76, "val_ratio_unified_retail": 0.4027, "val_ratio_unified_wholesale": 0.302, "restaurant_margin_unified_pct": 69.8, "val_ratio_tiered_retail": 0.6, "val_ratio_tiered_wholesale": 0.45, "restaurant_margin_tiered_pct": 55.0, "val_ratio_portion_retail": 2.72, "val_ratio_portion_wholesale": 0.51, "restaurant_margin_portion_pct": 49.0, "oil_absorption_factor": 1.6, "kcal_100g": 56.0, "protein_g": 2.6, "fat_g": 0.4, "sat_fat_g": 0.08, "carbs_g": 14.0, "fiber_g": 3.3, "sodium_mg": 13.0, "health_density_score": 11.07, "source_name": "VWC Online Bee's Brand Dried Shiitake 400g", "source_url": "https://vwcshopping.com.sg/dried-fungus-and-mushroom"}, {"id": "FM06", "name_en": "Fresh Grey Oyster Mushroom", "name_zh": "\u5e73\u83c7/\u79c0\u73cd\u83c7", "category": "Fungi & Mushrooms", "retail_cost_100g": 1.0, "wholesale_cost_100g": 0.68, "water_soak_multiplier": 1.25, "effective_stall_cogs_100g_wet": 0.54, "drained_retail_val_100g_weighed": 0.8, "price_unified_100g": 2.98, "price_tiered_100g": 2.0, "price_per_portion": 1.5, "portion_weight_g": 90.0, "price_per_portion_100g_equiv": 1.67, "val_ratio_unified_retail": 0.2685, "val_ratio_unified_wholesale": 0.1812, "restaurant_margin_unified_pct": 81.88, "val_ratio_tiered_retail": 0.4, "val_ratio_tiered_wholesale": 0.27, "restaurant_margin_tiered_pct": 73.0, "val_ratio_portion_retail": 0.6, "val_ratio_portion_wholesale": 0.324, "restaurant_margin_portion_pct": 67.6, "oil_absorption_factor": 1.55, "kcal_100g": 33.0, "protein_g": 3.3, "fat_g": 0.4, "sat_fat_g": 0.06, "carbs_g": 6.1, "fiber_g": 2.3, "sodium_mg": 18.0, "health_density_score": 9.26, "source_name": "NTUC FairPrice Pasar Fresh Oyster Mushroom", "source_url": "https://www.fairprice.com.sg/product/pasar-fresh-oyster-mushroom-13151458"}, {"id": "FM07", "name_en": "Black Wood Ear Fungus (Soaked)", "name_zh": "\u9ed1\u6728\u8033/\u4e91\u8033(\u6ce1\u53d1)", "category": "Fungi & Mushrooms", "retail_cost_100g": 1.8, "wholesale_cost_100g": 1.35, "water_soak_multiplier": 7.0, "effective_stall_cogs_100g_wet": 0.19, "drained_retail_val_100g_weighed": 0.257, "price_unified_100g": 2.98, "price_tiered_100g": 2.0, "price_per_portion": 1.2, "portion_weight_g": 90.0, "price_per_portion_100g_equiv": 1.33, "val_ratio_unified_retail": 0.0863, "val_ratio_unified_wholesale": 0.0638, "restaurant_margin_unified_pct": 93.62, "val_ratio_tiered_retail": 0.1286, "val_ratio_tiered_wholesale": 0.095, "restaurant_margin_tiered_pct": 90.5, "val_ratio_portion_retail": 1.35, "val_ratio_portion_wholesale": 0.1425, "restaurant_margin_portion_pct": 85.75, "oil_absorption_factor": 0.75, "kcal_100g": 25.0, "protein_g": 0.5, "fat_g": 0.1, "sat_fat_g": 0.02, "carbs_g": 6.8, "fiber_g": 2.6, "sodium_mg": 9.0, "health_density_score": 7.28, "source_name": "VWC Online Dried Fungus Catalog", "source_url": "https://vwcshopping.com.sg/dried-fungus-and-mushroom"}, {"id": "FM08", "name_en": "White Snow Fungus / Tremella (Soaked)", "name_zh": "\u94f6\u8033/\u96ea\u8033(\u6ce1\u53d1)", "category": "Fungi & Mushrooms", "retail_cost_100g": 2.28, "wholesale_cost_100g": 1.7, "water_soak_multiplier": 8.0, "effective_stall_cogs_100g_wet": 0.21, "drained_retail_val_100g_weighed": 0.285, "price_unified_100g": 2.98, "price_tiered_100g": 2.0, "price_per_portion": 1.2, "portion_weight_g": 85.0, "price_per_portion_100g_equiv": 1.41, "val_ratio_unified_retail": 0.0956, "val_ratio_unified_wholesale": 0.0705, "restaurant_margin_unified_pct": 92.95, "val_ratio_tiered_retail": 0.1425, "val_ratio_tiered_wholesale": 0.105, "restaurant_margin_tiered_pct": 89.5, "val_ratio_portion_retail": 1.615, "val_ratio_portion_wholesale": 0.1487, "restaurant_margin_portion_pct": 85.12, "oil_absorption_factor": 1.5, "kcal_100g": 23.0, "protein_g": 1.1, "fat_g": 0.1, "sat_fat_g": 0.02, "carbs_g": 5.0, "fiber_g": 3.0, "sodium_mg": 11.0, "health_density_score": 7.76, "source_name": "VWC Online Bee's Brand White Fungus 200g", "source_url": "https://vwcshopping.com.sg/dried-fungus-and-mushroom"}, {"id": "FM09", "name_en": "Tea Tree / Velvet Mushroom (Soaked)", "name_zh": "\u8336\u6811\u83c7/\u9e7f\u8338\u83c7", "category": "Fungi & Mushrooms", "retail_cost_100g": 3.84, "wholesale_cost_100g": 2.9, "water_soak_multiplier": 4.0, "effective_stall_cogs_100g_wet": 0.73, "drained_retail_val_100g_weighed": 0.96, "price_unified_100g": 2.98, "price_tiered_100g": 2.0, "price_per_portion": 1.5, "portion_weight_g": 85.0, "price_per_portion_100g_equiv": 1.76, "val_ratio_unified_retail": 0.3221, "val_ratio_unified_wholesale": 0.245, "restaurant_margin_unified_pct": 75.5, "val_ratio_tiered_retail": 0.48, "val_ratio_tiered_wholesale": 0.365, "restaurant_margin_tiered_pct": 63.5, "val_ratio_portion_retail": 2.176, "val_ratio_portion_wholesale": 0.4137, "restaurant_margin_portion_pct": 58.63, "oil_absorption_factor": 1.3, "kcal_100g": 38.0, "protein_g": 3.5, "fat_g": 0.4, "sat_fat_g": 0.06, "carbs_g": 7.2, "fiber_g": 3.6, "sodium_mg": 8.0, "health_density_score": 14.45, "source_name": "VWC Online Tea Tree & Velvet Mushroom", "source_url": "https://vwcshopping.com.sg/dried-fungus-and-mushroom"}, {"id": "FM10", "name_en": "White Button Mushroom", "name_zh": "\u767d\u8611\u83c7/\u53e3\u8611", "category": "Fungi & Mushrooms", "retail_cost_100g": 2.25, "wholesale_cost_100g": 1.45, "water_soak_multiplier": 1.1, "effective_stall_cogs_100g_wet": 1.32, "drained_retail_val_100g_weighed": 2.045, "price_unified_100g": 2.98, "price_tiered_100g": 2.0, "price_per_portion": 1.5, "portion_weight_g": 85.0, "price_per_portion_100g_equiv": 1.76, "val_ratio_unified_retail": 0.6864, "val_ratio_unified_wholesale": 0.443, "restaurant_margin_unified_pct": 55.7, "val_ratio_tiered_retail": 1.0227, "val_ratio_tiered_wholesale": 0.66, "restaurant_margin_tiered_pct": 34.0, "val_ratio_portion_retail": 1.275, "val_ratio_portion_wholesale": 0.748, "restaurant_margin_portion_pct": 25.2, "oil_absorption_factor": 1.05, "kcal_100g": 22.0, "protein_g": 3.1, "fat_g": 0.3, "sat_fat_g": 0.05, "carbs_g": 3.3, "fiber_g": 1.0, "sodium_mg": 5.0, "health_density_score": 6.06, "source_name": "RedMart Fresh Button Mushrooms", "source_url": "https://redmart.lazada.sg/shop-groceries-fresh-produce-mushrooms/?m=redmart?m=redmart"}, {"id": "FM11", "name_en": "Cordyceps Flower / Monkey Head (Soaked)", "name_zh": "\u866b\u8349\u82b1/\u7334\u5934\u83c7", "category": "Fungi & Mushrooms", "retail_cost_100g": 3.36, "wholesale_cost_100g": 2.5, "water_soak_multiplier": 3.5, "effective_stall_cogs_100g_wet": 0.71, "drained_retail_val_100g_weighed": 0.96, "price_unified_100g": 2.98, "price_tiered_100g": 2.0, "price_per_portion": 1.8, "portion_weight_g": 80.0, "price_per_portion_100g_equiv": 2.25, "val_ratio_unified_retail": 0.3221, "val_ratio_unified_wholesale": 0.2383, "restaurant_margin_unified_pct": 76.17, "val_ratio_tiered_retail": 0.48, "val_ratio_tiered_wholesale": 0.355, "restaurant_margin_tiered_pct": 64.5, "val_ratio_portion_retail": 1.4933, "val_ratio_portion_wholesale": 0.3156, "restaurant_margin_portion_pct": 68.44, "oil_absorption_factor": 1.75, "kcal_100g": 42.0, "protein_g": 4.1, "fat_g": 0.5, "sat_fat_g": 0.08, "carbs_g": 7.5, "fiber_g": 3.8, "sodium_mg": 6.0, "health_density_score": 15.02, "source_name": "VWC Online Cordyceps & Monkey Head Mushroom", "source_url": "https://vwcshopping.com.sg/dried-fungus-and-mushroom"}, {"id": "SB01", "name_en": "Tau Kwa (Firm Pressed Tofu)", "name_zh": "\u8c46\u5e72", "category": "Soy & Beancurd", "retail_cost_100g": 0.32, "wholesale_cost_100g": 0.22, "water_soak_multiplier": 1.05, "effective_stall_cogs_100g_wet": 0.21, "drained_retail_val_100g_weighed": 0.305, "price_unified_100g": 2.98, "price_tiered_100g": 2.0, "price_per_portion": 1.0, "portion_weight_g": 100.0, "price_per_portion_100g_equiv": 1.0, "val_ratio_unified_retail": 0.1023, "val_ratio_unified_wholesale": 0.0705, "restaurant_margin_unified_pct": 92.95, "val_ratio_tiered_retail": 0.1524, "val_ratio_tiered_wholesale": 0.105, "restaurant_margin_tiered_pct": 89.5, "val_ratio_portion_retail": 0.32, "val_ratio_portion_wholesale": 0.21, "restaurant_margin_portion_pct": 79.0, "oil_absorption_factor": 0.85, "kcal_100g": 145.0, "protein_g": 15.8, "fat_g": 8.7, "sat_fat_g": 1.3, "carbs_g": 2.8, "fiber_g": 1.2, "sodium_mg": 14.0, "health_density_score": 28.15, "source_name": "NTUC FairPrice Fortune Tau Kwa 450g", "source_url": "https://www.fairprice.com.sg/product/fortune-tau-kwa-400g-157819"}, {"id": "SB02", "name_en": "Egg Tofu / Silken Tofu Tube", "name_zh": "\u65e5\u672c\u7389\u5b50\u8c46\u8150", "category": "Soy & Beancurd", "retail_cost_100g": 0.32, "wholesale_cost_100g": 0.24, "water_soak_multiplier": 1.02, "effective_stall_cogs_100g_wet": 0.24, "drained_retail_val_100g_weighed": 0.314, "price_unified_100g": 2.98, "price_tiered_100g": 2.0, "price_per_portion": 1.0, "portion_weight_g": 110.0, "price_per_portion_100g_equiv": 0.91, "val_ratio_unified_retail": 0.1053, "val_ratio_unified_wholesale": 0.0805, "restaurant_margin_unified_pct": 91.95, "val_ratio_tiered_retail": 0.1569, "val_ratio_tiered_wholesale": 0.12, "restaurant_margin_tiered_pct": 88.0, "val_ratio_portion_retail": 0.352, "val_ratio_portion_wholesale": 0.264, "restaurant_margin_portion_pct": 73.6, "oil_absorption_factor": 0.9, "kcal_100g": 82.0, "protein_g": 6.8, "fat_g": 5.0, "sat_fat_g": 0.9, "carbs_g": 2.1, "fiber_g": 0.2, "sodium_mg": 195.0, "health_density_score": 8.5, "source_name": "NTUC FairPrice Beancurd & Tofu Listing", "source_url": "https://omni.fairprice.com.sg/product-listing?category=beancurd-tofu&pageType=category&url=beancurd-tofu&hasImage=true&hasStock=true&title=Similar+Products&isNew=true"}, {"id": "SB03", "name_en": "Tau Pok (Fried Tofu Puff - Picked Dry)", "name_zh": "\u8c46\u535c/\u6cb9\u8c46\u8150(\u5e72\u62ff)", "category": "Soy & Beancurd", "retail_cost_100g": 2.31, "wholesale_cost_100g": 1.65, "water_soak_multiplier": 1.0, "effective_stall_cogs_100g_wet": 1.65, "drained_retail_val_100g_weighed": 2.31, "price_unified_100g": 2.98, "price_tiered_100g": 2.0, "price_per_portion": 1.0, "portion_weight_g": 50.0, "price_per_portion_100g_equiv": 2.0, "val_ratio_unified_retail": 0.7752, "val_ratio_unified_wholesale": 0.5537, "restaurant_margin_unified_pct": 44.63, "val_ratio_tiered_retail": 1.155, "val_ratio_tiered_wholesale": 0.825, "restaurant_margin_tiered_pct": 17.5, "val_ratio_portion_retail": 1.155, "val_ratio_portion_wholesale": 0.825, "restaurant_margin_portion_pct": 17.5, "oil_absorption_factor": 2.6, "kcal_100g": 271.0, "protein_g": 18.6, "fat_g": 20.2, "sat_fat_g": 3.1, "carbs_g": 3.8, "fiber_g": 1.1, "sodium_mg": 16.0, "health_density_score": 25.79, "source_name": "NTUC FairPrice Unicurd Tofu Puff 65g", "source_url": "https://www.fairprice.com.sg/product/unicurd-tofu-puff-65g-158495"}, {"id": "SB04", "name_en": "Dried Beancurd Sticks (Fuzhu - Pre-Soaked)", "name_zh": "\u8150\u7af9(\u6ce1\u53d1)", "category": "Soy & Beancurd", "retail_cost_100g": 1.08, "wholesale_cost_100g": 0.85, "water_soak_multiplier": 2.8, "effective_stall_cogs_100g_wet": 0.3, "drained_retail_val_100g_weighed": 0.386, "price_unified_100g": 2.98, "price_tiered_100g": 2.0, "price_per_portion": 1.2, "portion_weight_g": 90.0, "price_per_portion_100g_equiv": 1.33, "val_ratio_unified_retail": 0.1294, "val_ratio_unified_wholesale": 0.1007, "restaurant_margin_unified_pct": 89.93, "val_ratio_tiered_retail": 0.1929, "val_ratio_tiered_wholesale": 0.15, "restaurant_margin_tiered_pct": 85.0, "val_ratio_portion_retail": 0.81, "val_ratio_portion_wholesale": 0.225, "restaurant_margin_portion_pct": 77.5, "oil_absorption_factor": 1.5, "kcal_100g": 165.0, "protein_g": 16.2, "fat_g": 8.5, "sat_fat_g": 1.2, "carbs_g": 5.8, "fiber_g": 1.4, "sodium_mg": 22.0, "health_density_score": 28.0, "source_name": "VWC Online Dried Beancurd Stick Catalog", "source_url": "https://vwcshopping.com.sg/Beans"}, {"id": "SB05", "name_en": "Dried Beancurd Knots (Fuzhujie - Pre-Soaked)", "name_zh": "\u8150\u7af9\u7ed3/\u8c46\u7ed3(\u6ce1\u53d1)", "category": "Soy & Beancurd", "retail_cost_100g": 1.4, "wholesale_cost_100g": 1.05, "water_soak_multiplier": 2.8, "effective_stall_cogs_100g_wet": 0.38, "drained_retail_val_100g_weighed": 0.5, "price_unified_100g": 2.98, "price_tiered_100g": 2.0, "price_per_portion": 1.2, "portion_weight_g": 90.0, "price_per_portion_100g_equiv": 1.33, "val_ratio_unified_retail": 0.1678, "val_ratio_unified_wholesale": 0.1275, "restaurant_margin_unified_pct": 87.25, "val_ratio_tiered_retail": 0.25, "val_ratio_tiered_wholesale": 0.19, "restaurant_margin_tiered_pct": 81.0, "val_ratio_portion_retail": 1.05, "val_ratio_portion_wholesale": 0.285, "restaurant_margin_portion_pct": 71.5, "oil_absorption_factor": 1.55, "kcal_100g": 165.0, "protein_g": 16.2, "fat_g": 8.5, "sat_fat_g": 1.2, "carbs_g": 5.8, "fiber_g": 1.4, "sodium_mg": 22.0, "health_density_score": 27.88, "source_name": "VWC Online Bee's Brand Beancurd Knots 300g", "source_url": "https://vwcshopping.com.sg/Bee's-Brand-Dried-Bean-Curd-Knots"}, {"id": "SB06", "name_en": "Beancurd Skin Sheets (Doupi / Qianzhang)", "name_zh": "\u5343\u5f20/\u8c46\u76ae/\u767e\u53f6", "category": "Soy & Beancurd", "retail_cost_100g": 1.6, "wholesale_cost_100g": 1.15, "water_soak_multiplier": 2.2, "effective_stall_cogs_100g_wet": 0.52, "drained_retail_val_100g_weighed": 0.727, "price_unified_100g": 2.98, "price_tiered_100g": 2.0, "price_per_portion": 1.2, "portion_weight_g": 85.0, "price_per_portion_100g_equiv": 1.41, "val_ratio_unified_retail": 0.2441, "val_ratio_unified_wholesale": 0.1745, "restaurant_margin_unified_pct": 82.55, "val_ratio_tiered_retail": 0.3636, "val_ratio_tiered_wholesale": 0.26, "restaurant_margin_tiered_pct": 74.0, "val_ratio_portion_retail": 1.1333, "val_ratio_portion_wholesale": 0.3683, "restaurant_margin_portion_pct": 63.17, "oil_absorption_factor": 1.25, "kcal_100g": 210.0, "protein_g": 21.5, "fat_g": 11.0, "sat_fat_g": 1.6, "carbs_g": 6.2, "fiber_g": 1.8, "sodium_mg": 35.0, "health_density_score": 38.8, "source_name": "VWC Online Dried Beancurd Sheets 150g", "source_url": "https://vwcshopping.com.sg/Beans"}, {"id": "SB07", "name_en": "Crispy Fried Beancurd Sheet (Dry Tau Kee)", "name_zh": "\u70b8\u8150\u7af9\u76ae(\u5e72\u62ff)", "category": "Soy & Beancurd", "retail_cost_100g": 1.78, "wholesale_cost_100g": 1.35, "water_soak_multiplier": 1.0, "effective_stall_cogs_100g_wet": 1.35, "drained_retail_val_100g_weighed": 1.78, "price_unified_100g": 2.98, "price_tiered_100g": 2.0, "price_per_portion": 1.5, "portion_weight_g": 55.0, "price_per_portion_100g_equiv": 2.73, "val_ratio_unified_retail": 0.5973, "val_ratio_unified_wholesale": 0.453, "restaurant_margin_unified_pct": 54.7, "val_ratio_tiered_retail": 0.89, "val_ratio_tiered_wholesale": 0.675, "restaurant_margin_tiered_pct": 32.5, "val_ratio_portion_retail": 0.6527, "val_ratio_portion_wholesale": 0.495, "restaurant_margin_portion_pct": 50.5, "oil_absorption_factor": 2.3, "kcal_100g": 472.0, "protein_g": 26.5, "fat_g": 34.0, "sat_fat_g": 5.2, "carbs_g": 14.5, "fiber_g": 2.1, "sodium_mg": 45.0, "health_density_score": 40.69, "source_name": "NTUC FairPrice Everbest Fried Bean Curd Sheet", "source_url": "https://omni.fairprice.com.sg/product-listing?category=beancurd-tofu&hasImage=true&hasStock=true&loadMoreType=SEEALL&pageType=Product%20Detail&loc=ProductWidget-SimilarProducts&title=Similar%20Product"}, {"id": "SB08", "name_en": "Ring Roll (Ling Ling Juan - Picked Dry)", "name_zh": "\u54cd\u94c3\u5377/\u94c3\u94c3\u5377(\u5e72\u62ff)", "category": "Soy & Beancurd", "retail_cost_100g": 2.5, "wholesale_cost_100g": 1.95, "water_soak_multiplier": 1.0, "effective_stall_cogs_100g_wet": 1.95, "drained_retail_val_100g_weighed": 2.5, "price_unified_100g": 2.98, "price_tiered_100g": 2.0, "price_per_portion": 2.0, "portion_weight_g": 50.0, "price_per_portion_100g_equiv": 4.0, "val_ratio_unified_retail": 0.8389, "val_ratio_unified_wholesale": 0.6544, "restaurant_margin_unified_pct": 34.56, "val_ratio_tiered_retail": 1.25, "val_ratio_tiered_wholesale": 0.975, "restaurant_margin_tiered_pct": 2.5, "val_ratio_portion_retail": 0.625, "val_ratio_portion_wholesale": 0.4875, "restaurant_margin_portion_pct": 51.25, "oil_absorption_factor": 2.75, "kcal_100g": 515.0, "protein_g": 23.8, "fat_g": 41.2, "sat_fat_g": 6.8, "carbs_g": 12.0, "fiber_g": 1.8, "sodium_mg": 60.0, "health_density_score": 31.29, "source_name": "VWC Online Everbest Beancurd Roll 168g", "source_url": "https://vwcshopping.com.sg/Beans"}, {"id": "SB09", "name_en": "Handmade Fish Paste Tau Kee", "name_zh": "\u624b\u5de5\u9c7c\u8089\u8150\u7af9", "category": "Soy & Beancurd", "retail_cost_100g": 2.14, "wholesale_cost_100g": 1.6, "water_soak_multiplier": 1.05, "effective_stall_cogs_100g_wet": 1.52, "drained_retail_val_100g_weighed": 2.038, "price_unified_100g": 2.98, "price_tiered_100g": 2.5, "price_per_portion": 2.0, "portion_weight_g": 80.0, "price_per_portion_100g_equiv": 2.5, "val_ratio_unified_retail": 0.6839, "val_ratio_unified_wholesale": 0.5101, "restaurant_margin_unified_pct": 48.99, "val_ratio_tiered_retail": 0.8152, "val_ratio_tiered_wholesale": 0.608, "restaurant_margin_tiered_pct": 39.2, "val_ratio_portion_retail": 0.856, "val_ratio_portion_wholesale": 0.608, "restaurant_margin_portion_pct": 39.2, "oil_absorption_factor": 1.5, "kcal_100g": 215.0, "protein_g": 14.2, "fat_g": 13.5, "sat_fat_g": 2.8, "carbs_g": 9.2, "fiber_g": 0.8, "sodium_mg": 480.0, "health_density_score": 18.25, "source_name": "NTUC FairPrice BoBo Fried Tau Kee 110g", "source_url": "https://www.fairprice.com.sg/product/11252713"}, {"id": "SB10", "name_en": "Cheese Fish Tofu", "name_zh": "\u829d\u58eb\u9c7c\u8c46\u8150", "category": "Soy & Beancurd", "retail_cost_100g": 1.41, "wholesale_cost_100g": 1.05, "water_soak_multiplier": 1.05, "effective_stall_cogs_100g_wet": 1.0, "drained_retail_val_100g_weighed": 1.343, "price_unified_100g": 2.98, "price_tiered_100g": 2.5, "price_per_portion": 2.0, "portion_weight_g": 85.0, "price_per_portion_100g_equiv": 2.35, "val_ratio_unified_retail": 0.4506, "val_ratio_unified_wholesale": 0.3356, "restaurant_margin_unified_pct": 66.44, "val_ratio_tiered_retail": 0.5371, "val_ratio_tiered_wholesale": 0.4, "restaurant_margin_tiered_pct": 60.0, "val_ratio_portion_retail": 0.5992, "val_ratio_portion_wholesale": 0.425, "restaurant_margin_portion_pct": 57.5, "oil_absorption_factor": 1.15, "kcal_100g": 218.0, "protein_g": 10.5, "fat_g": 14.8, "sat_fat_g": 4.9, "carbs_g": 10.6, "fiber_g": 0.4, "sodium_mg": 620.0, "health_density_score": 7.48, "source_name": "NTUC FairPrice Haton Cheese Fish Tofu 240g", "source_url": "https://www.fairprice.com.sg/product/haton-fish-tofu-with-cheese-240g-13095402"}, {"id": "SB11", "name_en": "Fried Fish Tofu", "name_zh": "\u70b8\u9c7c\u8c46\u8150", "category": "Soy & Beancurd", "retail_cost_100g": 1.0, "wholesale_cost_100g": 0.72, "water_soak_multiplier": 1.05, "effective_stall_cogs_100g_wet": 0.69, "drained_retail_val_100g_weighed": 0.952, "price_unified_100g": 2.98, "price_tiered_100g": 2.0, "price_per_portion": 1.5, "portion_weight_g": 85.0, "price_per_portion_100g_equiv": 1.76, "val_ratio_unified_retail": 0.3196, "val_ratio_unified_wholesale": 0.2315, "restaurant_margin_unified_pct": 76.85, "val_ratio_tiered_retail": 0.4762, "val_ratio_tiered_wholesale": 0.345, "restaurant_margin_tiered_pct": 65.5, "val_ratio_portion_retail": 0.5667, "val_ratio_portion_wholesale": 0.391, "restaurant_margin_portion_pct": 60.9, "oil_absorption_factor": 1.25, "kcal_100g": 175.0, "protein_g": 11.2, "fat_g": 9.8, "sat_fat_g": 2.1, "carbs_g": 10.5, "fiber_g": 0.5, "sodium_mg": 540.0, "health_density_score": 13.32, "source_name": "NTUC FairPrice Mr Joy's Fried Fish Tofu 450g", "source_url": "https://www.fairprice.com.sg/product/mr-joy-s-yong-tau-foo-fried-fish-tofu-450-g-90067774"}, {"id": "NS01", "name_en": "Instant Noodles Block (Maggi / Koka Dry)", "name_zh": "\u65b9\u4fbf\u9762/\u516c\u4ed4\u9762(\u5e72\u5757)", "category": "Noodles & Starches", "retail_cost_100g": 0.65, "wholesale_cost_100g": 0.42, "water_soak_multiplier": 1.0, "effective_stall_cogs_100g_wet": 0.42, "drained_retail_val_100g_weighed": 0.65, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 75.0, "price_per_portion_100g_equiv": 1.33, "val_ratio_unified_retail": 0.2181, "val_ratio_unified_wholesale": 0.1409, "restaurant_margin_unified_pct": 85.91, "val_ratio_tiered_retail": 0.4333, "val_ratio_tiered_wholesale": 0.28, "restaurant_margin_tiered_pct": 72.0, "val_ratio_portion_retail": 0.4875, "val_ratio_portion_wholesale": 0.315, "restaurant_margin_portion_pct": 68.5, "oil_absorption_factor": 1.85, "kcal_100g": 445.0, "protein_g": 9.2, "fat_g": 17.5, "sat_fat_g": 8.2, "carbs_g": 62.5, "fiber_g": 2.4, "sodium_mg": 380.0, "health_density_score": 5.79, "source_name": "NTUC FairPrice Koka Noodles 5x85g", "source_url": "https://www.fairprice.com.sg/product/koka-spicy-singapore-fried-noodle-5s-x-85g-10900950"}, {"id": "NS02", "name_en": "Sweet Potato Wide Noodles (Kuan Fen - Soaked)", "name_zh": "\u7ea2\u85af\u5bbd\u7c89/\u5ddd\u7c89(\u6ce1\u53d1)", "category": "Noodles & Starches", "retail_cost_100g": 0.38, "wholesale_cost_100g": 0.25, "water_soak_multiplier": 2.85, "effective_stall_cogs_100g_wet": 0.09, "drained_retail_val_100g_weighed": 0.133, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 120.0, "price_per_portion_100g_equiv": 0.83, "val_ratio_unified_retail": 0.0447, "val_ratio_unified_wholesale": 0.0302, "restaurant_margin_unified_pct": 96.98, "val_ratio_tiered_retail": 0.0889, "val_ratio_tiered_wholesale": 0.06, "restaurant_margin_tiered_pct": 94.0, "val_ratio_portion_retail": 0.456, "val_ratio_portion_wholesale": 0.108, "restaurant_margin_portion_pct": 89.2, "oil_absorption_factor": 1.35, "kcal_100g": 125.0, "protein_g": 0.2, "fat_g": 0.1, "sat_fat_g": 0.02, "carbs_g": 30.8, "fiber_g": 0.6, "sodium_mg": 12.0, "health_density_score": -1.17, "source_name": "Shopee HotPot Wide Sweet Potato Glass Noodle", "source_url": "https://shopee.sg/-N.G-Konjac-Noodle-(Sheets-Sticks-Knots)-%E8%92%9F%E8%92%BB-(%E7%B2%89%E7%9A%AE-%E6%9D%A1-%E4%B8%9D%E7%BB%93)-380g-pack-(Zero-Fat-Low-Calories)-i.58186181.22562970614"}, {"id": "NS03", "name_en": "Mung Bean Vermicelli (Tang Hoon - Soaked)", "name_zh": "\u9f99\u53e3\u7c89\u4e1d/\u51ac\u7c89(\u6ce1\u53d1)", "category": "Noodles & Starches", "retail_cost_100g": 0.72, "wholesale_cost_100g": 0.48, "water_soak_multiplier": 2.9, "effective_stall_cogs_100g_wet": 0.17, "drained_retail_val_100g_weighed": 0.248, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 115.0, "price_per_portion_100g_equiv": 0.87, "val_ratio_unified_retail": 0.0833, "val_ratio_unified_wholesale": 0.057, "restaurant_margin_unified_pct": 94.3, "val_ratio_tiered_retail": 0.1655, "val_ratio_tiered_wholesale": 0.1133, "restaurant_margin_tiered_pct": 88.67, "val_ratio_portion_retail": 0.828, "val_ratio_portion_wholesale": 0.1955, "restaurant_margin_portion_pct": 80.45, "oil_absorption_factor": 1.65, "kcal_100g": 118.0, "protein_g": 0.1, "fat_g": 0.1, "sat_fat_g": 0.01, "carbs_g": 29.2, "fiber_g": 0.5, "sodium_mg": 8.0, "health_density_score": -2.39, "source_name": "VWC Online Homey Lung Kow Vermicelli 250g", "source_url": "https://vwcshopping.com.sg/Homey?product_id=1399"}, {"id": "NS04", "name_en": "Rice Vermicelli (Bee Hoon - Soaked)", "name_zh": "\u7c73\u7c89(\u6ce1\u53d1)", "category": "Noodles & Starches", "retail_cost_100g": 0.6, "wholesale_cost_100g": 0.4, "water_soak_multiplier": 2.6, "effective_stall_cogs_100g_wet": 0.15, "drained_retail_val_100g_weighed": 0.231, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.0, "portion_weight_g": 115.0, "price_per_portion_100g_equiv": 0.87, "val_ratio_unified_retail": 0.0774, "val_ratio_unified_wholesale": 0.0503, "restaurant_margin_unified_pct": 94.97, "val_ratio_tiered_retail": 0.1538, "val_ratio_tiered_wholesale": 0.1, "restaurant_margin_tiered_pct": 90.0, "val_ratio_portion_retail": 0.69, "val_ratio_portion_wholesale": 0.1725, "restaurant_margin_portion_pct": 82.75, "oil_absorption_factor": 1.5, "kcal_100g": 130.0, "protein_g": 2.4, "fat_g": 0.3, "sat_fat_g": 0.06, "carbs_g": 28.5, "fiber_g": 0.8, "sodium_mg": 10.0, "health_density_score": 3.0, "source_name": "VWC Online Egret Rice Vermicelli 500g", "source_url": "https://vwcshopping.com.sg/Egret-Brand-Tong-Kou-Rice-Vermicelli-(%E7%A6%8F%E5%BB%BA%E7%B1%B3%E7%B2%89%E5%B9%B2)"}, {"id": "NS05", "name_en": "Konjac / Shirataki Knots", "name_zh": "\u9b54\u828b\u7ed3/\u9b54\u828b\u4e1d", "category": "Noodles & Starches", "retail_cost_100g": 1.22, "wholesale_cost_100g": 0.78, "water_soak_multiplier": 1.1, "effective_stall_cogs_100g_wet": 0.71, "drained_retail_val_100g_weighed": 1.109, "price_unified_100g": 2.98, "price_tiered_100g": 1.8, "price_per_portion": 1.2, "portion_weight_g": 100.0, "price_per_portion_100g_equiv": 1.2, "val_ratio_unified_retail": 0.3722, "val_ratio_unified_wholesale": 0.2383, "restaurant_margin_unified_pct": 76.17, "val_ratio_tiered_retail": 0.6162, "val_ratio_tiered_wholesale": 0.3944, "restaurant_margin_tiered_pct": 60.56, "val_ratio_portion_retail": 1.0167, "val_ratio_portion_wholesale": 0.5917, "restaurant_margin_portion_pct": 40.83, "oil_absorption_factor": 0.45, "kcal_100g": 10.0, "protein_g": 0.2, "fat_g": 0.0, "sat_fat_g": 0.0, "carbs_g": 2.8, "fiber_g": 3.0, "sodium_mg": 5.0, "health_density_score": 8.82, "source_name": "NTUC FairPrice Diet Food Organic Shirataki Konjac", "source_url": "https://www.fairprice.com.sg/product/diet-food-organic-shirataki-konjac---vermicelli"}, {"id": "NS06", "name_en": "Korean Rice Cake (Tteokbokki / Nian Gao)", "name_zh": "\u97e9\u5f0f\u5e74\u7cd5\u6761/\u5e74\u7cd5\u7247", "category": "Noodles & Starches", "retail_cost_100g": 0.66, "wholesale_cost_100g": 0.44, "water_soak_multiplier": 1.02, "effective_stall_cogs_100g_wet": 0.43, "drained_retail_val_100g_weighed": 0.647, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.2, "portion_weight_g": 110.0, "price_per_portion_100g_equiv": 1.09, "val_ratio_unified_retail": 0.2171, "val_ratio_unified_wholesale": 0.1443, "restaurant_margin_unified_pct": 85.57, "val_ratio_tiered_retail": 0.4314, "val_ratio_tiered_wholesale": 0.2867, "restaurant_margin_tiered_pct": 71.33, "val_ratio_portion_retail": 0.605, "val_ratio_portion_wholesale": 0.3942, "restaurant_margin_portion_pct": 60.58, "oil_absorption_factor": 0.9, "kcal_100g": 225.0, "protein_g": 4.2, "fat_g": 0.4, "sat_fat_g": 0.08, "carbs_g": 51.0, "fiber_g": 0.9, "sodium_mg": 145.0, "health_density_score": 7.49, "source_name": "NTUC FairPrice Jongga Chilled Rice Cake 500g", "source_url": "https://www.fairprice.com.sg/product/chongga-chilled-rice-cake---tubular-13088844"}, {"id": "NS07", "name_en": "Fresh Japanese Udon", "name_zh": "\u4e4c\u51ac\u9762", "category": "Noodles & Starches", "retail_cost_100g": 0.55, "wholesale_cost_100g": 0.35, "water_soak_multiplier": 1.15, "effective_stall_cogs_100g_wet": 0.3, "drained_retail_val_100g_weighed": 0.478, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.2, "portion_weight_g": 130.0, "price_per_portion_100g_equiv": 0.92, "val_ratio_unified_retail": 0.1605, "val_ratio_unified_wholesale": 0.1007, "restaurant_margin_unified_pct": 89.93, "val_ratio_tiered_retail": 0.3188, "val_ratio_tiered_wholesale": 0.2, "restaurant_margin_tiered_pct": 80.0, "val_ratio_portion_retail": 0.5958, "val_ratio_portion_wholesale": 0.325, "restaurant_margin_portion_pct": 67.5, "oil_absorption_factor": 1.05, "kcal_100g": 142.0, "protein_g": 3.8, "fat_g": 0.5, "sat_fat_g": 0.1, "carbs_g": 30.2, "fiber_g": 1.1, "sodium_mg": 210.0, "health_density_score": 6.74, "source_name": "NTUC FairPrice Fortune Japanese Udon 600g", "source_url": "https://www.fairprice.com.sg/product/fortune-japanese-udon-3s-600g-12536734"}, {"id": "NS08", "name_en": "Knife-Cut / Spinach Noodles (Dry/Semi-Fresh)", "name_zh": "\u5200\u524a\u9762/\u83e0\u83dc\u9762", "category": "Noodles & Starches", "retail_cost_100g": 0.78, "wholesale_cost_100g": 0.5, "water_soak_multiplier": 1.8, "effective_stall_cogs_100g_wet": 0.28, "drained_retail_val_100g_weighed": 0.433, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.2, "portion_weight_g": 110.0, "price_per_portion_100g_equiv": 1.09, "val_ratio_unified_retail": 0.1454, "val_ratio_unified_wholesale": 0.094, "restaurant_margin_unified_pct": 90.6, "val_ratio_tiered_retail": 0.2889, "val_ratio_tiered_wholesale": 0.1867, "restaurant_margin_tiered_pct": 81.33, "val_ratio_portion_retail": 0.715, "val_ratio_portion_wholesale": 0.2567, "restaurant_margin_portion_pct": 74.33, "oil_absorption_factor": 1.2, "kcal_100g": 185.0, "protein_g": 6.2, "fat_g": 0.8, "sat_fat_g": 0.15, "carbs_g": 38.0, "fiber_g": 2.2, "sodium_mg": 160.0, "health_density_score": 14.34, "source_name": "Shopee Chi Sheng Tainan Knife-Cut Noodles 600g", "source_url": "https://shopee.sg/Chongqing-Sweet-Potato-Flat-Vermicelli-Hot-Pot-Dipping-Package-240g-i.1241785451.25426526702?extraParams=%7B%22display_model_id%22%3A217463177013%2C%22model_selection_logic%22%3A3%7D"}, {"id": "NS09", "name_en": "Mantou Buns / Youtiao Dough Fritters", "name_zh": "\u9992\u5934/\u6cb9\u6761", "category": "Noodles & Starches", "retail_cost_100g": 0.71, "wholesale_cost_100g": 0.45, "water_soak_multiplier": 1.0, "effective_stall_cogs_100g_wet": 0.45, "drained_retail_val_100g_weighed": 0.71, "price_unified_100g": 2.98, "price_tiered_100g": 1.5, "price_per_portion": 1.2, "portion_weight_g": 80.0, "price_per_portion_100g_equiv": 1.5, "val_ratio_unified_retail": 0.2383, "val_ratio_unified_wholesale": 0.151, "restaurant_margin_unified_pct": 84.9, "val_ratio_tiered_retail": 0.4733, "val_ratio_tiered_wholesale": 0.3, "restaurant_margin_tiered_pct": 70.0, "val_ratio_portion_retail": 0.4733, "val_ratio_portion_wholesale": 0.3, "restaurant_margin_portion_pct": 70.0, "oil_absorption_factor": 2.4, "kcal_100g": 285.0, "protein_g": 7.5, "fat_g": 6.2, "sat_fat_g": 1.4, "carbs_g": 49.5, "fiber_g": 1.6, "sodium_mg": 260.0, "health_density_score": 9.48, "source_name": "NTUC FairPrice Fortune Mantou Plain 360g", "source_url": "https://www.fairprice.com.sg/product/fortune-mantou-plain-360g-306242"}, {"id": "PB01", "name_en": "Pork / Chicken Luncheon Meat", "name_zh": "\u5348\u9910\u8089", "category": "Processed & Surimi", "retail_cost_100g": 1.35, "wholesale_cost_100g": 0.92, "water_soak_multiplier": 1.0, "effective_stall_cogs_100g_wet": 0.92, "drained_retail_val_100g_weighed": 1.35, "price_unified_100g": 2.98, "price_tiered_100g": 2.8, "price_per_portion": 2.0, "portion_weight_g": 85.0, "price_per_portion_100g_equiv": 2.35, "val_ratio_unified_retail": 0.453, "val_ratio_unified_wholesale": 0.3087, "restaurant_margin_unified_pct": 69.13, "val_ratio_tiered_retail": 0.4821, "val_ratio_tiered_wholesale": 0.3286, "restaurant_margin_tiered_pct": 67.14, "val_ratio_portion_retail": 0.5737, "val_ratio_portion_wholesale": 0.391, "restaurant_margin_portion_pct": 60.9, "oil_absorption_factor": 1.1, "kcal_100g": 295.0, "protein_g": 12.5, "fat_g": 24.5, "sat_fat_g": 8.8, "carbs_g": 5.5, "fiber_g": 0.2, "sodium_mg": 890.0, "health_density_score": 3.63, "source_name": "NTUC FairPrice Golden Bridge Luncheon Meat 340g", "source_url": "https://www.fairprice.com.sg/product/13132610"}, {"id": "PB02", "name_en": "Taiwan Pork / XO Sausage", "name_zh": "\u53f0\u6e7e\u9999\u80a0/\u732a\u8089\u80a0", "category": "Processed & Surimi", "retail_cost_100g": 1.53, "wholesale_cost_100g": 1.08, "water_soak_multiplier": 1.0, "effective_stall_cogs_100g_wet": 1.08, "drained_retail_val_100g_weighed": 1.53, "price_unified_100g": 2.98, "price_tiered_100g": 2.8, "price_per_portion": 2.0, "portion_weight_g": 80.0, "price_per_portion_100g_equiv": 2.5, "val_ratio_unified_retail": 0.5134, "val_ratio_unified_wholesale": 0.3624, "restaurant_margin_unified_pct": 63.76, "val_ratio_tiered_retail": 0.5464, "val_ratio_tiered_wholesale": 0.3857, "restaurant_margin_tiered_pct": 61.43, "val_ratio_portion_retail": 0.612, "val_ratio_portion_wholesale": 0.432, "restaurant_margin_portion_pct": 56.8, "oil_absorption_factor": 0.95, "kcal_100g": 338.0, "protein_g": 14.8, "fat_g": 25.0, "sat_fat_g": 8.5, "carbs_g": 13.5, "fiber_g": 0.1, "sodium_mg": 740.0, "health_density_score": 8.88, "source_name": "NTUC FairPrice Golden Bridge XO Sausage", "source_url": "https://omni.fairprice.com.sg/product-listing?brand=golden-bridge&pageType=brand&url=golden-bridge&metaData=%5Bobject+Object%5D"}, {"id": "PB03", "name_en": "Cheese / Cocktail Chicken Sausage", "name_zh": "\u829d\u58eb\u8106\u76ae\u80a0", "category": "Processed & Surimi", "retail_cost_100g": 1.05, "wholesale_cost_100g": 0.72, "water_soak_multiplier": 1.0, "effective_stall_cogs_100g_wet": 0.72, "drained_retail_val_100g_weighed": 1.05, "price_unified_100g": 2.98, "price_tiered_100g": 2.5, "price_per_portion": 1.5, "portion_weight_g": 85.0, "price_per_portion_100g_equiv": 1.76, "val_ratio_unified_retail": 0.3523, "val_ratio_unified_wholesale": 0.2416, "restaurant_margin_unified_pct": 75.84, "val_ratio_tiered_retail": 0.42, "val_ratio_tiered_wholesale": 0.288, "restaurant_margin_tiered_pct": 71.2, "val_ratio_portion_retail": 0.595, "val_ratio_portion_wholesale": 0.408, "restaurant_margin_portion_pct": 59.2, "oil_absorption_factor": 0.9, "kcal_100g": 248.0, "protein_g": 12.2, "fat_g": 19.5, "sat_fat_g": 6.4, "carbs_g": 5.8, "fiber_g": 0.1, "sodium_mg": 780.0, "health_density_score": 7.31, "source_name": "Sheng Siong Tasty Bites Chicken Range", "source_url": "https://corporate.shengsiong.com.sg/tasty-bites-cheezy-chicken-meatball-pasta/"}, {"id": "PB04", "name_en": "Imitation Crab Stick (Surimi)", "name_zh": "\u87f9\u67f3/\u87f9\u5473\u68d2", "category": "Processed & Surimi", "retail_cost_100g": 1.38, "wholesale_cost_100g": 0.9, "water_soak_multiplier": 1.08, "effective_stall_cogs_100g_wet": 0.83, "drained_retail_val_100g_weighed": 1.278, "price_unified_100g": 2.98, "price_tiered_100g": 2.5, "price_per_portion": 1.5, "portion_weight_g": 85.0, "price_per_portion_100g_equiv": 1.76, "val_ratio_unified_retail": 0.4288, "val_ratio_unified_wholesale": 0.2785, "restaurant_margin_unified_pct": 72.15, "val_ratio_tiered_retail": 0.5111, "val_ratio_tiered_wholesale": 0.332, "restaurant_margin_tiered_pct": 66.8, "val_ratio_portion_retail": 0.782, "val_ratio_portion_wholesale": 0.4703, "restaurant_margin_portion_pct": 52.97, "oil_absorption_factor": 1.0, "kcal_100g": 95.0, "protein_g": 7.6, "fat_g": 0.8, "sat_fat_g": 0.15, "carbs_g": 14.2, "fiber_g": 0.2, "sodium_mg": 580.0, "health_density_score": 9.28, "source_name": "NTUC FairPrice DoDo Crab Flavoured Stick 250g", "source_url": "https://www.fairprice.com.sg/product/dodo-crab-flavoured-stick-250g-390617"}, {"id": "PB05", "name_en": "Cooked Fish Ball", "name_zh": "\u9c7c\u4e38", "category": "Processed & Surimi", "retail_cost_100g": 1.04, "wholesale_cost_100g": 0.68, "water_soak_multiplier": 1.05, "effective_stall_cogs_100g_wet": 0.65, "drained_retail_val_100g_weighed": 0.99, "price_unified_100g": 2.98, "price_tiered_100g": 2.5, "price_per_portion": 1.5, "portion_weight_g": 90.0, "price_per_portion_100g_equiv": 1.67, "val_ratio_unified_retail": 0.3324, "val_ratio_unified_wholesale": 0.2181, "restaurant_margin_unified_pct": 78.19, "val_ratio_tiered_retail": 0.3962, "val_ratio_tiered_wholesale": 0.26, "restaurant_margin_tiered_pct": 74.0, "val_ratio_portion_retail": 0.624, "val_ratio_portion_wholesale": 0.39, "restaurant_margin_portion_pct": 61.0, "oil_absorption_factor": 0.75, "kcal_100g": 108.0, "protein_g": 10.8, "fat_g": 2.2, "sat_fat_g": 0.5, "carbs_g": 11.2, "fiber_g": 0.1, "sodium_mg": 640.0, "health_density_score": 14.58, "source_name": "NTUC FairPrice DoDo Cooked Fish Ball 450g", "source_url": "https://www.fairprice.com.sg/product/dodo-cooked-fish-ball-value-pack-450g-11135912"}, {"id": "PB06", "name_en": "Fuzhou Fish Ball (Meat-Stuffed)", "name_zh": "\u798f\u5dde\u9c7c\u4e38", "category": "Processed & Surimi", "retail_cost_100g": 1.58, "wholesale_cost_100g": 1.12, "water_soak_multiplier": 1.05, "effective_stall_cogs_100g_wet": 1.07, "drained_retail_val_100g_weighed": 1.505, "price_unified_100g": 2.98, "price_tiered_100g": 2.8, "price_per_portion": 2.0, "portion_weight_g": 90.0, "price_per_portion_100g_equiv": 2.22, "val_ratio_unified_retail": 0.505, "val_ratio_unified_wholesale": 0.3591, "restaurant_margin_unified_pct": 64.09, "val_ratio_tiered_retail": 0.5374, "val_ratio_tiered_wholesale": 0.3821, "restaurant_margin_tiered_pct": 61.79, "val_ratio_portion_retail": 0.711, "val_ratio_portion_wholesale": 0.4815, "restaurant_margin_portion_pct": 51.85, "oil_absorption_factor": 0.95, "kcal_100g": 168.0, "protein_g": 11.5, "fat_g": 8.6, "sat_fat_g": 3.1, "carbs_g": 11.0, "fiber_g": 0.2, "sodium_mg": 610.0, "health_density_score": 11.87, "source_name": "NTUC FairPrice DoDo Fuzhou Fishball 250g", "source_url": "https://www.fairprice.com.sg/product/dodo-fuzhou-fishball-250g-11451974"}, {"id": "PB07", "name_en": "Teochew Pork Ball (Gong Wan)", "name_zh": "\u732a\u8089\u4e38/\u8d21\u4e38", "category": "Processed & Surimi", "retail_cost_100g": 2.29, "wholesale_cost_100g": 1.6, "water_soak_multiplier": 1.02, "effective_stall_cogs_100g_wet": 1.57, "drained_retail_val_100g_weighed": 2.245, "price_unified_100g": 2.98, "price_tiered_100g": 2.8, "price_per_portion": 2.0, "portion_weight_g": 85.0, "price_per_portion_100g_equiv": 2.35, "val_ratio_unified_retail": 0.7534, "val_ratio_unified_wholesale": 0.5268, "restaurant_margin_unified_pct": 47.32, "val_ratio_tiered_retail": 0.8018, "val_ratio_tiered_wholesale": 0.5607, "restaurant_margin_tiered_pct": 43.93, "val_ratio_portion_retail": 0.9732, "val_ratio_portion_wholesale": 0.6673, "restaurant_margin_portion_pct": 33.27, "oil_absorption_factor": 0.85, "kcal_100g": 235.0, "protein_g": 14.2, "fat_g": 17.5, "sat_fat_g": 6.2, "carbs_g": 5.2, "fiber_g": 0.2, "sodium_mg": 670.0, "health_density_score": 12.09, "source_name": "NTUC FairPrice Mr Joy's Handmade Pork Ball 240g", "source_url": "https://www.fairprice.com.sg/product/mr-joys-handmade-teochew-pork-ball-frozen"}, {"id": "PB08", "name_en": "Fish Dumpling (Her Jiao)", "name_zh": "\u9c7c\u997a", "category": "Processed & Surimi", "retail_cost_100g": 3.56, "wholesale_cost_100g": 1.8, "water_soak_multiplier": 1.05, "effective_stall_cogs_100g_wet": 1.71, "drained_retail_val_100g_weighed": 3.39, "price_unified_100g": 2.98, "price_tiered_100g": 2.8, "price_per_portion": 2.0, "portion_weight_g": 80.0, "price_per_portion_100g_equiv": 2.5, "val_ratio_unified_retail": 1.1377, "val_ratio_unified_wholesale": 0.5738, "restaurant_margin_unified_pct": 42.62, "val_ratio_tiered_retail": 1.2109, "val_ratio_tiered_wholesale": 0.6107, "restaurant_margin_tiered_pct": 38.93, "val_ratio_portion_retail": 1.424, "val_ratio_portion_wholesale": 0.684, "restaurant_margin_portion_pct": 31.6, "oil_absorption_factor": 1.0, "kcal_100g": 182.0, "protein_g": 12.6, "fat_g": 9.8, "sat_fat_g": 3.2, "carbs_g": 10.8, "fiber_g": 0.2, "sodium_mg": 650.0, "health_density_score": 13.42, "source_name": "NTUC FairPrice DoDo Fish Dumpling 80g", "source_url": "https://www.fairprice.com.sg/product/240200"}, {"id": "PB09", "name_en": "Squid & Prawn Paste Cake / Ebiko Ball", "name_zh": "\u58a8\u9c7c\u867e\u6ed1\u997c/\u867e\u4e38", "category": "Processed & Surimi", "retail_cost_100g": 4.18, "wholesale_cost_100g": 2.85, "water_soak_multiplier": 1.02, "effective_stall_cogs_100g_wet": 2.79, "drained_retail_val_100g_weighed": 4.098, "price_unified_100g": 2.98, "price_tiered_100g": 3.5, "price_per_portion": 3.0, "portion_weight_g": 80.0, "price_per_portion_100g_equiv": 3.75, "val_ratio_unified_retail": 1.3752, "val_ratio_unified_wholesale": 0.9362, "restaurant_margin_unified_pct": 6.38, "val_ratio_tiered_retail": 1.1709, "val_ratio_tiered_wholesale": 0.7971, "restaurant_margin_tiered_pct": 20.29, "val_ratio_portion_retail": 1.1147, "val_ratio_portion_wholesale": 0.744, "restaurant_margin_portion_pct": 25.6, "oil_absorption_factor": 0.85, "kcal_100g": 138.0, "protein_g": 14.8, "fat_g": 4.5, "sat_fat_g": 1.1, "carbs_g": 9.5, "fiber_g": 0.3, "sodium_mg": 520.0, "health_density_score": 21.75, "source_name": "NTUC FairPrice EB Frozen Squid Prawn Cake", "source_url": "https://www.fairprice.com.sg/product/eb-frozen-squid-prawn-cake-4-per-pack-13187919"}, {"id": "PB10", "name_en": "Peeled Quail Eggs", "name_zh": "\u9e4c\u9e51\u86cb", "category": "Processed & Surimi", "retail_cost_100g": 1.79, "wholesale_cost_100g": 1.25, "water_soak_multiplier": 1.0, "effective_stall_cogs_100g_wet": 1.25, "drained_retail_val_100g_weighed": 1.79, "price_unified_100g": 2.98, "price_tiered_100g": 2.5, "price_per_portion": 1.8, "portion_weight_g": 85.0, "price_per_portion_100g_equiv": 2.12, "val_ratio_unified_retail": 0.6007, "val_ratio_unified_wholesale": 0.4195, "restaurant_margin_unified_pct": 58.05, "val_ratio_tiered_retail": 0.716, "val_ratio_tiered_wholesale": 0.5, "restaurant_margin_tiered_pct": 50.0, "val_ratio_portion_retail": 0.8453, "val_ratio_portion_wholesale": 0.5903, "restaurant_margin_portion_pct": 40.97, "oil_absorption_factor": 0.65, "kcal_100g": 158.0, "protein_g": 13.1, "fat_g": 11.1, "sat_fat_g": 3.56, "carbs_g": 0.4, "fiber_g": 0.0, "sodium_mg": 141.0, "health_density_score": 16.05, "source_name": "RedMart Dasoon Peeled Quail Eggs 145g", "source_url": "https://redmart.lazada.sg/dasoon-166440/"}, {"id": "MT01", "name_en": "Pork Belly Shabu Slices", "name_zh": "\u4e94\u82b1\u8089\u7247/\u4e09\u5c42\u8089", "category": "Meat Cuts", "retail_cost_100g": 1.81, "wholesale_cost_100g": 1.35, "water_soak_multiplier": 1.08, "effective_stall_cogs_100g_wet": 1.25, "drained_retail_val_100g_weighed": 1.676, "price_unified_100g": 2.98, "price_tiered_100g": 2.8, "price_per_portion": 2.0, "portion_weight_g": 75.0, "price_per_portion_100g_equiv": 2.67, "val_ratio_unified_retail": 0.5624, "val_ratio_unified_wholesale": 0.4195, "restaurant_margin_unified_pct": 58.05, "val_ratio_tiered_retail": 0.5985, "val_ratio_tiered_wholesale": 0.4464, "restaurant_margin_tiered_pct": 55.36, "val_ratio_portion_retail": 0.6787, "val_ratio_portion_wholesale": 0.4688, "restaurant_margin_portion_pct": 53.12, "oil_absorption_factor": 1.15, "kcal_100g": 395.0, "protein_g": 14.5, "fat_g": 37.0, "sat_fat_g": 13.5, "carbs_g": 0.0, "fiber_g": 0.0, "sodium_mg": 58.0, "health_density_score": 2.74, "source_name": "NTUC FairPrice Tasty Food Affair Pork Belly Shabu 300g", "source_url": "https://www.fairprice.com.sg/product/tasty-food-affair-pork-belly-shabu-shabu-300-g-90076861"}, {"id": "MT02", "name_en": "Pork Collar Shabu Slices", "name_zh": "\u6885\u82b1\u8089\u7247", "category": "Meat Cuts", "retail_cost_100g": 2.15, "wholesale_cost_100g": 1.55, "water_soak_multiplier": 1.08, "effective_stall_cogs_100g_wet": 1.44, "drained_retail_val_100g_weighed": 1.991, "price_unified_100g": 2.98, "price_tiered_100g": 2.8, "price_per_portion": 2.0, "portion_weight_g": 75.0, "price_per_portion_100g_equiv": 2.67, "val_ratio_unified_retail": 0.668, "val_ratio_unified_wholesale": 0.4832, "restaurant_margin_unified_pct": 51.68, "val_ratio_tiered_retail": 0.711, "val_ratio_tiered_wholesale": 0.5143, "restaurant_margin_tiered_pct": 48.57, "val_ratio_portion_retail": 0.8062, "val_ratio_portion_wholesale": 0.54, "restaurant_margin_portion_pct": 46.0, "oil_absorption_factor": 0.95, "kcal_100g": 232.0, "protein_g": 18.8, "fat_g": 17.2, "sat_fat_g": 6.1, "carbs_g": 0.0, "fiber_g": 0.0, "sodium_mg": 62.0, "health_density_score": 22.07, "source_name": "NTUC FairPrice Meat Affair Pork Collar Shabu 300g", "source_url": "https://www.fairprice.com.sg/product/meat-affair-pork-collar-shabu-shabu-300-g-90055334"}, {"id": "MT03", "name_en": "Iberico Pork Collar Shabu", "name_zh": "\u4f0a\u6bd4\u5229\u4e9a\u9ed1\u732a\u8089\u7247", "category": "Meat Cuts", "retail_cost_100g": 4.75, "wholesale_cost_100g": 3.4, "water_soak_multiplier": 1.05, "effective_stall_cogs_100g_wet": 3.24, "drained_retail_val_100g_weighed": 4.524, "price_unified_100g": 2.98, "price_tiered_100g": 3.8, "price_per_portion": 3.5, "portion_weight_g": 70.0, "price_per_portion_100g_equiv": 5.0, "val_ratio_unified_retail": 1.5181, "val_ratio_unified_wholesale": 1.0872, "restaurant_margin_unified_pct": -8.72, "val_ratio_tiered_retail": 1.1905, "val_ratio_tiered_wholesale": 0.8526, "restaurant_margin_tiered_pct": 14.74, "val_ratio_portion_retail": 0.95, "val_ratio_portion_wholesale": 0.648, "restaurant_margin_portion_pct": 35.2, "oil_absorption_factor": 1.05, "kcal_100g": 290.0, "protein_g": 17.5, "fat_g": 24.2, "sat_fat_g": 8.2, "carbs_g": 0.0, "fiber_g": 0.0, "sodium_mg": 60.0, "health_density_score": 16.34, "source_name": "NTUC FairPrice Porkolicious Iberico Pork Collar 200g", "source_url": "https://www.fairprice.com.sg/product/porkolicious-iberico-pork-collar-shabu-steamboat-200-g-90158338"}, {"id": "MT04", "name_en": "Beef Shortplate / Shabu Rolls", "name_zh": "\u80a5\u725b\u5377/\u725b\u8089\u7247", "category": "Meat Cuts", "retail_cost_100g": 2.75, "wholesale_cost_100g": 2.1, "water_soak_multiplier": 1.1, "effective_stall_cogs_100g_wet": 1.91, "drained_retail_val_100g_weighed": 2.5, "price_unified_100g": 2.98, "price_tiered_100g": 3.5, "price_per_portion": 3.0, "portion_weight_g": 75.0, "price_per_portion_100g_equiv": 4.0, "val_ratio_unified_retail": 0.8389, "val_ratio_unified_wholesale": 0.6409, "restaurant_margin_unified_pct": 35.91, "val_ratio_tiered_retail": 0.7143, "val_ratio_tiered_wholesale": 0.5457, "restaurant_margin_tiered_pct": 45.43, "val_ratio_portion_retail": 0.6875, "val_ratio_portion_wholesale": 0.4775, "restaurant_margin_portion_pct": 52.25, "oil_absorption_factor": 1.05, "kcal_100g": 254.0, "protein_g": 19.4, "fat_g": 19.5, "sat_fat_g": 7.8, "carbs_g": 0.0, "fiber_g": 0.0, "sodium_mg": 68.0, "health_density_score": 20.32, "source_name": "NTUC FairPrice Amir's Beef Shabu Shabu 400g", "source_url": "https://www.fairprice.com.sg/product/amirs-beef-shabu-shabu-400g-11977554"}, {"id": "MT05", "name_en": "Mutton / Lamb Leg Shabu Rolls", "name_zh": "\u7f8a\u8089\u5377", "category": "Meat Cuts", "retail_cost_100g": 3.2, "wholesale_cost_100g": 2.45, "water_soak_multiplier": 1.1, "effective_stall_cogs_100g_wet": 2.23, "drained_retail_val_100g_weighed": 2.909, "price_unified_100g": 2.98, "price_tiered_100g": 3.5, "price_per_portion": 3.0, "portion_weight_g": 75.0, "price_per_portion_100g_equiv": 4.0, "val_ratio_unified_retail": 0.9762, "val_ratio_unified_wholesale": 0.7483, "restaurant_margin_unified_pct": 25.17, "val_ratio_tiered_retail": 0.8312, "val_ratio_tiered_wholesale": 0.6371, "restaurant_margin_tiered_pct": 36.29, "val_ratio_portion_retail": 0.8, "val_ratio_portion_wholesale": 0.5575, "restaurant_margin_portion_pct": 44.25, "oil_absorption_factor": 1.05, "kcal_100g": 242.0, "protein_g": 19.8, "fat_g": 18.0, "sat_fat_g": 7.9, "carbs_g": 0.0, "fiber_g": 0.0, "sodium_mg": 72.0, "health_density_score": 20.88, "source_name": "NTUC FairPrice Chef Delights Mutton Shabu 300g", "source_url": "https://www.fairprice.com.sg/product/chef-delights-frozen-mutton-shabu-shabu-300g-13140193"}, {"id": "MT06", "name_en": "Boneless Skinless Chicken Thigh", "name_zh": "\u65e0\u9aa8\u9e21\u817f\u8089", "category": "Meat Cuts", "retail_cost_100g": 2.11, "wholesale_cost_100g": 1.15, "water_soak_multiplier": 1.08, "effective_stall_cogs_100g_wet": 1.06, "drained_retail_val_100g_weighed": 1.954, "price_unified_100g": 2.98, "price_tiered_100g": 2.8, "price_per_portion": 2.0, "portion_weight_g": 85.0, "price_per_portion_100g_equiv": 2.35, "val_ratio_unified_retail": 0.6556, "val_ratio_unified_wholesale": 0.3557, "restaurant_margin_unified_pct": 64.43, "val_ratio_tiered_retail": 0.6978, "val_ratio_tiered_wholesale": 0.3786, "restaurant_margin_tiered_pct": 62.14, "val_ratio_portion_retail": 0.8967, "val_ratio_portion_wholesale": 0.4505, "restaurant_margin_portion_pct": 54.95, "oil_absorption_factor": 0.8, "kcal_100g": 144.0, "protein_g": 19.8, "fat_g": 7.1, "sat_fat_g": 1.95, "carbs_g": 0.0, "fiber_g": 0.0, "sodium_mg": 84.0, "health_density_score": 30.38, "source_name": "NTUC FairPrice Master Grocer Boneless Chicken Thigh", "source_url": "https://www.fairprice.com.sg/product/master-grocer-fresh-chicken-thigh-boneless-and-skinless-330-g-90175209"}, {"id": "MT07", "name_en": "Skinless Chicken Breast Slices", "name_zh": "\u9e21\u80f8\u8089\u7247", "category": "Meat Cuts", "retail_cost_100g": 0.8, "wholesale_cost_100g": 0.58, "water_soak_multiplier": 1.12, "effective_stall_cogs_100g_wet": 0.52, "drained_retail_val_100g_weighed": 0.714, "price_unified_100g": 2.98, "price_tiered_100g": 2.8, "price_per_portion": 2.0, "portion_weight_g": 85.0, "price_per_portion_100g_equiv": 2.35, "val_ratio_unified_retail": 0.2397, "val_ratio_unified_wholesale": 0.1745, "restaurant_margin_unified_pct": 82.55, "val_ratio_tiered_retail": 0.2551, "val_ratio_tiered_wholesale": 0.1857, "restaurant_margin_tiered_pct": 81.43, "val_ratio_portion_retail": 0.34, "val_ratio_portion_wholesale": 0.221, "restaurant_margin_portion_pct": 77.9, "oil_absorption_factor": 0.7, "kcal_100g": 114.0, "protein_g": 23.2, "fat_g": 1.8, "sat_fat_g": 0.45, "carbs_g": 0.0, "fiber_g": 0.0, "sodium_mg": 65.0, "health_density_score": 39.08, "source_name": "NTUC FairPrice Sadia IQF Chicken Breast 1kg", "source_url": "https://www.fairprice.com.sg/product/sadia-iqf-skinless-chicken-breast-1kg-13104103"}, {"id": "MT08", "name_en": "Smoked Duck Breast Slices", "name_zh": "\u70df\u718f\u9e2d\u80f8\u8089", "category": "Meat Cuts", "retail_cost_100g": 2.31, "wholesale_cost_100g": 1.75, "water_soak_multiplier": 1.02, "effective_stall_cogs_100g_wet": 1.72, "drained_retail_val_100g_weighed": 2.265, "price_unified_100g": 2.98, "price_tiered_100g": 3.2, "price_per_portion": 3.0, "portion_weight_g": 75.0, "price_per_portion_100g_equiv": 4.0, "val_ratio_unified_retail": 0.76, "val_ratio_unified_wholesale": 0.5772, "restaurant_margin_unified_pct": 42.28, "val_ratio_tiered_retail": 0.7077, "val_ratio_tiered_wholesale": 0.5375, "restaurant_margin_tiered_pct": 46.25, "val_ratio_portion_retail": 0.5775, "val_ratio_portion_wholesale": 0.43, "restaurant_margin_portion_pct": 57.0, "oil_absorption_factor": 0.9, "kcal_100g": 198.0, "protein_g": 18.5, "fat_g": 13.2, "sat_fat_g": 4.1, "carbs_g": 1.2, "fiber_g": 0.0, "sodium_mg": 680.0, "health_density_score": 22.18, "source_name": "NTUC FairPrice Delicato Smoked Duck 220g", "source_url": "https://www.fairprice.com.sg/product/delicato-smoked-duck-original-220g-13224209"}, {"id": "MT09", "name_en": "Mid-Joint Chicken Wings", "name_zh": "\u9e21\u4e2d\u7fc5", "category": "Meat Cuts", "retail_cost_100g": 1.69, "wholesale_cost_100g": 1.05, "water_soak_multiplier": 1.05, "effective_stall_cogs_100g_wet": 1.0, "drained_retail_val_100g_weighed": 1.61, "price_unified_100g": 2.98, "price_tiered_100g": 2.8, "price_per_portion": 2.0, "portion_weight_g": 90.0, "price_per_portion_100g_equiv": 2.22, "val_ratio_unified_retail": 0.5401, "val_ratio_unified_wholesale": 0.3356, "restaurant_margin_unified_pct": 66.44, "val_ratio_tiered_retail": 0.5748, "val_ratio_tiered_wholesale": 0.3571, "restaurant_margin_tiered_pct": 64.29, "val_ratio_portion_retail": 0.7605, "val_ratio_portion_wholesale": 0.45, "restaurant_margin_portion_pct": 55.0, "oil_absorption_factor": 0.95, "kcal_100g": 195.0, "protein_g": 17.5, "fat_g": 13.8, "sat_fat_g": 3.8, "carbs_g": 0.0, "fiber_g": 0.0, "sodium_mg": 82.0, "health_density_score": 23.1, "source_name": "Shopee Frozen & Chilled Poultry Catalog", "source_url": "https://shopee.sg/Beef-Tripe-Australia-%E7%89%9B%E8%82%9A-Jokia--i.989345379.22490001023"}, {"id": "OF01", "name_en": "Beef Honeycomb Tripe (Jin Qian Du)", "name_zh": "\u91d1\u94b1\u809a/\u8702\u7a9d\u725b\u809a", "category": "Offal & Tripe", "retail_cost_100g": 2.42, "wholesale_cost_100g": 1.65, "water_soak_multiplier": 1.15, "effective_stall_cogs_100g_wet": 1.43, "drained_retail_val_100g_weighed": 2.104, "price_unified_100g": 2.98, "price_tiered_100g": 3.2, "price_per_portion": 3.0, "portion_weight_g": 75.0, "price_per_portion_100g_equiv": 4.0, "val_ratio_unified_retail": 0.7062, "val_ratio_unified_wholesale": 0.4799, "restaurant_margin_unified_pct": 52.01, "val_ratio_tiered_retail": 0.6576, "val_ratio_tiered_wholesale": 0.4469, "restaurant_margin_tiered_pct": 55.31, "val_ratio_portion_retail": 0.605, "val_ratio_portion_wholesale": 0.3575, "restaurant_margin_portion_pct": 64.25, "oil_absorption_factor": 0.95, "kcal_100g": 94.0, "protein_g": 14.6, "fat_g": 3.8, "sat_fat_g": 1.45, "carbs_g": 0.0, "fiber_g": 0.0, "sodium_mg": 96.0, "health_density_score": 21.35, "source_name": "RedMart Eater's Market Beef Honeycomb Tripe 500g", "source_url": "https://redmart.lazada.sg/shop-groceries-frozen-meat/eater's-market-124492235/"}, {"id": "OF02", "name_en": "Black Beef Omasum Tripe (Mao Du)", "name_zh": "\u5343\u5c42\u809a/\u9c9c\u9ed1\u6bdb\u809a", "category": "Offal & Tripe", "retail_cost_100g": 1.2, "wholesale_cost_100g": 0.95, "water_soak_multiplier": 1.25, "effective_stall_cogs_100g_wet": 0.76, "drained_retail_val_100g_weighed": 0.96, "price_unified_100g": 2.98, "price_tiered_100g": 3.5, "price_per_portion": 3.0, "portion_weight_g": 70.0, "price_per_portion_100g_equiv": 4.29, "val_ratio_unified_retail": 0.3221, "val_ratio_unified_wholesale": 0.255, "restaurant_margin_unified_pct": 74.5, "val_ratio_tiered_retail": 0.2743, "val_ratio_tiered_wholesale": 0.2171, "restaurant_margin_tiered_pct": 78.29, "val_ratio_portion_retail": 0.28, "val_ratio_portion_wholesale": 0.1773, "restaurant_margin_portion_pct": 82.27, "oil_absorption_factor": 1.1, "kcal_100g": 85.0, "protein_g": 15.2, "fat_g": 2.5, "sat_fat_g": 0.95, "carbs_g": 0.0, "fiber_g": 0.0, "sodium_mg": 88.0, "health_density_score": 22.83, "source_name": "Shopee Black Beef Omasum Tripe 1kg", "source_url": "https://shopee.sg/Black-Beef-Tripe-%E7%81%AB%E9%94%85%E9%B2%9C%E9%BB%91%E6%AF%9B%E8%82%9A-i.466580631.42572637742"}, {"id": "OF03", "name_en": "Braised Pig Large Intestine (Da Chang)", "name_zh": "\u5364\u80a5\u80a0/\u732a\u5927\u80a0", "category": "Offal & Tripe", "retail_cost_100g": 1.9, "wholesale_cost_100g": 1.4, "water_soak_multiplier": 1.05, "effective_stall_cogs_100g_wet": 1.33, "drained_retail_val_100g_weighed": 1.81, "price_unified_100g": 2.98, "price_tiered_100g": 3.2, "price_per_portion": 3.0, "portion_weight_g": 75.0, "price_per_portion_100g_equiv": 4.0, "val_ratio_unified_retail": 0.6072, "val_ratio_unified_wholesale": 0.4463, "restaurant_margin_unified_pct": 55.37, "val_ratio_tiered_retail": 0.5655, "val_ratio_tiered_wholesale": 0.4156, "restaurant_margin_tiered_pct": 58.44, "val_ratio_portion_retail": 0.475, "val_ratio_portion_wholesale": 0.3325, "restaurant_margin_portion_pct": 66.75, "oil_absorption_factor": 1.65, "kcal_100g": 265.0, "protein_g": 11.8, "fat_g": 23.5, "sat_fat_g": 8.9, "carbs_g": 1.2, "fiber_g": 0.0, "sodium_mg": 490.0, "health_density_score": 1.81, "source_name": "Shopee Jokia Cleaned Pork Offal", "source_url": "https://shopee.sg/Pork-Stomach-Pork-Maw-Pig-Stomach-%E7%8C%AA%E8%82%9A-(Cleaned-cooked)-i.989345379.23064453826"}, {"id": "OF04", "name_en": "Pig Stomach Strips (Zhu Du)", "name_zh": "\u732a\u809a\u6761", "category": "Offal & Tripe", "retail_cost_100g": 2.0, "wholesale_cost_100g": 1.45, "water_soak_multiplier": 1.08, "effective_stall_cogs_100g_wet": 1.34, "drained_retail_val_100g_weighed": 1.852, "price_unified_100g": 2.98, "price_tiered_100g": 3.2, "price_per_portion": 3.0, "portion_weight_g": 75.0, "price_per_portion_100g_equiv": 4.0, "val_ratio_unified_retail": 0.6214, "val_ratio_unified_wholesale": 0.4497, "restaurant_margin_unified_pct": 55.03, "val_ratio_tiered_retail": 0.5787, "val_ratio_tiered_wholesale": 0.4188, "restaurant_margin_tiered_pct": 58.13, "val_ratio_portion_retail": 0.5, "val_ratio_portion_wholesale": 0.335, "restaurant_margin_portion_pct": 66.5, "oil_absorption_factor": 0.85, "kcal_100g": 148.0, "protein_g": 16.5, "fat_g": 8.6, "sat_fat_g": 3.1, "carbs_g": 0.0, "fiber_g": 0.0, "sodium_mg": 115.0, "health_density_score": 22.46, "source_name": "Shopee Cleaned Pig Stomach 500g", "source_url": "https://shopee.sg/Pig-Stomach-%E7%8C%AA%E8%82%9A-(Cleaned-and-Ready-to-Cook)-i.345357404.4568461983"}, {"id": "OF05", "name_en": "Pork Aorta / Artery Slices (Huang Hou)", "name_zh": "\u732a\u9ec4\u5589", "category": "Offal & Tripe", "retail_cost_100g": 2.4, "wholesale_cost_100g": 1.85, "water_soak_multiplier": 1.12, "effective_stall_cogs_100g_wet": 1.65, "drained_retail_val_100g_weighed": 2.143, "price_unified_100g": 2.98, "price_tiered_100g": 3.5, "price_per_portion": 3.0, "portion_weight_g": 70.0, "price_per_portion_100g_equiv": 4.29, "val_ratio_unified_retail": 0.7191, "val_ratio_unified_wholesale": 0.5537, "restaurant_margin_unified_pct": 44.63, "val_ratio_tiered_retail": 0.6122, "val_ratio_tiered_wholesale": 0.4714, "restaurant_margin_tiered_pct": 52.86, "val_ratio_portion_retail": 0.56, "val_ratio_portion_wholesale": 0.385, "restaurant_margin_portion_pct": 61.5, "oil_absorption_factor": 0.7, "kcal_100g": 112.0, "protein_g": 18.2, "fat_g": 4.1, "sat_fat_g": 1.4, "carbs_g": 0.0, "fiber_g": 0.0, "sodium_mg": 78.0, "health_density_score": 28.6, "source_name": "Shopee Hotpot Pork Aorta Slice", "source_url": "https://shopee.sg/Pork-Aorta-Slice-%E7%81%AB%E9%94%85%E7%8C%AA%E9%BB%84%E5%96%89-i.466580631.43222641032"}, {"id": "OF06", "name_en": "Pig Brain (Zhu Nao)", "name_zh": "\u732a\u8111\u82b1", "category": "Offal & Tripe", "retail_cost_100g": 2.75, "wholesale_cost_100g": 2.1, "water_soak_multiplier": 1.02, "effective_stall_cogs_100g_wet": 2.06, "drained_retail_val_100g_weighed": 2.696, "price_unified_100g": 2.98, "price_tiered_100g": 3.5, "price_per_portion": 3.5, "portion_weight_g": 80.0, "price_per_portion_100g_equiv": 4.38, "val_ratio_unified_retail": 0.9047, "val_ratio_unified_wholesale": 0.6913, "restaurant_margin_unified_pct": 30.87, "val_ratio_tiered_retail": 0.7703, "val_ratio_tiered_wholesale": 0.5886, "restaurant_margin_tiered_pct": 41.14, "val_ratio_portion_retail": 0.6286, "val_ratio_portion_wholesale": 0.4709, "restaurant_margin_portion_pct": 52.91, "oil_absorption_factor": 1.35, "kcal_100g": 131.0, "protein_g": 10.8, "fat_g": 9.5, "sat_fat_g": 2.2, "carbs_g": 0.0, "fiber_g": 0.0, "sodium_mg": 128.0, "health_density_score": 12.25, "source_name": "Shopee Jokia Frozen Pig Brain", "source_url": "https://shopee.sg/Pig-Brain-Pork-Brain-%E7%8C%AA%E8%84%91-Jokia--i.989345379.25825895295"}, {"id": "OF07", "name_en": "Pork / Calf Liver & Kidney Slices", "name_zh": "\u732a\u809d/\u732a\u8170/\u725b\u809d", "category": "Offal & Tripe", "retail_cost_100g": 1.2, "wholesale_cost_100g": 0.85, "water_soak_multiplier": 1.08, "effective_stall_cogs_100g_wet": 0.79, "drained_retail_val_100g_weighed": 1.111, "price_unified_100g": 2.98, "price_tiered_100g": 2.8, "price_per_portion": 2.5, "portion_weight_g": 80.0, "price_per_portion_100g_equiv": 3.12, "val_ratio_unified_retail": 0.3729, "val_ratio_unified_wholesale": 0.2651, "restaurant_margin_unified_pct": 73.49, "val_ratio_tiered_retail": 0.3968, "val_ratio_tiered_wholesale": 0.2821, "restaurant_margin_tiered_pct": 71.79, "val_ratio_portion_retail": 0.384, "val_ratio_portion_wholesale": 0.2528, "restaurant_margin_portion_pct": 74.72, "oil_absorption_factor": 0.9, "kcal_100g": 135.0, "protein_g": 20.4, "fat_g": 3.9, "sat_fat_g": 1.25, "carbs_g": 2.5, "fiber_g": 0.0, "sodium_mg": 85.0, "health_density_score": 32.25, "source_name": "Shopee Halal Calf & Pork Liver 1.5kg", "source_url": "https://shopee.sg/BEEF-TRIPE-500g-(Halal)-i.484555713.24409943775"}, {"id": "OF08", "name_en": "Boneless Duck Web / Chicken Feet", "name_zh": "\u65e0\u9aa8\u9e2d\u638c/\u51e4\u722a", "category": "Offal & Tripe", "retail_cost_100g": 1.48, "wholesale_cost_100g": 1.05, "water_soak_multiplier": 1.05, "effective_stall_cogs_100g_wet": 1.0, "drained_retail_val_100g_weighed": 1.41, "price_unified_100g": 2.98, "price_tiered_100g": 2.8, "price_per_portion": 2.5, "portion_weight_g": 80.0, "price_per_portion_100g_equiv": 3.12, "val_ratio_unified_retail": 0.473, "val_ratio_unified_wholesale": 0.3356, "restaurant_margin_unified_pct": 66.44, "val_ratio_tiered_retail": 0.5034, "val_ratio_tiered_wholesale": 0.3571, "restaurant_margin_tiered_pct": 64.29, "val_ratio_portion_retail": 0.4736, "val_ratio_portion_wholesale": 0.32, "restaurant_margin_portion_pct": 68.0, "oil_absorption_factor": 1.15, "kcal_100g": 215.0, "protein_g": 19.4, "fat_g": 14.6, "sat_fat_g": 3.9, "carbs_g": 0.0, "fiber_g": 0.0, "sodium_mg": 110.0, "health_density_score": 25.75, "source_name": "Shopee Fresh Lacto Chicken Feet 300g", "source_url": "https://shopee.sg/Beef-Tripe-Australia-%E7%89%9B%E8%82%9A-Jokia--i.989345379.22490001023"}, {"id": "SF01", "name_en": "Grey Vannamei Prawn (Shell-On)", "name_zh": "\u5e26\u58f3\u7070\u867e/\u767d\u867e", "category": "Seafood", "retail_cost_100g": 2.88, "wholesale_cost_100g": 1.65, "water_soak_multiplier": 1.15, "effective_stall_cogs_100g_wet": 1.43, "drained_retail_val_100g_weighed": 2.504, "price_unified_100g": 2.98, "price_tiered_100g": 3.5, "price_per_portion": 3.0, "portion_weight_g": 80.0, "price_per_portion_100g_equiv": 3.75, "val_ratio_unified_retail": 0.8404, "val_ratio_unified_wholesale": 0.4799, "restaurant_margin_unified_pct": 52.01, "val_ratio_tiered_retail": 0.7155, "val_ratio_tiered_wholesale": 0.4086, "restaurant_margin_tiered_pct": 59.14, "val_ratio_portion_retail": 0.768, "val_ratio_portion_wholesale": 0.3813, "restaurant_margin_portion_pct": 61.87, "oil_absorption_factor": 0.75, "kcal_100g": 85.0, "protein_g": 18.2, "fat_g": 0.9, "sat_fat_g": 0.22, "carbs_g": 0.2, "fiber_g": 0.0, "sodium_mg": 148.0, "health_density_score": 29.96, "source_name": "NTUC FairPrice Hai Sia Fresh Vannamei Prawn 200g", "source_url": "https://www.fairprice.com.sg/product/hai-sia-fresh-vannamei-prawn-200g-13292020"}, {"id": "SF02", "name_en": "Deshelled Vannamei Prawn Meat", "name_zh": "\u624b\u5265\u867e\u4ec1", "category": "Seafood", "retail_cost_100g": 1.41, "wholesale_cost_100g": 1.18, "water_soak_multiplier": 1.12, "effective_stall_cogs_100g_wet": 1.05, "drained_retail_val_100g_weighed": 1.259, "price_unified_100g": 2.98, "price_tiered_100g": 3.5, "price_per_portion": 3.0, "portion_weight_g": 75.0, "price_per_portion_100g_equiv": 4.0, "val_ratio_unified_retail": 0.4225, "val_ratio_unified_wholesale": 0.3523, "restaurant_margin_unified_pct": 64.77, "val_ratio_tiered_retail": 0.3597, "val_ratio_tiered_wholesale": 0.3, "restaurant_margin_tiered_pct": 70.0, "val_ratio_portion_retail": 0.3525, "val_ratio_portion_wholesale": 0.2625, "restaurant_margin_portion_pct": 73.75, "oil_absorption_factor": 0.7, "kcal_100g": 92.0, "protein_g": 20.1, "fat_g": 1.0, "sat_fat_g": 0.25, "carbs_g": 0.2, "fiber_g": 0.0, "sodium_mg": 165.0, "health_density_score": 33.4, "source_name": "Fassler Gourmet Vannamei Grey Prawn Deshelled 1kg", "source_url": "https://fasslergourmet.com/products/vannamei-grey-prawn-deshelled"}, {"id": "SF03", "name_en": "Black Tiger Prawns", "name_zh": "\u9ed1\u864e\u867e/\u8349\u867e", "category": "Seafood", "retail_cost_100g": 1.98, "wholesale_cost_100g": 1.6, "water_soak_multiplier": 1.12, "effective_stall_cogs_100g_wet": 1.43, "drained_retail_val_100g_weighed": 1.768, "price_unified_100g": 2.98, "price_tiered_100g": 3.5, "price_per_portion": 3.5, "portion_weight_g": 80.0, "price_per_portion_100g_equiv": 4.38, "val_ratio_unified_retail": 0.5932, "val_ratio_unified_wholesale": 0.4799, "restaurant_margin_unified_pct": 52.01, "val_ratio_tiered_retail": 0.5051, "val_ratio_tiered_wholesale": 0.4086, "restaurant_margin_tiered_pct": 59.14, "val_ratio_portion_retail": 0.4526, "val_ratio_portion_wholesale": 0.3269, "restaurant_margin_portion_pct": 67.31, "oil_absorption_factor": 0.75, "kcal_100g": 96.0, "protein_g": 20.6, "fat_g": 1.1, "sat_fat_g": 0.28, "carbs_g": 0.2, "fiber_g": 0.0, "sodium_mg": 152.0, "health_density_score": 34.18, "source_name": "Fassler Gourmet Black Tiger Prawns 1kg", "source_url": "https://fasslergourmet.com/products/black-tiger-prawns-peeled-and-deshelled"}, {"id": "SF04", "name_en": "Squid Flower Cut / Sotong Rings", "name_zh": "\u9c7f\u9c7c\u82b1/\u82cf\u4e1c\u5708", "category": "Seafood", "retail_cost_100g": 1.2, "wholesale_cost_100g": 0.95, "water_soak_multiplier": 1.18, "effective_stall_cogs_100g_wet": 0.81, "drained_retail_val_100g_weighed": 1.017, "price_unified_100g": 2.98, "price_tiered_100g": 3.5, "price_per_portion": 3.0, "portion_weight_g": 80.0, "price_per_portion_100g_equiv": 3.75, "val_ratio_unified_retail": 0.3413, "val_ratio_unified_wholesale": 0.2718, "restaurant_margin_unified_pct": 72.82, "val_ratio_tiered_retail": 0.2906, "val_ratio_tiered_wholesale": 0.2314, "restaurant_margin_tiered_pct": 76.86, "val_ratio_portion_retail": 0.32, "val_ratio_portion_wholesale": 0.216, "restaurant_margin_portion_pct": 78.4, "oil_absorption_factor": 0.8, "kcal_100g": 92.0, "protein_g": 15.6, "fat_g": 1.4, "sat_fat_g": 0.36, "carbs_g": 3.1, "fiber_g": 0.0, "sodium_mg": 44.0, "health_density_score": 25.36, "source_name": "NTUC FairPrice Aw's Market Fresh XL Sotong 500g", "source_url": "https://www.fairprice.com.sg/product/aw-s-market-fresh-a-grade-fresh-xl-sotong-squid-500-g-90018639"}, {"id": "SF05", "name_en": "Baby Octopus (Tako)", "name_zh": "\u5c0f\u516b\u722a\u9c7c/\u7ae0\u9c7c", "category": "Seafood", "retail_cost_100g": 5.0, "wholesale_cost_100g": 3.6, "water_soak_multiplier": 1.1, "effective_stall_cogs_100g_wet": 3.27, "drained_retail_val_100g_weighed": 4.545, "price_unified_100g": 2.98, "price_tiered_100g": 3.8, "price_per_portion": 3.5, "portion_weight_g": 70.0, "price_per_portion_100g_equiv": 5.0, "val_ratio_unified_retail": 1.5253, "val_ratio_unified_wholesale": 1.0973, "restaurant_margin_unified_pct": -9.73, "val_ratio_tiered_retail": 1.1962, "val_ratio_tiered_wholesale": 0.8605, "restaurant_margin_tiered_pct": 13.95, "val_ratio_portion_retail": 1.0, "val_ratio_portion_wholesale": 0.654, "restaurant_margin_portion_pct": 34.6, "oil_absorption_factor": 0.8, "kcal_100g": 82.0, "protein_g": 14.9, "fat_g": 1.0, "sat_fat_g": 0.23, "carbs_g": 2.2, "fiber_g": 0.0, "sodium_mg": 230.0, "health_density_score": 23.55, "source_name": "Fassler Gourmet Japanese Octopus 280g", "source_url": "https://fasslergourmet.com/products/japanese-octopus-tako-sashimi"}, {"id": "SF06", "name_en": "Lala Clams & Mussels (Shell-On)", "name_zh": "\u5566\u5566/\u82b1\u7532/\u9752\u53e3", "category": "Seafood", "retail_cost_100g": 1.5, "wholesale_cost_100g": 0.9, "water_soak_multiplier": 1.2, "effective_stall_cogs_100g_wet": 0.75, "drained_retail_val_100g_weighed": 1.25, "price_unified_100g": 2.98, "price_tiered_100g": 3.5, "price_per_portion": 3.0, "portion_weight_g": 110.0, "price_per_portion_100g_equiv": 2.73, "val_ratio_unified_retail": 0.4195, "val_ratio_unified_wholesale": 0.2517, "restaurant_margin_unified_pct": 74.83, "val_ratio_tiered_retail": 0.3571, "val_ratio_tiered_wholesale": 0.2143, "restaurant_margin_tiered_pct": 78.57, "val_ratio_portion_retail": 0.55, "val_ratio_portion_wholesale": 0.275, "restaurant_margin_portion_pct": 72.5, "oil_absorption_factor": 0.9, "kcal_100g": 74.0, "protein_g": 12.8, "fat_g": 1.2, "sat_fat_g": 0.2, "carbs_g": 2.6, "fiber_g": 0.0, "sodium_mg": 260.0, "health_density_score": 19.45, "source_name": "Fassler Gourmet Frozen Seafood Mix 1kg", "source_url": "https://fasslergourmet.com/products/frozen-seafood-mix"}, {"id": "SF07", "name_en": "Sliced Batang (Spanish Mackerel)", "name_zh": "\u9a6c\u9c9b\u9c7c\u7247", "category": "Seafood", "retail_cost_100g": 2.83, "wholesale_cost_100g": 2.15, "water_soak_multiplier": 1.06, "effective_stall_cogs_100g_wet": 2.03, "drained_retail_val_100g_weighed": 2.67, "price_unified_100g": 2.98, "price_tiered_100g": 3.5, "price_per_portion": 3.0, "portion_weight_g": 75.0, "price_per_portion_100g_equiv": 4.0, "val_ratio_unified_retail": 0.8959, "val_ratio_unified_wholesale": 0.6812, "restaurant_margin_unified_pct": 31.88, "val_ratio_tiered_retail": 0.7628, "val_ratio_tiered_wholesale": 0.58, "restaurant_margin_tiered_pct": 42.0, "val_ratio_portion_retail": 0.7075, "val_ratio_portion_wholesale": 0.5075, "restaurant_margin_portion_pct": 49.25, "oil_absorption_factor": 0.75, "kcal_100g": 112.0, "protein_g": 21.5, "fat_g": 2.6, "sat_fat_g": 0.68, "carbs_g": 0.0, "fiber_g": 0.0, "sodium_mg": 62.0, "health_density_score": 35.56, "source_name": "NTUC FairPrice Catch Seafood Batang Slice 300g", "source_url": "https://www.fairprice.com.sg/product/catch-seafood-mackeral-slice-batang-fish-300-g-90111437"}, {"id": "SF08", "name_en": "Dory / Pangasius Sutchi Fillet", "name_zh": "\u591a\u5229\u9c7c\u7247", "category": "Seafood", "retail_cost_100g": 0.83, "wholesale_cost_100g": 0.58, "water_soak_multiplier": 1.22, "effective_stall_cogs_100g_wet": 0.48, "drained_retail_val_100g_weighed": 0.68, "price_unified_100g": 2.98, "price_tiered_100g": 3.5, "price_per_portion": 3.0, "portion_weight_g": 85.0, "price_per_portion_100g_equiv": 3.53, "val_ratio_unified_retail": 0.2283, "val_ratio_unified_wholesale": 0.1611, "restaurant_margin_unified_pct": 83.89, "val_ratio_tiered_retail": 0.1944, "val_ratio_tiered_wholesale": 0.1371, "restaurant_margin_tiered_pct": 86.29, "val_ratio_portion_retail": 0.2352, "val_ratio_portion_wholesale": 0.136, "restaurant_margin_portion_pct": 86.4, "oil_absorption_factor": 0.95, "kcal_100g": 88.0, "protein_g": 15.2, "fat_g": 2.8, "sat_fat_g": 0.95, "carbs_g": 0.0, "fiber_g": 0.0, "sodium_mg": 185.0, "health_density_score": 22.82, "source_name": "Shopee Sutchi / Dory Fillet 800g", "source_url": "https://shopee.sg/-Song-Fish-Baby-Squid-i.275237504.9468212958"}, {"id": "SF09", "name_en": "Barramundi / Seabass Fillet", "name_zh": "\u91d1\u76ee\u9c88\u9c7c\u7247", "category": "Seafood", "retail_cost_100g": 2.9, "wholesale_cost_100g": 2.2, "water_soak_multiplier": 1.06, "effective_stall_cogs_100g_wet": 2.08, "drained_retail_val_100g_weighed": 2.736, "price_unified_100g": 2.98, "price_tiered_100g": 3.5, "price_per_portion": 3.0, "portion_weight_g": 75.0, "price_per_portion_100g_equiv": 4.0, "val_ratio_unified_retail": 0.9181, "val_ratio_unified_wholesale": 0.698, "restaurant_margin_unified_pct": 30.2, "val_ratio_tiered_retail": 0.7817, "val_ratio_tiered_wholesale": 0.5943, "restaurant_margin_tiered_pct": 40.57, "val_ratio_portion_retail": 0.725, "val_ratio_portion_wholesale": 0.52, "restaurant_margin_portion_pct": 48.0, "oil_absorption_factor": 0.75, "kcal_100g": 105.0, "protein_g": 20.8, "fat_g": 2.1, "sat_fat_g": 0.55, "carbs_g": 0.0, "fiber_g": 0.0, "sodium_mg": 68.0, "health_density_score": 34.47, "source_name": "RedMart Song Fish Fresh Barramundi Fillet", "source_url": "https://redmart.lazada.sg/shop-groceries-meat-seafood-fresh-seafood/song-fish-123392473/"}, {"id": "SP01", "name_en": "Bamboo Pith / Bamboo Fungus (Soaked)", "name_zh": "\u7af9\u7b19/\u7af9\u836a(\u6ce1\u53d1)", "category": "Specialty", "retail_cost_100g": 7.5, "wholesale_cost_100g": 5.2, "water_soak_multiplier": 7.0, "effective_stall_cogs_100g_wet": 0.74, "drained_retail_val_100g_weighed": 1.071, "price_unified_100g": 2.98, "price_tiered_100g": 2.8, "price_per_portion": 2.5, "portion_weight_g": 60.0, "price_per_portion_100g_equiv": 4.17, "val_ratio_unified_retail": 0.3595, "val_ratio_unified_wholesale": 0.2483, "restaurant_margin_unified_pct": 75.17, "val_ratio_tiered_retail": 0.3827, "val_ratio_tiered_wholesale": 0.2643, "restaurant_margin_tiered_pct": 73.57, "val_ratio_portion_retail": 1.8, "val_ratio_portion_wholesale": 0.1776, "restaurant_margin_portion_pct": 82.24, "oil_absorption_factor": 2.65, "kcal_100g": 32.0, "protein_g": 2.8, "fat_g": 0.3, "sat_fat_g": 0.05, "carbs_g": 5.4, "fiber_g": 3.2, "sodium_mg": 8.0, "health_density_score": 8.55, "source_name": "VWC Online NE Tiger Bamboo Fungus 50g", "source_url": "https://vwcshopping.com.sg/dried-fungus-and-mushroom"}, {"id": "SP02", "name_en": "Fried Fish Maw Tube (Soaked)", "name_zh": "\u70b8\u9c7c\u9cd4/\u9c7c\u809a(\u6ce1\u53d1)", "category": "Specialty", "retail_cost_100g": 12.0, "wholesale_cost_100g": 8.8, "water_soak_multiplier": 6.0, "effective_stall_cogs_100g_wet": 1.47, "drained_retail_val_100g_weighed": 2.0, "price_unified_100g": 2.98, "price_tiered_100g": 3.5, "price_per_portion": 3.5, "portion_weight_g": 65.0, "price_per_portion_100g_equiv": 5.38, "val_ratio_unified_retail": 0.6711, "val_ratio_unified_wholesale": 0.4933, "restaurant_margin_unified_pct": 50.67, "val_ratio_tiered_retail": 0.5714, "val_ratio_tiered_wholesale": 0.42, "restaurant_margin_tiered_pct": 58.0, "val_ratio_portion_retail": 2.2286, "val_ratio_portion_wholesale": 0.273, "restaurant_margin_portion_pct": 72.7, "oil_absorption_factor": 2.5, "kcal_100g": 198.0, "protein_g": 24.5, "fat_g": 11.2, "sat_fat_g": 3.4, "carbs_g": 0.5, "fiber_g": 0.0, "sodium_mg": 85.0, "health_density_score": 32.41, "source_name": "VWC Online Hippo Fried Fish Maw Tube 200g", "source_url": "https://vwcshopping.com.sg/Hippo-Fried-Fish-Maw-Tube-(%E7%82%B8%E9%B1%BC%E9%B3%94%E7%AD%92%EF%BC%89"}, {"id": "SP03", "name_en": "Sliced Brine / Mock Abalone", "name_zh": "\u9c8d\u9c7c\u7247/\u5c0f\u9c8d\u9c7c", "category": "Specialty", "retail_cost_100g": 7.11, "wholesale_cost_100g": 4.9, "water_soak_multiplier": 1.05, "effective_stall_cogs_100g_wet": 4.67, "drained_retail_val_100g_weighed": 6.771, "price_unified_100g": 2.98, "price_tiered_100g": 3.8, "price_per_portion": 3.5, "portion_weight_g": 60.0, "price_per_portion_100g_equiv": 5.83, "val_ratio_unified_retail": 2.2723, "val_ratio_unified_wholesale": 1.5671, "restaurant_margin_unified_pct": -56.71, "val_ratio_tiered_retail": 1.782, "val_ratio_tiered_wholesale": 1.2289, "restaurant_margin_tiered_pct": -22.89, "val_ratio_portion_retail": 1.2189, "val_ratio_portion_wholesale": 0.8006, "restaurant_margin_portion_pct": 19.94, "oil_absorption_factor": 0.65, "kcal_100g": 105.0, "protein_g": 17.1, "fat_g": 0.8, "sat_fat_g": 0.18, "carbs_g": 6.0, "fiber_g": 0.0, "sodium_mg": 390.0, "health_density_score": 27.33, "source_name": "NTUC FairPrice Lee Kum Kee Abalone 180g", "source_url": "https://www.fairprice.com.sg/product/lee-kum-kee-abalone-in-premium-brand-oyster-sauce-180g-13183947"}, {"id": "SP04", "name_en": "Konjac Mock Tripe (Su Mao Du)", "name_zh": "\u9b54\u828b\u7d20\u6bdb\u809a", "category": "Specialty", "retail_cost_100g": 1.15, "wholesale_cost_100g": 0.78, "water_soak_multiplier": 1.05, "effective_stall_cogs_100g_wet": 0.74, "drained_retail_val_100g_weighed": 1.095, "price_unified_100g": 2.98, "price_tiered_100g": 2.0, "price_per_portion": 1.5, "portion_weight_g": 85.0, "price_per_portion_100g_equiv": 1.76, "val_ratio_unified_retail": 0.3675, "val_ratio_unified_wholesale": 0.2483, "restaurant_margin_unified_pct": 75.17, "val_ratio_tiered_retail": 0.5476, "val_ratio_tiered_wholesale": 0.37, "restaurant_margin_tiered_pct": 63.0, "val_ratio_portion_retail": 0.6517, "val_ratio_portion_wholesale": 0.4193, "restaurant_margin_portion_pct": 58.07, "oil_absorption_factor": 0.6, "kcal_100g": 48.0, "protein_g": 0.8, "fat_g": 2.5, "sat_fat_g": 0.35, "carbs_g": 6.2, "fiber_g": 2.8, "sodium_mg": 420.0, "health_density_score": 6.69, "source_name": "NTUC FairPrice Weilong Konjac Mala Snack", "source_url": "https://www.fairprice.com.sg/product/weilong-konjac-snack-box---mala"}, {"id": "SP05", "name_en": "Crispy Fried Egg / Scrambled Egg Topping", "name_zh": "\u70b8\u86cb/\u6ed1\u86cb", "category": "Specialty", "retail_cost_100g": 0.55, "wholesale_cost_100g": 0.38, "water_soak_multiplier": 1.0, "effective_stall_cogs_100g_wet": 0.38, "drained_retail_val_100g_weighed": 0.55, "price_unified_100g": 2.98, "price_tiered_100g": 2.0, "price_per_portion": 1.5, "portion_weight_g": 65.0, "price_per_portion_100g_equiv": 2.31, "val_ratio_unified_retail": 0.1846, "val_ratio_unified_wholesale": 0.1275, "restaurant_margin_unified_pct": 87.25, "val_ratio_tiered_retail": 0.275, "val_ratio_tiered_wholesale": 0.19, "restaurant_margin_tiered_pct": 81.0, "val_ratio_portion_retail": 0.2383, "val_ratio_portion_wholesale": 0.1647, "restaurant_margin_portion_pct": 83.53, "oil_absorption_factor": 1.85, "kcal_100g": 215.0, "protein_g": 12.6, "fat_g": 17.2, "sat_fat_g": 4.2, "carbs_g": 0.8, "fiber_g": 0.0, "sodium_mg": 220.0, "health_density_score": 10.87, "source_name": "Eatbook A Hot Hideout Scrambled Egg Benchmark", "source_url": "https://eatbook.sg/a-hot-hideout/"}];
+    const BASES = [{"base_id": "B01", "name_en": "Dry Mala Xiang Guo - Te La (Extra Spicy)", "name_zh": "\u7279\u8fa3\u5e72\u9505", "category": "Dry Stir-Fry", "spice_class": "Spicy (Te La)", "addon_price_sgd": 2.0, "wholesale_cogs_sgd": 0.65, "full_pot_kcal": 580.0, "full_pot_protein_g": 4.2, "full_pot_fat_g": 58.0, "full_pot_sat_fat_g": 22.5, "full_pot_carbs_g": 8.5, "full_pot_fiber_g": 2.8, "full_pot_sodium_mg": 2450.0, "typical_ingestion_fraction": 1.0, "technical_notes": "Heavy beef tallow/palm oil + Pixian doubanjiang + chili oil coat; 100% of adhered oil/paste is ingested."}, {"base_id": "B02", "name_en": "Dry Mala Xiang Guo - Da La (Big Spicy)", "name_zh": "\u5927\u8fa3\u5e72\u9505", "category": "Dry Stir-Fry", "spice_class": "Spicy (Da La)", "addon_price_sgd": 1.5, "wholesale_cogs_sgd": 0.55, "full_pot_kcal": 445.0, "full_pot_protein_g": 3.5, "full_pot_fat_g": 44.0, "full_pot_sat_fat_g": 17.0, "full_pot_carbs_g": 7.2, "full_pot_fiber_g": 2.2, "full_pot_sodium_mg": 2050.0, "typical_ingestion_fraction": 1.0, "technical_notes": "High chili oil + Sichuan peppercorn oleoresin + fermented bean paste."}, {"base_id": "B03", "name_en": "Dry Mala Xiang Guo - Zhong La (Medium Spicy)", "name_zh": "\u4e2d\u8fa3\u5e72\u9505", "category": "Dry Stir-Fry", "spice_class": "Spicy (Zhong La)", "addon_price_sgd": 1.5, "wholesale_cogs_sgd": 0.45, "full_pot_kcal": 330.0, "full_pot_protein_g": 2.8, "full_pot_fat_g": 32.0, "full_pot_sat_fat_g": 12.2, "full_pot_carbs_g": 6.0, "full_pot_fiber_g": 1.8, "full_pot_sodium_mg": 1720.0, "typical_ingestion_fraction": 1.0, "technical_notes": "Standard Singapore Mala Xiang Guo benchmark (~1,257 kcal total bowl with ingredients)."}, {"base_id": "B04", "name_en": "Dry Mala Xiang Guo - Wei La (Mild Spicy)", "name_zh": "\u5fae\u8fa3\u5e72\u9505", "category": "Dry Stir-Fry", "spice_class": "Spicy (Wei La)", "addon_price_sgd": 1.0, "wholesale_cogs_sgd": 0.38, "full_pot_kcal": 240.0, "full_pot_protein_g": 2.2, "full_pot_fat_g": 22.5, "full_pot_sat_fat_g": 8.2, "full_pot_carbs_g": 5.2, "full_pot_fiber_g": 1.4, "full_pot_sodium_mg": 1450.0, "typical_ingestion_fraction": 1.0, "technical_notes": "Reduced chili oil ladle (~25g oil) while keeping aromatic spices."}, {"base_id": "B05", "name_en": "Dry Mala Xiang Guo - Shao You Shao Yan Wei La (Less Oil/Salt)", "name_zh": "\u5c11\u6cb9\u5c11\u76d0\u5fae\u8fa3\u5e72\u9505", "category": "Dry Stir-Fry", "spice_class": "Spicy (Healthier Request)", "addon_price_sgd": 1.0, "wholesale_cogs_sgd": 0.28, "full_pot_kcal": 125.0, "full_pot_protein_g": 1.6, "full_pot_fat_g": 11.0, "full_pot_sat_fat_g": 2.8, "full_pot_carbs_g": 4.0, "full_pot_fiber_g": 1.2, "full_pot_sodium_mg": 780.0, "typical_ingestion_fraction": 1.0, "technical_notes": "Best dry option: halves oil ladle and cuts doubanjiang/MSG by 45%."}, {"base_id": "B06", "name_en": "Dry Non-Spicy - Jiang Xiang (Fermented Bean Fragrant)", "name_zh": "\u4e0d\u8fa3\u9171\u9999\u5e72\u9505", "category": "Dry Stir-Fry", "spice_class": "Non-Spicy", "addon_price_sgd": 1.0, "wholesale_cogs_sgd": 0.35, "full_pot_kcal": 210.0, "full_pot_protein_g": 3.1, "full_pot_fat_g": 18.0, "full_pot_sat_fat_g": 3.5, "full_pot_carbs_g": 8.5, "full_pot_fiber_g": 1.0, "full_pot_sodium_mg": 1680.0, "typical_ingestion_fraction": 1.0, "technical_notes": "Zero chili heat, but heavy sweet bean/oyster/soy sauce glaze drives high sodium."}, {"base_id": "B07", "name_en": "Dry Non-Spicy - Suan Xiang (Garlic Herb Stir-Fry)", "name_zh": "\u4e0d\u8fa3\u849c\u9999\u5e72\u9505", "category": "Dry Stir-Fry", "spice_class": "Non-Spicy", "addon_price_sgd": 1.0, "wholesale_cogs_sgd": 0.35, "full_pot_kcal": 195.0, "full_pot_protein_g": 2.4, "full_pot_fat_g": 17.5, "full_pot_sat_fat_g": 3.1, "full_pot_carbs_g": 6.8, "full_pot_fiber_g": 0.9, "full_pot_sodium_mg": 1220.0, "typical_ingestion_fraction": 1.0, "technical_notes": "Minced garlic + scallion oil stir-fry; lower sodium than Jiang Xiang."}, {"base_id": "B08", "name_en": "Dry Toss - Mala Ban (Blanched + Sesame/Chili Dressing)", "name_zh": "\u5ddd\u5f0f\u9ebb\u8fa3\u62cc/\u5e72\u62cc", "category": "Dry Blanch-Toss", "spice_class": "Spicy/Nutty", "addon_price_sgd": 0.0, "wholesale_cogs_sgd": 0.42, "full_pot_kcal": 265.0, "full_pot_protein_g": 5.8, "full_pot_fat_g": 21.0, "full_pot_sat_fat_g": 3.4, "full_pot_carbs_g": 11.5, "full_pot_fiber_g": 2.1, "full_pot_sodium_mg": 1340.0, "typical_ingestion_fraction": 1.0, "technical_notes": "Ingredients boiled in water then tossed in sesame paste + vinegar + chili oil; higher unsaturated fat from tahini."}, {"base_id": "B09", "name_en": "Soup Malatang - Classic Spicy Beef Tallow Broth", "name_zh": "\u7ea2\u6cb9\u725b\u6cb9\u9ebb\u8fa3\u6c64", "category": "Soup Malatang", "spice_class": "Spicy", "addon_price_sgd": 0.0, "wholesale_cogs_sgd": 0.6, "full_pot_kcal": 520.0, "full_pot_protein_g": 4.5, "full_pot_fat_g": 51.0, "full_pot_sat_fat_g": 24.0, "full_pot_carbs_g": 9.0, "full_pot_fiber_g": 1.8, "full_pot_sodium_mg": 3200.0, "typical_ingestion_fraction": 0.35, "technical_notes": "Full pot has 3,200mg sodium & 51g fat; skimming oil & leaving 65% broth unconsumed cuts intake to ~182 kcal & 1,120mg sodium."}, {"base_id": "B10", "name_en": "Soup Malatang - Spicy Pork Bone Collagen Mala", "name_zh": "\u9ebb\u8fa3\u732a\u9aa8\u80f6\u539f\u6c64", "category": "Soup Malatang", "spice_class": "Spicy", "addon_price_sgd": 2.0, "wholesale_cogs_sgd": 0.58, "full_pot_kcal": 390.0, "full_pot_protein_g": 9.5, "full_pot_fat_g": 34.0, "full_pot_sat_fat_g": 13.5, "full_pot_carbs_g": 8.5, "full_pot_fiber_g": 1.4, "full_pot_sodium_mg": 2650.0, "typical_ingestion_fraction": 0.35, "technical_notes": "Signature Yang Guo Fu / Gong Yuan emulsified bone broth + chili oil (~137 kcal & 928mg sodium if 35% broth consumed)."}, {"base_id": "B11", "name_en": "Soup Malatang - Non-Spicy Rich Tomato Broth", "name_zh": "\u6d53\u90c1\u756a\u8304\u6c64", "category": "Soup Malatang", "spice_class": "Non-Spicy", "addon_price_sgd": 2.0, "wholesale_cogs_sgd": 0.45, "full_pot_kcal": 165.0, "full_pot_protein_g": 3.8, "full_pot_fat_g": 7.5, "full_pot_sat_fat_g": 1.6, "full_pot_carbs_g": 20.5, "full_pot_fiber_g": 2.8, "full_pot_sodium_mg": 1750.0, "typical_ingestion_fraction": 0.45, "technical_notes": "High lycopene & potassium; lowest saturated fat among rich soups (~74 kcal & 788mg sodium if 45% consumed)."}, {"base_id": "B12", "name_en": "Soup Malatang - Non-Spicy Pork/Chicken Collagen Broth", "name_zh": "\u732a\u9aa8/\u9e21\u9aa8\u80f6\u539f\u6e05\u6c64", "category": "Soup Malatang", "spice_class": "Non-Spicy", "addon_price_sgd": 2.0, "wholesale_cogs_sgd": 0.5, "full_pot_kcal": 215.0, "full_pot_protein_g": 11.2, "full_pot_fat_g": 15.5, "full_pot_sat_fat_g": 5.8, "full_pot_carbs_g": 6.5, "full_pot_fiber_g": 0.2, "full_pot_sodium_mg": 1880.0, "typical_ingestion_fraction": 0.4, "technical_notes": "High collagen protein, zero capsaicin, moderate saturated fat (~86 kcal & 752mg sodium at 40% broth intake)."}, {"base_id": "B13", "name_en": "Soup Malatang - Non-Spicy Wild Mushroom & Herbal Broth", "name_zh": "\u83cc\u83c7\u6ecb\u8865\u6e05\u6c64", "category": "Soup Malatang", "spice_class": "Non-Spicy", "addon_price_sgd": 0.0, "wholesale_cogs_sgd": 0.38, "full_pot_kcal": 95.0, "full_pot_protein_g": 4.2, "full_pot_fat_g": 3.5, "full_pot_sat_fat_g": 0.6, "full_pot_carbs_g": 11.5, "full_pot_fiber_g": 1.8, "full_pot_sodium_mg": 1420.0, "typical_ingestion_fraction": 0.4, "technical_notes": "Top health-policy benchmark base: 95 kcal full pot (~38 kcal & 568mg sodium at 40% broth consumption)."}, {"base_id": "B14", "name_en": "Soup Malatang - Pickled Vegetable (Suan Cai) / Tom Yum / Laksa", "name_zh": "\u9178\u83dc\u91d1\u6c64/\u51ac\u9634\u529f/\u53fb\u6c99\u6c64", "category": "Soup Malatang", "spice_class": "Spicy/Sour", "addon_price_sgd": 2.0, "wholesale_cogs_sgd": 0.5, "full_pot_kcal": 240.0, "full_pot_protein_g": 3.5, "full_pot_fat_g": 16.0, "full_pot_sat_fat_g": 8.5, "full_pot_carbs_g": 18.0, "full_pot_fiber_g": 1.5, "full_pot_sodium_mg": 2950.0, "typical_ingestion_fraction": 0.3, "technical_notes": "Suan Cai has low fat but high pickled brine sodium (2,950mg); Laksa adds coconut milk saturated fat."}];
+    const HIDS = [{"Company_Name": "Bunge Asia Pte Ltd", "Contact_Person": "Elaine Wee", "Job_Title": "Sales Manager", "Contact_Number": "9012 7923", "Email_Address": "bas.food.sng@bunge.com", "Products": "FarmOrigin Canola Blended Oil; FarmOrigin Sunflower Blended Oil", "Category": "Healthier Oil", "Mala_Policy_Application": "Replaces palm olein / beef tallow in Mala stir-fry & chili oil to cut saturated fat from >42% to <18%"}, {"Company_Name": "Gan Hup Lee Pte Ltd", "Contact_Person": "Jessica Gan", "Job_Title": "General Manager", "Contact_Number": "6741 2626", "Email_Address": "jessica.gan@ganhuplee.com", "Products": "333 Super Refined Blended Vegetable Oil", "Category": "Healthier Oil", "Mala_Policy_Application": "High-smoke-point HCS blended oil for high-heat Mala Xiang Guo wok tossing"}, {"Company_Name": "Gan Hup Lee Pte Ltd", "Contact_Person": "Jessica Gan", "Job_Title": "General Manager", "Contact_Number": "6741 2626", "Email_Address": "jessica.gan@ganhuplee.com", "Products": "Golden Twin Stars Mixed Brown Rice; Mixed Red Rice; Red Rice; Thai Hom Mali Brown Rice; Tri-blended Rice", "Category": "Wholegrain Rice", "Mala_Policy_Application": "Replaces refined white rice at the free-flow rice bar (+220% fiber, lower GI)"}, {"Company_Name": "Chip Seng Impex (S) Pte Ltd", "Contact_Person": "Joven Ng", "Job_Title": "Sales Manager", "Contact_Number": "9737 7799", "Email_Address": "sales@chipseng.com.sg", "Products": "Golden Eagle Brown Jasmine Rice + Thai Jasmine Rice; Fresh Brown Jasmine Rice; Fresh Red Brown Rice; Thai Brown Rice", "Category": "Wholegrain Rice", "Mala_Policy_Application": "80/20 or 50/50 brown-white rice blend for high diner acceptance at Mala outlets"}, {"Company_Name": "FarLee Pte Ltd", "Contact_Person": "Mark Low", "Job_Title": "Director", "Contact_Number": "6484 1075", "Email_Address": "marklow@farlee.com.sg", "Products": "Golden Hill Black Rice; Golden Hill Brown Rice; Golden Hill Mixed Brown Rice; Golden Hill Red Cargo Rice", "Category": "Wholegrain Rice", "Mala_Policy_Application": "Anthocyanin-rich black/red cargo rice for Healthier Dining Programme (HDP) certification"}, {"Company_Name": "Chuen Cheong Food Industries Pte Ltd", "Contact_Person": "Ang Wei Kok", "Job_Title": "Business Development Manager", "Contact_Number": "6285 1501", "Email_Address": "angwk@tigersauce.com.sg", "Products": "Tiger Brand Reduced Salt Dark Soya Sauce; Tiger Brand Reduced Salt Light Soya Sauce; Tiger Brand Vegetarian Oyster Sauce; Tiger Brand Chilli Sauce W/Garlic & Ginger", "Category": "Sauces", "Mala_Policy_Application": "Cuts sodium in Jiang Xiang, Mala Ban, and dipping sauce bars by 25%-35%"}, {"Company_Name": "Chung Hwa Food Industries Pte Ltd", "Contact_Person": "Lin Hao Lun", "Job_Title": "General Manager", "Contact_Number": "9664 1442 / 6481 3300", "Email_Address": "linhaolun@chunghwa.com.sg", "Products": "Chung Hwa Sweet and Spicy Sour Bean Paste; Chung Hwa Tomato Flavour Sauce; Food People Black Bean Light Soy Sauce; Food People White Sesame Paste; Chung Hwa Vegetarian Oyster Sauce", "Category": "Sauces", "Mala_Policy_Application": "Direct HIDS-subsidised replacements for Mala doubanjiang bean paste, Tomato soup base, and Mala Ban sesame paste"}, {"Company_Name": "Faesol Pte Ltd", "Contact_Person": "Jonathan Cheah", "Job_Title": "Director", "Contact_Number": "9179 3222", "Email_Address": "jonathan@faesol.com", "Products": "iLite K-Salt (Reduced Sodium Iodized Salt); Chicken Stock; Lower-Sodium Instant Mashed Potato", "Category": "Table Salt", "Mala_Policy_Application": "Potassium-enriched K-Salt cuts sodium by 30-50% while adding antihypertensive potassium to Mala broth"}, {"Company_Name": "French Food Factory Pte Ltd", "Contact_Person": "Ian Choo", "Job_Title": "Director, Sales & Marketing", "Contact_Number": "9338 9795", "Email_Address": "ian.choo@saybons.com", "Products": "Saybons Fresh Tomato Soup; Saybons Golden Pumpkin Soup; Saybons Mushroom Potage Soup; Wholegrain Pasta", "Category": "Sauces & Other Wholegrain Products", "Mala_Policy_Application": "HCS-compliant Tomato & Mushroom soup base concentrates and wholegrain noodle alternatives"}];
+
+    // Tab Switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(el => {
+        el.classList.remove('bg-rose-600', 'text-white');
+        el.classList.add('text-slate-400');
+      });
+      
+      document.getElementById(tabId).classList.remove('hidden');
+      const btnId = tabId.replace('tab-', 'btn-');
+      const btn = document.getElementById(btnId);
+      if (btn) {
+        btn.classList.add('bg-rose-600', 'text-white');
+        btn.classList.remove('text-slate-400');
+      }
+    }
+
+    // Knapsack Solver
+    function solveKnapsack(budget, objective, pricingModel) {
+      const priceKey = pricingModel === 'tiered' ? 'price_tiered_100g' : (pricingModel === 'portion' ? 'price_per_portion_100g_equiv' : 'price_unified_100g');
+      const ratioKey = pricingModel === 'tiered' ? 'val_ratio_tiered_wholesale' : (pricingModel === 'portion' ? 'val_ratio_portion_wholesale' : 'val_ratio_unified_wholesale');
+
+      let ranked = [...CATALOG].sort((a, b) => {
+        if (objective === 'minimise_restaurant_margin') {
+          return b[ratioKey] - a[ratioKey];
+        } else if (objective === 'maximise_health') {
+          return (b.health_density_score / b[priceKey]) - (a.health_density_score / a[priceKey]);
+        } else {
+          const scoreA = (a[ratioKey] * 25.0) + (a.health_density_score / a[priceKey]);
+          const scoreB = (b[ratioKey] * 25.0) + (b.health_density_score / b[priceKey]);
+          return scoreB - scoreA;
+        }
+      });
+
+      let remBudget = budget;
+      let chosen = [];
+      let totCogs = 0.0;
+      let totRetail = 0.0;
+      let totWeight = 0.0;
+      let totWaterTax = 0.0;
+
+      for (let it of ranked) {
+        if (remBudget <= 0.05) break;
+        const p100 = it[priceKey];
+        const maxCost = (150.0 / 100.0) * p100;
+        const alloc = Math.min(remBudget, maxCost);
+        const wt = (alloc / p100) * 100.0;
+        const cogs = (wt / 100.0) * it.effective_stall_cogs_100g_wet;
+        const rval = (wt / 100.0) * it.drained_retail_val_100g_weighed;
+        const waterFrac = Math.max(0.0, 1.0 - (1.0 / it.water_soak_multiplier));
+        const waterTax = alloc * waterFrac;
+
+        chosen.push({
+          id: it.id,
+          name_en: it.name_en,
+          name_zh: it.name_zh,
+          category: it.category,
+          weight_g: Math.round(wt * 10) / 10,
+          spend_sgd: Math.round(alloc * 100) / 100,
+          wholesale_cogs: Math.round(cogs * 100) / 100,
+          retail_replacement: Math.round(rval * 100) / 100,
+          source_url: it.source_url
+        });
+
+        remBudget -= alloc;
+        totCogs += cogs;
+        totRetail += rval;
+        totWeight += wt;
+        totWaterTax += waterTax;
+      }
+
+      const freeFlowCogs = budget >= 15.0 ? 1.93 : 0.0;
+      const freeFlowRetail = budget >= 15.0 ? 6.63 : 0.0;
+      const spent = Math.round((budget - remBudget) * 100) / 100;
+      const finalCogs = Math.round((totCogs + freeFlowCogs) * 100) / 100;
+      const finalRetail = Math.round((totRetail + freeFlowRetail) * 100) / 100;
+      const margin = Math.round(((spent - finalCogs) / Math.max(spent, 1e-6)) * 10000) / 100;
+
+      return {
+        spent,
+        totWeight: Math.round(totWeight * 10) / 10,
+        totCogs: finalCogs,
+        totRetail: finalRetail,
+        margin,
+        waterTax: Math.round(totWaterTax * 100) / 100,
+        allocations: chosen
+      };
+    }
+
+    function renderOptimizer() {
+      const budget = parseFloat(document.getElementById('input-budget').value);
+      const objective = document.getElementById('input-objective').value;
+      const pricing = document.getElementById('input-pricing').value;
+
+      document.getElementById('budget-val-badge').textContent = `$${budget.toFixed(2)} SGD`;
+
+      const res = solveKnapsack(budget, objective, pricing);
+
+      document.getElementById('kpi-spend').textContent = `$${res.spent.toFixed(2)}`;
+      document.getElementById('kpi-weight').textContent = `${res.totWeight}g`;
+      document.getElementById('kpi-cogs').textContent = `$${res.totCogs.toFixed(2)}`;
+      document.getElementById('kpi-retail').textContent = `$${res.totRetail.toFixed(2)}`;
+      
+      const marginEl = document.getElementById('kpi-margin');
+      marginEl.textContent = `${res.margin.toFixed(2)}%`;
+      if (res.margin < 0) {
+        marginEl.className = 'text-lg font-bold text-rose-400';
+        document.getElementById('kpi-margin-sub').textContent = 'Stall In The Red!';
+        document.getElementById('kpi-margin-sub').className = 'text-[10px] text-rose-400 font-semibold';
+      } else {
+        marginEl.className = 'text-lg font-bold text-emerald-400';
+        document.getElementById('kpi-margin-sub').textContent = 'Positive Stall Profit';
+        document.getElementById('kpi-margin-sub').className = 'text-[10px] text-emerald-400 font-semibold';
+      }
+
+      document.getElementById('kpi-watertax').textContent = `$${res.waterTax.toFixed(2)}`;
+
+      const tbody = document.getElementById('basket-table-body');
+      tbody.innerHTML = '';
+      res.allocations.forEach(it => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-800/40 transition';
+        tr.innerHTML = `
+          <td class="py-2.5 px-4 font-sans text-slate-400">${it.category}</td>
+          <td class="py-2.5 px-4 font-sans text-white font-medium">${it.name_en} <span class="text-slate-400 text-[11px]">(${it.name_zh})</span></td>
+          <td class="py-2.5 px-4 text-right text-amber-300 font-bold">${it.weight_g}g</td>
+          <td class="py-2.5 px-4 text-right text-slate-300">$${it.spend_sgd.toFixed(2)}</td>
+          <td class="py-2.5 px-4 text-right text-emerald-400 font-semibold">$${it.wholesale_cogs.toFixed(2)}</td>
+          <td class="py-2.5 px-4 text-right text-cyan-300 font-semibold">$${it.retail_replacement.toFixed(2)}</td>
+          <td class="py-2.5 px-4 text-center font-sans">
+            <a href="${it.source_url}" target="_blank" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-rose-400 hover:text-rose-300 text-[11px] font-semibold border border-slate-700 transition inline-block">
+              Verify Link <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+            </a>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Broth & Nutrition Simulator
+    function populateBasesSelect() {
+      const select = document.getElementById('input-base');
+      select.innerHTML = '';
+      BASES.forEach(b => {
+        const opt = document.createElement('option');
+        opt.value = b.base_id;
+        opt.textContent = `[${b.base_id}] ${b.name_en} (${b.category})`;
+        if (b.base_id === 'B11') opt.selected = true;
+        select.appendChild(opt);
+      });
+    }
+
+    function renderNutrition() {
+      const baseId = document.getElementById('input-base').value;
+      const ingestFrac = parseFloat(document.getElementById('input-ingest-frac').value);
+      const diners = parseInt(document.getElementById('input-diners').value);
+      
+      document.getElementById('ingest-frac-badge').textContent = `${Math.round(ingestFrac * 100)}% Consumed`;
+
+      const base = BASES.find(b => b.base_id === baseId) || BASES[0];
+
+      // Simulated Mediterranean Basket raw ingredients
+      const rawProtein = 90.0;
+      const rawFiber = 19.2;
+      const rawSatFat = 3.65;
+      const rawSodium = 518.0;
+      const rawKcal = 550.0;
+      const rawFat = 18.0;
+
+      const potKcal = rawKcal + (base.full_pot_kcal * ingestFrac);
+      const potProtein = rawProtein + (base.full_pot_protein_g * ingestFrac);
+      const potFiber = rawFiber + (base.full_pot_fiber_g * ingestFrac);
+      const potSatFat = rawSatFat + (base.full_pot_sat_fat_g * ingestFrac);
+      const potFat = rawFat + (base.full_pot_fat_g * ingestFrac);
+      const potSodium = rawSodium + (base.full_pot_sodium_mg * ingestFrac);
+
+      const perKcal = Math.round(potKcal / diners);
+      const perProtein = Math.round((potProtein / diners) * 10) / 10;
+      const perFiber = Math.round((potFiber / diners) * 10) / 10;
+      const perSatFat = Math.round((potSatFat / diners) * 100) / 100;
+      const perFat = Math.round((potFat / diners) * 10) / 10;
+      const perSodium = Math.round(potSodium / diners);
+      const sodShare = Math.round((perSodium / 2000.0) * 1000) / 10;
+
+      document.getElementById('nutr-kcal').textContent = `${perKcal} kcal`;
+      document.getElementById('nutr-protein').textContent = `${perProtein}g`;
+      document.getElementById('nutr-fiber').textContent = `${perFiber}g`;
+      document.getElementById('nutr-satfat').textContent = `${perSatFat}g`;
+      document.getElementById('nutr-totalfat').textContent = `Total fat: ${perFat}g`;
+      document.getElementById('nutr-sodium').textContent = `${perSodium} mg`;
+      document.getElementById('nutr-sod-share').textContent = `${sodShare}% of 2,000mg Daily Limit`;
+      document.getElementById('bar-sodium').style.width = `${Math.min(sodShare, 100)}%`;
+
+      const badge500 = document.getElementById('badge-500kcal');
+      if (perKcal <= 500) {
+        badge500.textContent = 'HPB ≤500 kcal Pass';
+        badge500.className = 'text-[10px] px-2 py-0.5 rounded font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800';
+      } else {
+        badge500.textContent = 'HPB ≤700 kcal Pass';
+        badge500.className = 'text-[10px] px-2 py-0.5 rounded font-semibold bg-amber-950 text-amber-400 border border-amber-800';
+      }
+
+      const badgeGrade = document.getElementById('nutri-grade-badge');
+      if (perSatFat <= 2.5 && perSodium <= 650) {
+        badgeGrade.textContent = 'Grade A';
+        badgeGrade.className = 'text-[10px] px-2.5 py-0.5 rounded font-bold bg-emerald-500 text-slate-950';
+      } else if (perSatFat <= 4.5 && perSodium <= 1000) {
+        badgeGrade.textContent = 'Grade B';
+        badgeGrade.className = 'text-[10px] px-2.5 py-0.5 rounded font-bold bg-cyan-400 text-slate-950';
+      } else if (perSatFat <= 8.0) {
+        badgeGrade.textContent = 'Grade C';
+        badgeGrade.className = 'text-[10px] px-2.5 py-0.5 rounded font-bold bg-amber-400 text-slate-950';
+      } else {
+        badgeGrade.textContent = 'Grade D';
+        badgeGrade.className = 'text-[10px] px-2.5 py-0.5 rounded font-bold bg-rose-600 text-white';
+      }
+    }
+
+    // Actuarial Calculator
+    let currentCash = 500;
+    let currentCredit = 600;
+
+    function selectTopUpPlan(cash, credit) {
+      currentCash = cash;
+      currentCredit = credit;
+      renderActuarial();
+    }
+
+    function renderActuarial() {
+      const spend = parseFloat(document.getElementById('act-spend').value) || 30.0;
+      const intervalDays = parseFloat(document.getElementById('act-interval').value) || 14.0;
+      const lambda = parseFloat(document.getElementById('act-hazard').value) || 0.22;
+
+      if (currentCash === 0) {
+        document.getElementById('act-verdict-pill').textContent = 'OPTIMAL_RISK_FREE_DEFAULT';
+        document.getElementById('act-verdict-pill').className = 'text-xs font-extrabold px-3 py-1 rounded-full bg-emerald-600 text-white uppercase';
+        document.getElementById('act-verdict-title').textContent = 'Zero Risk + 5%-8% Credit Card Cashback';
+        document.getElementById('act-verdict-desc').textContent = 'No capital lock-in, zero default hazard, maximum dining flexibility across Singapore.';
+        document.getElementById('act-breakeven').textContent = '0 visits';
+        document.getElementById('act-total-trips').textContent = 'Pay-as-you-go';
+        document.getElementById('act-horizon').textContent = 'Immediate';
+        document.getElementById('act-closure-prob').textContent = '0.0%';
+        document.getElementById('act-rest-cogs').textContent = 'N/A';
+        document.getElementById('act-rest-profit').textContent = 'N/A';
+        return;
+      }
+
+      const breakevenVisits = Math.round((currentCash / spend) * 10) / 10;
+      const totalVisits = Math.ceil(currentCredit / spend);
+      const horizonYears = ((totalVisits - 1) * intervalDays) / 365.0;
+      const horizonMonths = Math.round(horizonYears * 12.0 * 10) / 10;
+      const closureProb = 1.0 - Math.exp(-lambda * horizonYears);
+      const closureProbPct = Math.round(closureProb * 1000) / 10;
+
+      const exposedPrincipal = Math.max(0.0, currentCash - spend);
+      const insolvencyLoss = exposedPrincipal * closureProb;
+      const breakageLoss = currentCredit * 0.05;
+      const inflationDrag = currentCredit * (0.04 * (horizonYears / 2.0));
+      const oppCost = (currentCash / 2.0) * (0.02 * horizonYears);
+      const nominalBonus = currentCredit - currentCash;
+      const netEv = nominalBonus - insolvencyLoss - breakageLoss - inflationDrag - oppCost;
+
+      const restCogs = Math.round(currentCredit * 0.30);
+      const restProfit = currentCash - restCogs;
+      const restProfitPct = Math.round((restProfit / currentCash) * 1000) / 10;
+
+      document.getElementById('act-breakeven').textContent = `${breakevenVisits} visits`;
+      document.getElementById('act-total-trips').textContent = `${totalVisits} visits`;
+      document.getElementById('act-horizon').textContent = `${horizonMonths} mos horizon`;
+      document.getElementById('act-closure-prob').textContent = `${closureProbPct}%`;
+      document.getElementById('act-rest-cogs').textContent = `$${restCogs.toFixed(2)}`;
+      document.getElementById('act-rest-profit').textContent = `+$${restProfit.toFixed(2)} (${restProfitPct}%)`;
+
+      const verdictPill = document.getElementById('act-verdict-pill');
+      const verdictTitle = document.getElementById('act-verdict-title');
+      const verdictDesc = document.getElementById('act-verdict-desc');
+
+      if (netEv > 0 && horizonMonths <= 12) {
+        verdictPill.textContent = 'WINNING_DEAL_FEASIBLE';
+        verdictPill.className = 'text-xs font-extrabold px-3 py-1 rounded-full bg-emerald-600 text-white uppercase';
+        verdictTitle.textContent = `Net Risk-Adjusted EV: +$${netEv.toFixed(2)} SGD`;
+        verdictDesc.textContent = `Depleted within ${horizonMonths} months (safely before 1-yr expiry) with manageable default risk.`;
+      } else {
+        verdictPill.textContent = 'LOSING_ASYMMETRIC_TRAP';
+        verdictPill.className = 'text-xs font-extrabold px-3 py-1 rounded-full bg-rose-600 text-white uppercase';
+        verdictTitle.textContent = `Net Risk-Adjusted EV: -$${Math.abs(netEv).toFixed(2)} SGD`;
+        verdictDesc.textContent = horizonMonths > 12 ? `Exceeds 1-year expiry wall! High probability of forfeited unspent balance.` : `Insolvency hazard and breakage outweigh the nominal discount.`;
+      }
+    }
+
+    // Catalog Table
+    function renderCatalog() {
+      const search = (document.getElementById('catalog-search').value || '').toLowerCase();
+      const catFilter = document.getElementById('catalog-cat-filter').value;
+      const tbody = document.getElementById('catalog-table-body');
+      tbody.innerHTML = '';
+
+      const filtered = CATALOG.filter(it => {
+        const matchesSearch = it.name_en.toLowerCase().includes(search) || it.name_zh.includes(search) || it.id.toLowerCase().includes(search);
+        const matchesCat = !catFilter || it.category === catFilter;
+        return matchesSearch && matchesCat;
+      });
+
+      filtered.forEach(it => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-800/40 transition';
+        tr.innerHTML = `
+          <td class="py-2 px-3 text-slate-400">${it.id}</td>
+          <td class="py-2 px-3 text-white font-medium">${it.name_en} <span class="text-slate-400 text-[10px]">(${it.name_zh})</span></td>
+          <td class="py-2 px-3 text-slate-400">${it.category}</td>
+          <td class="py-2 px-3 text-right text-emerald-400 font-bold">$${it.wholesale_cost_100g.toFixed(2)}</td>
+          <td class="py-2 px-3 text-right text-cyan-300">${it.val_ratio_unified_wholesale.toFixed(2)}x</td>
+          <td class="py-2 px-3 text-right text-amber-300">${it.water_soak_multiplier.toFixed(1)}x</td>
+          <td class="py-2 px-3 text-right text-slate-300">${it.protein_g.toFixed(1)}g</td>
+          <td class="py-2 px-3 text-right text-slate-300">${it.sat_fat_g.toFixed(2)}g</td>
+          <td class="py-2 px-3 text-right text-slate-300">${it.sodium_mg.toFixed(0)}mg</td>
+          <td class="py-2 px-3 text-center">
+            <a href="${it.source_url}" target="_blank" class="text-rose-400 hover:text-rose-300 text-[10px]">
+              Link <i class="fa-solid fa-arrow-up-right-from-square text-[8px]"></i>
+            </a>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Event Listeners
+    document.getElementById('input-budget').addEventListener('input', renderOptimizer);
+    document.getElementById('input-objective').addEventListener('change', renderOptimizer);
+    document.getElementById('input-pricing').addEventListener('change', renderOptimizer);
+
+    document.getElementById('input-base').addEventListener('change', renderNutrition);
+    document.getElementById('input-ingest-frac').addEventListener('input', renderNutrition);
+    document.getElementById('input-diners').addEventListener('change', renderNutrition);
+
+    document.getElementById('act-spend').addEventListener('input', renderActuarial);
+    document.getElementById('act-interval').addEventListener('change', renderActuarial);
+    document.getElementById('act-hazard').addEventListener('change', renderActuarial);
+
+    document.getElementById('catalog-search').addEventListener('input', renderCatalog);
+    document.getElementById('catalog-cat-filter').addEventListener('change', renderCatalog);
+
+    // Initial Setup
+    window.addEventListener('DOMContentLoaded', () => {
+      populateBasesSelect();
+      renderOptimizer();
+      renderNutrition();
+      renderActuarial();
+      renderCatalog();
+    });
+  </script>
+</body>
+</html>
