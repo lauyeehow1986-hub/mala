@@ -17,17 +17,20 @@ Under Unified Weight pricing ($\$2.98/100\text{g}$, standard at *Yang Guo Fu, Zh
 
 | Category | Ingredient | Scale Weight | Protein | Fiber | Saturated Fat | Sodium | Clinical Mechanism |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
-| **Marine Seafood** | Barramundi / Seabass Fillet | $150.0\text{g}$ | $28.8\text{g}$ | $0.0\text{g}$ | $0.98\text{g}$ | $87\text{mg}$ | High marine Omega-3 EPA/DHA; cardioprotective. |
+| **Marine Seafood** | Barramundi / Seabass Fillet | $150.0\text{g}$ | $31.2\text{g}$ | $0.0\text{g}$ | $0.83\text{g}$ | $102\text{mg}$ | High marine Omega-3 EPA/DHA; cardioprotective. |
 | **Marine Seafood** | Deshelled Vannamei Prawns | $80.0\text{g}$ | $16.1\text{g}$ | $0.0\text{g}$ | $0.20\text{g}$ | $132\text{mg}$ | Dense astaxanthin antioxidant; zero saturated fat. |
 | **Marine Seafood** | Squid Flower Cut / Sotong | $70.0\text{g}$ | $10.9\text{g}$ | $0.0\text{g}$ | $0.25\text{g}$ | $31\text{mg}$ | Rich in taurine and copper; low cholesterol density. |
 | **Soy & Legume** | Tau Kwa (Firm Pressed Tofu) | $150.0\text{g}$ | $23.7\text{g}$ | $1.8\text{g}$ | $1.95\text{g}$ | $21\text{mg}$ | Non-fried plant isoflavones; cardioprotective sterols. |
 | **Cruciferous** | Fresh Broccoli Florets | $130.0\text{g}$ | $3.6\text{g}$ | $3.4\text{g}$ | $0.05\text{g}$ | $43\text{mg}$ | Glucoraphanin & sulforaphane; phase-II liver detox. |
 | **Leafy Greens** | Xiao Bai Cai (Bok Choy) | $100.0\text{g}$ | $1.5\text{g}$ | $1.0\text{g}$ | $0.03\text{g}$ | $65\text{mg}$ | High potassium (counteracts sodium) & bioavailable folate. |
 | **Bioactive Fungi**| King Oyster Mushroom (Eryngii)| $100.0\text{g}$ | $3.3\text{g}$ | $3.4\text{g}$ | $0.06\text{g}$ | $9\text{mg}$ | Ergothioneine & beta-glucans; savory nucleotide umami. |
-| **Medicinal Fungi**| Black Wood Ear (Mu Er) | $76.7\text{g}$ | $0.8\text{g}$ | $5.4\text{g}$ | $0.02\text{g}$ | $6\text{mg}$ | Soluble gut mucilage; lowers LDL cholesterol. |
+| **Medicinal Fungi**| Black Wood Ear (Mu Er) | $76.7\text{g}$ | $1.2\text{g}$ | $2.0\text{g}$ | $0.02\text{g}$ | $7\text{mg}$ | Soluble gut mucilage; lowers LDL cholesterol. |
 | **Slow Starch** | Konjac Shirataki Knots | $50.0\text{g}$ | $0.1\text{g}$ | $1.4\text{g}$ | $0.01\text{g}$ | $4\text{mg}$ | Zero-glycemic glucomannan; prebiotic gut fermentation. |
-| **Sea Vegetable** | Kelp Knots (Hai Dai) | $100.0\text{g}$ | $1.2\text{g}$ | $2.8\text{g}$ | $0.05\text{g}$ | $120\text{mg}$ | Alginate & organic iodine; supports metabolic rate. |
-| **Total Basket** | **Raw Ingredients Only** | **$1,006.7\text{g}$** | **$90.0\text{g}$** | **$19.2\text{g}$** | **$3.65\text{g}$** | **$518\text{mg}$** | **Per Diner (2 pax): $45.0\text{g}$ Protein, $9.6\text{g}$ Fiber!** |
+| **Sea Vegetable** | Kelp Knots (Hai Dai) | $100.0\text{g}$ | $1.7\text{g}$ | $1.3\text{g}$ | $0.10\text{g}$ | $233\text{mg}$ | Alginate & organic iodine; naturally the saltiest item in the basket. |
+| **Total Basket** | **Raw Ingredients Only** | **$1,006.7\text{g}$** | **$93.3\text{g}$** | **$14.4\text{g}$** | **$3.48\text{g}$** | **$645\text{mg}$** | **Per Diner (2 pax): $46.6\text{g}$ Protein, $7.2\text{g}$ Fiber, 336 kcal (before broth)** |
+
+> [!NOTE]
+> **Audit (Nov 2026):** All rows are now computed directly from `data/sg_mala_96_ingredients_catalog.csv` (USDA FoodData Central / China Food Composition Tables). The earlier version under-stated kelp sodium (120 → 233 mg) and over-stated wood ear fiber (5.4 → 2.0 g). Xiao Bai Cai's 65 mg/100 g sodium is correct (USDA NDB 11116); bok choy is naturally sodium-rich for a vegetable.
 
 ---
 
@@ -38,30 +41,38 @@ $$\text{Ingested Lipid/Sodium} = \sum_{i} w_i \cdot \text{Nutrient}_i + \phi_{\t
 1. **Dry Stir-Fry (Mala Xiang Guo — Bases `B01`–`B04`)**:
    - $\phi_{\text{ingest}} = 1.0$: $100\%$ of the wok-adhered oil, tallow, and paste is ingested.
    - High-temperature wok frying ($>180^\circ\text{C}$) triggers lipid peroxidation and advanced glycation end-products (AGEs).
-   - At *Te La* (`B01`), saturated fat reaches **$12.94\text{g}$ per diner**, breaching HPB HDP safety ceilings.
+   - At *Te La* (`B01`), saturated fat reaches **$12.99\text{g}$ per diner**, breaching HPB HDP safety ceilings.
    - *Mitigation*: Diners must order `B05` (*Shao You, Shao Yan, Wei La*), which reduces added lipid by $61\%$.
 2. **Dry Toss (Mala Ban — Base `B08`)**:
    - $\phi_{\text{ingest}} = 1.0$, but blanched in clean boiling water first, rendering out excess fats and surface starches.
    - Dressed with roasted sesame paste (tahini equivalent — high MUFAs and sesamin lignans), aged Chinkiang vinegar, and light Sichuan peppercorn oil.
-   - Total saturated fat is restricted to **$3.39\text{g}$**, with $876\text{mg}$ sodium.
-3. **Soup Malatang (Bases `B09`–`B13`)**:
-   - **The Broth Dilution & Ingestion Shield**: The aqueous broth acts as a flavor extraction bath. Typical soup consumption is only **$35\%\text{--}40\%$** ($\phi_{\text{ingest}} = 0.35\text{--}0.40$).
-   - By leaving the residual soup unconsumed, ingested sodium drops from pot-level $2,650\text{mg}$ down to **$490\text{--}670\text{mg}$ per diner**, effortlessly satisfying HPB guidelines ($\le 1,000\text{mg}$).
+   - Total saturated fat is restricted to **$3.44\text{g}$**, with $993\text{mg}$ sodium.
+3. **Soup Malatang (Bases `B09`–`B14`)**:
+   - **The Broth Dilution & Ingestion Shield**: The aqueous broth acts as a flavor extraction bath. Typical soup consumption is only **$30\%\text{--}45\%$** ($\phi_{\text{ingest}} = 0.30\text{--}0.45$).
+   - By leaving the residual soup unconsumed, ingested sodium drops to **$607\text{--}883\text{mg}$ per diner** (vs $993\text{--}1,548\text{mg}$ for dry formats), satisfying the HPB $\le 1,000\text{mg}$ meal guide.
 
 ---
 
-## 3. Simulation Scorecard Across 8 Broth Bases (Per Diner, 2 Pax Sharing)
+## 3. Simulation Scorecard Across All 14 Bases (Per Diner, 2 Pax Sharing)
 
-| Base ID | Base Name | Category | $\phi_{\text{ingest}}$ | Kcal | Protein | Fiber | Sat Fat | Ingested Sodium | HPB HDP Compliance | Nutri-Grade |
+*Per diner = (raw basket + base × $\phi_{\text{ingest}}$) ÷ 2, using the corrected catalog. "Grade" is this project's heuristic (A: SFA ≤ 2.5 g & Na ≤ 650 mg; B: SFA ≤ 4.5 g & Na ≤ 1,000 mg; C: SFA ≤ 8 g; D: above) — Singapore's official Nutri-Grade labels apply to packaged products, not hawker meals.*
+
+| Base ID | Base Name | Category | $\phi_{\text{ingest}}$ | Kcal | Protein | Fiber | Sat Fat | Ingested Sodium | HPB HDP Compliance | Grade |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **`B01`** | Dry Te La (Extra Spicy) | Dry Stir-Fry | $1.00$ | $605\text{ kcal}$ | $47.5\text{g}$ | $7.9\text{g}$ | **$12.94\text{g}$** | $1,431\text{mg}$ ($72\%$) | ❌ **FAIL** (Sat Fat > 10g) | **Grade D** |
-| **`B03`** | Dry Zhong La (Medium Spicy) | Dry Stir-Fry | $1.00$ | $480\text{ kcal}$ | $46.8\text{g}$ | $7.4\text{g}$ | **$7.79\text{g}$** | $1,066\text{mg}$ ($53\%$) | ⚠️ Borderline (Sodium) | **Grade C** |
-| **`B05`** | Dry Shao You Shao Yan Wei La | Dry Stir-Fry | $1.00$ | $377\text{ kcal}$ | $46.2\text{g}$ | $7.1\text{g}$ | **$3.09\text{g}$** | $596\text{mg}$ ($30\%$) | ✅ **PASS** | **Grade B** |
-| **`B08`** | Dry Toss Mala Ban | Dry Toss | $1.00$ | $447\text{ kcal}$ | $48.3\text{g}$ | $7.6\text{g}$ | **$3.39\text{g}$** | $876\text{mg}$ ($44\%$) | ✅ **PASS** | **Grade B** |
-| **`B09`** | Soup Classic Beef Tallow | Soup Malatang| $0.35$ | $406\text{ kcal}$ | $46.2\text{g}$ | $6.9\text{g}$ | **$5.89\text{g}$** | $766\text{mg}$ ($38\%$) | ✅ **PASS** | **Grade C** |
-| **`B10`** | Soup Spicy Pork Collagen | Soup Malatang| $0.35$ | $383\text{ kcal}$ | $47.1\text{g}$ | $6.8\text{g}$ | **$4.05\text{g}$** | $670\text{mg}$ ($34\%$) | ✅ **PASS** | **Grade B** |
-| **`B11`** | **Soup Rich Tomato & Pepper**| Soup Malatang| $0.45$ | **$352\text{ kcal}$**| **$46.3\text{g}$**| **$7.2\text{g}$** | **$2.05\text{g}$** | **$600\text{mg}$ ($30\%$)** | ✅ **BEST DUO (Lycopene)** | **Grade A** |
-| **`B13`** | **Soup Wild Mushroom & Herb**| Soup Malatang| $0.40$ | **$334\text{ kcal}$**| **$46.3\text{g}$**| **$6.9\text{g}$** | **$1.81\text{g}$** | **$490\text{mg}$ ($25\%$)** | ✅ **CLEANEST (Beta-Glucan)**| **Grade A** |
+| **`B01`** | Dry Te La (Extra Spicy) | Dry Stir-Fry | $1.00$ | $626\text{ kcal}$ | $48.7\text{g}$ | $8.6\text{g}$ | **$12.99\text{g}$** | $1,548\text{mg}$ ($77\%$) | ❌ **FAIL** (Sat Fat > 10g, Na > 1,000mg) | **D** |
+| **`B02`** | Dry Da La (Big Spicy) | Dry Stir-Fry | $1.00$ | $559\text{ kcal}$ | $48.4\text{g}$ | $8.3\text{g}$ | **$10.24\text{g}$** | $1,348\text{mg}$ ($67\%$) | ❌ **FAIL** | **D** |
+| **`B03`** | Dry Zhong La (Medium Spicy) | Dry Stir-Fry | $1.00$ | $501\text{ kcal}$ | $48.0\text{g}$ | $8.1\text{g}$ | **$7.84\text{g}$** | $1,183\text{mg}$ ($59\%$) | ⚠️ Sodium > 1,000mg | **C** |
+| **`B04`** | Dry Wei La (Mild Spicy) | Dry Stir-Fry | $1.00$ | $456\text{ kcal}$ | $47.7\text{g}$ | $7.9\text{g}$ | **$5.84\text{g}$** | $1,048\text{mg}$ ($52\%$) | ⚠️ Sodium > 1,000mg | **C** |
+| **`B05`** | Dry Shao You Shao Yan Wei La | Dry Stir-Fry | $1.00$ | $399\text{ kcal}$ | $47.4\text{g}$ | $7.8\text{g}$ | **$3.14\text{g}$** | $713\text{mg}$ ($36\%$) | ✅ **PASS** (best dry option) | **B** |
+| **`B06`** | Dry Jiang Xiang (Non-Spicy) | Dry Stir-Fry | $1.00$ | $441\text{ kcal}$ | $48.2\text{g}$ | $7.7\text{g}$ | **$3.49\text{g}$** | $1,163\text{mg}$ ($58\%$) | ⚠️ Sodium > 1,000mg | **C** |
+| **`B07`** | Dry Suan Xiang (Garlic Herb) | Dry Stir-Fry | $1.00$ | $434\text{ kcal}$ | $47.8\text{g}$ | $7.6\text{g}$ | **$3.29\text{g}$** | $933\text{mg}$ ($47\%$) | ✅ PASS | **B** |
+| **`B08`** | Dry Toss Mala Ban | Dry Toss | $1.00$ | $469\text{ kcal}$ | $49.5\text{g}$ | $8.2\text{g}$ | **$3.44\text{g}$** | $993\text{mg}$ ($50\%$) | ✅ PASS (borderline Na) | **B** |
+| **`B09`** | Soup Classic Beef Tallow | Soup Malatang| $0.35$ | $427\text{ kcal}$ | $47.4\text{g}$ | $7.5\text{g}$ | **$5.94\text{g}$** | $883\text{mg}$ ($44\%$) | ✅ PASS | **C** |
+| **`B10`** | Soup Spicy Pork Collagen | Soup Malatang| $0.35$ | $404\text{ kcal}$ | $48.3\text{g}$ | $7.4\text{g}$ | **$4.10\text{g}$** | $786\text{mg}$ ($39\%$) | ✅ PASS | **B** |
+| **`B11`** | **Soup Rich Tomato & Pepper**| Soup Malatang| $0.45$ | **$373\text{ kcal}$**| **$47.5\text{g}$**| **$7.8\text{g}$** | **$2.10\text{g}$** | **$716\text{mg}$ ($36\%$)** | ✅ **BEST DUO (Lycopene)** | **B** |
+| **`B12`** | Soup Pork/Chicken Collagen (Non-Spicy) | Soup Malatang| $0.40$ | $379\text{ kcal}$ | $48.9\text{g}$ | $7.2\text{g}$ | **$2.90\text{g}$** | $699\text{mg}$ ($35\%$) | ✅ PASS | **B** |
+| **`B13`** | **Soup Wild Mushroom & Herb**| Soup Malatang| $0.40$ | **$355\text{ kcal}$**| **$47.5\text{g}$**| **$7.5\text{g}$** | **$1.86\text{g}$** | **$607\text{mg}$ ($30\%$)** | ✅ **CLEANEST (Beta-Glucan)**| **A** |
+| **`B14`** | Soup Suan Cai / Tom Yum / Laksa | Soup Malatang| $0.30$ | $372\text{ kcal}$ | $47.2\text{g}$ | $7.4\text{g}$ | **$3.02\text{g}$** | $765\text{mg}$ ($38\%$) | ✅ PASS | **B** |
 
 ---
 

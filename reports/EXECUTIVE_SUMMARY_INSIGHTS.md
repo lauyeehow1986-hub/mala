@@ -63,17 +63,17 @@ How to build a **Grade A Nutri-Grade, Healthier Dining Programme (HDP)** complia
 ```
 
 ### The Per-Diner Nutritional Payload (2 Pax Sharing)
-- **Calories**: **$334\text{--}352\text{ kcal}$** (Effortlessly passes the HPB $\le 500\text{ kcal}$ threshold).
-- **Protein**: **$46.3\text{g}$** of high-biological-value protein (Far exceeds the HPB $\ge 35\text{g}$ target).
-- **Dietary Fiber**: **$6.9\text{--}7.2\text{g}$** of gut-protective prebiotic fiber.
-- **Saturated Fat**: **$1.81\text{--}2.05\text{g}$** (Far below the HPB $\le 10\text{g}$ limit).
-- **Ingested Sodium**: **$490\text{--}600\text{mg}$** (Only $25\%\text{--}30\%$ of the $2,000\text{mg}$ daily allowance).
+- **Calories**: **$355\text{--}373\text{ kcal}$** (Effortlessly passes the HPB $\le 500\text{ kcal}$ threshold).
+- **Protein**: **$47.5\text{g}$** of high-biological-value protein (Far exceeds the HPB $\ge 35\text{g}$ target).
+- **Dietary Fiber**: **$7.5\text{--}7.8\text{g}$** of gut-protective prebiotic fiber.
+- **Saturated Fat**: **$1.86\text{--}2.10\text{g}$** (Far below the HPB $\le 10\text{g}$ limit).
+- **Ingested Sodium**: **$607\text{--}716\text{mg}$** ($30.3\%\text{--}35.8\%$ of the $2,000\text{mg}$ daily allowance).
 
 > 🏆 **Featured Gold Standard (`B13` Non-Spicy Wild Mushroom & Herbal Broth)**:
-> - 🔥 **$334\text{ kcal}$** • 💪 **$46.3\text{g}$ Protein** • 🥦 **$6.9\text{g}$ Fiber** • 🧈 **$1.81\text{g}$ Sat Fat**
-> - 🧂 **$490\text{mg}$ Ingested Sodium** (Just $24.5\%$ of the $2,000\text{mg}$ daily limit — a $75\%$ drop vs hawker Mala).
-> - **Zero Added Sugar** • Medicinal fungal $\beta$-glucans & ergothioneine • **Certified Nutri-Grade A**.
-> *(If dining as a duo craving bolder richness, `B11` Rich Tomato delivers $352\text{ kcal}$ & $600\text{mg}$ sodium with active lycopene).*
+> - 🔥 **$355\text{ kcal}$** • 💪 **$47.5\text{g}$ Protein** • 🥦 **$7.5\text{g}$ Fiber** • 🧈 **$1.86\text{g}$ Sat Fat**
+> - 🧂 **$607\text{mg}$ Ingested Sodium** ($30.3\%$ of the $2,000\text{mg}$ daily limit — ~$75\%$ lower than typical hawker Mala).
+> - **Zero Added Sugar** • Medicinal fungal $\beta$-glucans & ergothioneine • **Project Heuristic Grade A**.
+> *(If dining as a duo craving bolder richness, `B11` Rich Tomato delivers $373\text{ kcal}$ & $716\text{mg}$ sodium with active lycopene — Project Heuristic Grade B).*
 
 ---
 
@@ -85,8 +85,8 @@ How to build a **Grade A Nutri-Grade, Healthier Dining Programme (HDP)** complia
  │ DRY STIR-FRY (Xiang Guo)    │ DRY TOSS (Mala Ban)         │ SOUP MALATANG               │
  ├─────────────────────────────┼─────────────────────────────┼─────────────────────────────┤
  │ • 100% oil & paste ingested │ • Blanched in water first   │ • 35%-40% broth consumed    │
- │ • Sat Fat: 12.9g (B01 Te La)│ • Sat Fat: 3.4g (B08 Ban)   │ • Absorbed Sodium: 490mg    │
- │ • Must request: "Shao You,  │ • Rich in sesame MUFAs &    │ • Leaving 65% broth prevents│
+ │ • Sat Fat: 13.0g (B01 Te La)│ • Sat Fat: 3.4g (B08 Ban)   │ • Absorbed Sodium: 607mg    │
+ │ • Must request: "Shao You,  │ • Rich in sesame MUFAs &    │ • Leaving 60% broth prevents│
  │   Shao Yan, Wei La" (B05)   │   Chinkiang black vinegar   │   sodium hyper-concentration│
  └─────────────────────────────┴─────────────────────────────┴─────────────────────────────┘
 ```
